@@ -1,4 +1,4 @@
 # BloodBound
 
-Run composer install \n
-Import BloodBound.sql to phpmyadmin
+=> Run composer install
+=> Import BloodBound.sql to phpmyadmin
