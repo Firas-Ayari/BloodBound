@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
@@ -15,23 +15,54 @@ class Emergency
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
+//controle saisie de titre
+    #[ORM\Column(length: 20)]
+    /**
+     * @Assert\NotBlank(message="Le Titre est obligatoire")
+     * @Assert\Length(max=20, maxMessage="Le Titre ne peut pas dépasser 20 caractères")
+     */
     private ?string $title = null;
 
+//contrôle saisie de description
     #[ORM\Column(length: 255)]
+    /**
+     * @Assert\NotBlank(message="La description est obligatoire")
+     *  min = 20,
+     *     max = 255,
+     *     minMessage = "La description minimum est 20 caractères",
+     *     maxMessage = "La description ne peut pas dépasser 255 caractères"
+     */
     private ?string $description = null;
 
-    #[ORM\Column(length: 255)]
+    //contrôle saisie de type de sang
+    #[ORM\Column(length: 5)]
+    /**
+     * @Assert\Choice(choices={"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"}, message="Type de sang invalide)
+     */
     private ?string $bloodType = null;
 
-    #[ORM\Column(length: 255)]
+    //contrôle saisie de Location
+    #[ORM\Column(length: 40)]
+    /**
+     * @Assert\NotBlank(message="La description est obligatoire")
+     *  min = 5,
+     *     max = 40,
+     *     minMessage = "Emplacement description minimum est 5 caractères",
+     *     maxMessage = "Emplacement description ne peut pas dépasser 40 caractères"
+     */
     private ?string $location = null;
-
+//contrôle saisie de date
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    /**
+     * @Assert\Date(message="La date limite doit être une date valide")
+     */
     private ?\DateTimeInterface $deadline = null;
 
+    //contrôle saisie de status
     #[ORM\Column(length: 255)]
+    /**
+     * @Assert\Choice(choices={"pas commencé", "en cours", "complété"}, message="Statut de traitement invalide")
+     */
     private ?string $status = null;
 
     #[ORM\Column]
