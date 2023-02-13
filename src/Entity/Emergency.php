@@ -16,21 +16,28 @@ class Emergency
     #[ORM\Column]
     private ?int $id = null;
 //controle saisie de titre
-    #[ORM\Column(length: 20)]
+    #[ORM\Column(length: 25)]
     /**
-     * @Assert\NotBlank(message="Le Titre est obligatoire")
-     * @Assert\Length(max=20, maxMessage="Le Titre ne peut pas dépasser 20 caractères")
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min=5,
+     *     max=25,
+     *     minMessage="Le nom doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="Le nom ne peut pas dépasser {{ limit }} caractères"
+     * )
      */
     private ?string $title = null;
 
 //contrôle saisie de description
     #[ORM\Column(length: 255)]
     /**
-     * @Assert\NotBlank(message="La description est obligatoire")
-     *  min = 20,
-     *     max = 255,
-     *     minMessage = "La description minimum est 20 caractères",
-     *     maxMessage = "La description ne peut pas dépasser 255 caractères"
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min=20,
+     *     max=255,
+     *     minMessage="La description doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="Le description ne peut pas dépasser {{ limit }} caractères"
+     * )
      */
     private ?string $description = null;
 
@@ -44,11 +51,13 @@ class Emergency
     //contrôle saisie de Location
     #[ORM\Column(length: 40)]
     /**
-     * @Assert\NotBlank(message="La description est obligatoire")
-     *  min = 5,
-     *     max = 40,
-     *     minMessage = "Emplacement description minimum est 5 caractères",
-     *     maxMessage = "Emplacement description ne peut pas dépasser 40 caractères"
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *     min=5,
+     *     max=40,
+     *     minMessage="La description d'emplacement doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="Le description d'emplacement ne peut pas dépasser {{ limit }} caractères"
+     * )
      */
     private ?string $location = null;
 //contrôle saisie de date
