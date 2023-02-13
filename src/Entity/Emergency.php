@@ -53,9 +53,7 @@ class Emergency
     private ?string $location = null;
 //contrôle saisie de date
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    /**
-     * @Assert\Date(message="La date limite doit être une date valide")
-     */
+
     private ?\DateTimeInterface $deadline = null;
 
     //contrôle saisie de status
