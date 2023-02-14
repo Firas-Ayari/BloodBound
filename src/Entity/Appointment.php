@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\AppointmentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -14,11 +14,26 @@ class Appointment
     #[ORM\Column]
     private ?int $id = null;
 
+
+
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    /**
+     * @Assert\DateTime
+     * @var string A "Y-m-d H:i" formatted value
+     */
     private ?\DateTimeInterface $date = null;
 
+
+
+
     #[ORM\Column(length: 255)]
+    /**
+     * @Assert\Choice(choices={"missed", "établie"}, message="Status of the appointment invalid")
+     */
     private ?string $status = null;
+
+
+
 
     public function getId(): ?int
     {

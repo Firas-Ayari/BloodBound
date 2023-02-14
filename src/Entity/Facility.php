@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\FacilityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -15,14 +15,42 @@ class Facility
     #[ORM\Column]
     private ?int $id = null;
 
+
     #[ORM\Column(length: 255)]
+    /**
+     * @Assert\NotBlank(message = "Please enter a value.")
+     * @Assert\Length(
+     *     min=5,
+     *     max=30,
+     *     minMessage="Le nom doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="Le nom ne peut pas dépasser {{ limit }} caractères"
+     * )
+     */
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $address = null;
+
 
     #[ORM\Column(length: 255)]
+     /**
+     * @Assert\NotBlank(message = "Please enter a value.")
+     * @Assert\Length(
+     *     min=5,
+     *     max=40,
+     *     minMessage="La description d'emplacement doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="Le description d'emplacement ne peut pas dépasser {{ limit }} caractères"
+     * )
+     */
+    private ?string $address = null;
+
+
+
+    #[ORM\Column(length: 255)]
+    /**
+     * @Assert\Positive
+     */
     private ?string $rank = null;
+
+
 
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'facilities')]
     private Collection $users;
