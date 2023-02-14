@@ -72,12 +72,16 @@ class Emergency
      */
     private ?string $status = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private \DateTimeImmutable $createdAt;
 
     #[ManyToOne(targetEntity: User::class, inversedBy: 'emergencies')]
     #[JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private User|null $user = null;
+    public function __construct() {
+        $this->createdAt = new \DateTimeImmutable();
+    }
+
 
     public function getId(): ?int
     {
