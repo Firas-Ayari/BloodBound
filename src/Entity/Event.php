@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Ticket;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,29 +18,78 @@ class Event
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
+//controle saisie de titre
+    #[ORM\Column(length: 30)]
+    /**
+     * @Assert\NotBlank(message = "Please enter a value.")
+     * @Assert\Length(
+     *     min=5,
+     *     max=30,
+     *     minMessage="Le titre doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="Le titre ne peut pas dépasser {{ limit }} caractères"
+     * )
+     */
     private ?string $title = null;
-
+//controle saisie de description
     #[ORM\Column(length: 255)]
+    /**
+     * @Assert\NotBlank(message = "Please enter a value.")
+     * @Assert\Length(
+     *     min=20,
+     *     max=255,
+     *     minMessage="La description doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="Le description ne peut pas dépasser {{ limit }} caractères"
+     * )
+     */
     private ?string $description = null;
-
+//controle saisie de statut
     #[ORM\Column(length: 255)]
+    /**
+     * @Assert\Choice(choices={"complet", "non complet"}, message="statut d'evenement invalide")
+     */
     private ?string $status = null;
-
-    #[ORM\Column(length: 255)]
+    
+//contrôle saisie de Location
+    #[ORM\Column(length: 40)]
+    /**
+     * @Assert\NotBlank(message = "Please enter a value.")
+     * @Assert\Length(
+     *     min=5,
+     *     max=40,
+     *     minMessage="La description d'emplacement doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="Le description d'emplacement ne peut pas dépasser {{ limit }} caractères"
+     * )
+     */
     private ?string $location = null;
-
-    #[ORM\Column(length: 255)]
+//contrôle saisie de image
+    #[ORM\Column(length: 60)]
+    /**
+     * @Assert\NotBlank(message = "Please enter an image.")
+     * @Assert\Length(
+     *     min=5,
+     *     max=60,
+     *     minMessage="image doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="image ne peut pas dépasser {{ limit }} caractères"
+     * )
+     */
     private ?string $image = null;
-
+//contrôle saisie de date event 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    /**
+     * @Assert\NotBlank(message = "Please enter an event date.")
+     */
     private ?\DateTimeInterface $eventDate = null;
-
+//contrôle saisie de debut heure
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    /**
+     * @Assert\NotBlank(message = "Please enter start time.")
+     */
     private ?\DateTimeInterface $startTime = null;
-
+//contrôle saisie de fin heure
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    /**
+     * @Assert\NotBlank(message = "Please enter end time.")
+     */
     private ?\DateTimeInterface $endTime = null;
 
     #[ManyToOne(targetEntity: User::class, inversedBy: 'events')]
