@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/product-category')]
-class ProductController extends AbstractController
+class ProductCategoryController extends AbstractController
 {
     private $em;
     private $productCategoryRepository;

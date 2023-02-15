@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/users')]
-class ProductController extends AbstractController
+class UserController extends AbstractController
 {
     private $em;
     private $userRepository;
