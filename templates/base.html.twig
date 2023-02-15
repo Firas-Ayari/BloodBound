@@ -112,7 +112,7 @@
                                             <li class="has-subMenu-left">
                                                 <a href="#" class="">
                                                 <img src="{{ asset('img/svg/shopping-cart.svg') }}" alt="shopping-cart" class="svg nav-icon">
-                                                <span class="menu-text text-initial">eCommerce</span>
+                                                <span class="menu-text text-initial">Marketplace</span>
                                                 </a>
                                                 <ul class="subMenu">
                                                 <li>
@@ -149,35 +149,18 @@
                                                 <span class="menu-text">Users</span>
                                                 </a>
                                                 <ul class="subMenu">
-                                                <li>
-                                                    <a href="users-membar.html" class="">Team</a>
+                                               {# <li>
+                                                    <a href="users-list.html" class="">Users List</a>
                                                 </li>
                                                 <li>
-                                                    <a href="users-card.html" class="">Users
-                                                        Grid</a>
+                                                    <a href="users-card2.html" class="">Add Users </a>
                                                 </li>
                                                 <li>
-                                                    <a href="users-list.html" class="">Users
-                                                        List</a>
+                                                    <a href="users-group.html" class="">Edit Users</a>
                                                 </li>
-                                                <li>
-                                                    <a href="users-card2.html" class="">Users
-                                                        Grid
-                                                        style</a>
-                                                </li>
-                                                <li>
-                                                    <a href="users-group.html" class="">Users
-                                                        Group</a>
-                                                </li>
-                                                <li>
-                                                    <a href="user-info.html" class="">Add
-                                                        User</a>
-                                                </li>
-                                                <li>
-                                                    <a href="users-datatable.html" class="">Users
-                                                        Table</a>
-                                                </li>
+                                               #}
                                                 </ul>
+
                                             </li>
 
                                             <li>
@@ -481,7 +464,7 @@
                             <li class="has-child">
                                 <a href="#" class="">
                                     <span class="nav-icon uil uil-bag"></span>
-                                    <span class="menu-text text-initial">eCommerce</span>
+                                    <span class="menu-text text-initial">MarketPlace</span>
                                     <span class="toggle-icon"></span>
                                 </a>
                                 <ul>
@@ -523,31 +506,17 @@
                                     <span class="toggle-icon"></span>
                                 </a>
                                 <ul>
-                                    <li class="">
-                                    <a href="users-membar.html">Team</a>
-                                    </li>
-                                    <li class="">
-                                    <a href="users-card.html">Users Grid</a>
-                                    </li>
-                                    <li class="">
-                                    <a href="users-list.html">Users
-                                        List</a>
-                                    </li>
-                                    <li class="">
-                                    <a href="users-card2.html">Users Grid
-                                        style</a>
-                                    </li>
-                                    <li class="">
-                                    <a href="users-group.html">Users
-                                        Group</a>
-                                    </li>
-                                    <li class="">
-                                    <a href="user-info.html">Add User</a>
-                                    </li>
-                                    <li class="">
-                                    <a href="users-datatable.html">Users
-                                        Table</a>
-                                    </li>
+                                    {#
+                                                <li>
+                                                    <a href="{{ path('app_user_list') }}" class="">Users List</a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ path('app_create_user') }}" class="">Add Users </a>
+                                                </li>
+                                                <li>
+                                                    <a href="{{ path('app_user_edit') }}" class="">Edit Users</a>
+                                                </li>
+                                    #}
 
                                 </ul>
                             </li>
@@ -562,21 +531,15 @@
                             <li class="has-child">
                                 <a href="#" class="">
                                     <span class="nav-icon uil uil-at"></span>
-                                    <span class="menu-text">Contact</span>
+                                    <span class="menu-text">Emergencies</span>
                                     <span class="toggle-icon"></span>
                                 </a>
                                 <ul>
                                     <li class="">
-                                    <a href="contact-2.html">Contact
-                                        Grid</a>
+                                    <a href="{{ path('app_emergency_new') }}"> Add Emergency</a>
                                     </li>
                                     <li class="">
-                                    <a href="contact-1.html">Contact
-                                        List</a>
-                                    </li>
-                                    <li class="">
-                                    <a href="contact-3.html">Contact
-                                        Create</a>
+                                    <a href="{{ path('app_emergency_index') }}">Emergencies List</a>
                                     </li>
                                 </ul>
                             </li>
