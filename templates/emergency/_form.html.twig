@@ -1,13 +1,44 @@
 <div class="container">
-{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
     <div class="form-group">
-    {{ form_label(form.title,'votre titre') }}
- {{ form_widget(form.title,{'attr':{'class':'form-control'}}) }}
-        <div class="alert alert-danger">
- {{ form_errors(form.title) }}
-        </div>
+        {{ form_label(form.title, 'Title') }}
+        {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.title) }}
+    </div>
+    <div class="form-group">
+        {{ form_label(form.description, 'Description') }}
+        {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+
+            {{ form_errors(form.description) }}
+
+    </div>
+    <div class="form-group">
+        {{ form_label(form.bloodType, 'Your Blood Type is') }}
+        {{ form_widget(form.bloodType, {'attr': {'class': 'form-control'}}) }}
+
+            {{ form_errors(form.bloodType) }}
+
+    </div>
+    <div class="form-group">
+        {{ form_label(form.location, 'Add your Location') }}
+        {{ form_widget(form.location, {'attr': {'class': 'form-control'}}) }}
+
+            {{ form_errors(form.location) }}
+
+    </div>
+    <div class="form-group">
+        {{ form_label(form.deadline, 'Create your Deadline') }}
+        {{ form_widget(form.deadline, {'attr': {'class': 'form-control'}}) }}
+
+            {{ form_errors(form.deadline) }}
+
+    </div>
+    <div class="form-group">
+        {{ form_label(form.status, 'Choose your Status') }}
+        {{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(form.status) }}
+
     </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}
-
+    {{ form_end(form) }}
 </div>

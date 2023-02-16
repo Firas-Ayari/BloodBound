@@ -17,7 +17,7 @@ class Emergency
     private ?int $id = null;
 //controle saisie de titre
     #[ORM\Column(length: 30)]
-  #[assert\NotBlank(message: 'is null')]
+  #[assert\NotBlank(message: 'is null,Please enter a value.')]
     #[Assert\Length(
         min: 5,
         max: 255,
