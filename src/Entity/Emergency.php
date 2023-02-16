@@ -39,7 +39,7 @@ class Emergency
 
     //contrôle saisie de type de sang
     #[ORM\Column(length: 5)]
-    #[Assert\Choice(choices: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], message: 'Type de sang invalide')]
+    #[Assert\Choice(choices: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], message: 'Invalid type of blood ')]
     private ?string $bloodType = null;
 
     //contrôle saisie de Location
