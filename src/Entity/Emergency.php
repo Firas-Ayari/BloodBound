@@ -18,39 +18,39 @@ class Emergency
 //controle saisie de titre
     #[ORM\Column(length: 30)]
   #[assert\NotBlank(message: 'is null')]
+    #[Assert\Length(
+        min: 5,
+        max: 255,
+        minMessage: 'The title must be at least {{ limit }} characters',
+        maxMessage: 'The title cannot exceed {{ limit }} characters'
+    )]
     private ?string $title = null;
 
 //contrôle saisie de description
     #[ORM\Column(length: 255)]
-    /**
-     * @Assert\NotBlank(message = "Please enter a value.")
-     * @Assert\Length(
-     *     min=20,
-     *     max=255,
-     *     minMessage="La description doit comporter au moins {{ limit }} caractères",
-     *     maxMessage="Le description ne peut pas dépasser {{ limit }} caractères"
-     * )
-     */
+    #[Assert\NotBlank(message: 'Please enter a value.')]
+    #[Assert\Length(
+        min: 20,
+        max: 255,
+        minMessage: 'The description must be at least {{ limit }} characters',
+        maxMessage: 'The description cannot exceed {{ limit }} characters'
+    )]
     private ?string $description = null;
 
     //contrôle saisie de type de sang
     #[ORM\Column(length: 5)]
-    /**
-     * @Assert\Choice(choices={"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"}, message="Type de sang invalide")
-     */
+    #[Assert\Choice(choices: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], message: 'Type de sang invalide')]
     private ?string $bloodType = null;
 
     //contrôle saisie de Location
     #[ORM\Column(length: 40)]
-    /**
-     * @Assert\NotBlank(message = "Please enter a value.")
-     * @Assert\Length(
-     *     min=5,
-     *     max=40,
-     *     minMessage="La description d'emplacement doit comporter au moins {{ limit }} caractères",
-     *     maxMessage="Le description d'emplacement ne peut pas dépasser {{ limit }} caractères"
-     * )
-     */
+    #[Assert\NotBlank(message: 'Please enter a value.')]
+    #[Assert\Length(
+        min: 5,
+        max: 40,
+        minMessage: 'Location description must be at least {{ limit }} characters',
+        maxMessage: 'Location description cannot exceed {{ limit }} characters'
+    )]
     private ?string $location = null;
 //contrôle saisie de date
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -59,9 +59,7 @@ class Emergency
 
     //contrôle saisie de status
     #[ORM\Column(length: 255)]
-    /**
-     * @Assert\Choice(choices={"pas commencé", "en cours", "complété"}, message="Statut de traitement invalide")
-     */
+    #[Assert\Choice(choices: ['not started', 'in progress', 'completed'], message: 'Invalid processing status')]
     private ?string $status = null;
 
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
