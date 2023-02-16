@@ -1,6 +1,13 @@
-<form method="post"  novalidate>
-{{ form_start(form) }}
-    {{ form_widget(form) }}
+<div class="container">
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+    <div class="form-group">
+    {{ form_label(form.title,'votre titre') }}
+ {{ form_widget(form.title,{'attr':{'class':'form-control'}}) }}
+        <div class="alert alert-danger">
+ {{ form_errors(form.title) }}
+        </div>
+    </div>
     <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
-</form>
+
+</div>

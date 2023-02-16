@@ -17,15 +17,7 @@ class Emergency
     private ?int $id = null;
 //controle saisie de titre
     #[ORM\Column(length: 30)]
-    /**
-     * @Assert\NotBlank(message = "Please enter a value.")
-     * @Assert\Length(
-     *     min=5,
-     *     max=30,
-     *     minMessage="Le nom doit comporter au moins {{ limit }} caractères",
-     *     maxMessage="Le nom ne peut pas dépasser {{ limit }} caractères"
-     * )
-     */
+  #[assert\NotBlank(message: 'is null')]
     private ?string $title = null;
 
 //contrôle saisie de description
