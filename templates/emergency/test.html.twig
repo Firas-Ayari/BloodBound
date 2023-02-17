@@ -1,230 +1,91 @@
-{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
 <div class="container-fluid">
    <div class="row">
       <div class="col-lg-12">
-         <div class="d-flex align-items-center user-member__title mb-30 mt-30">
-            <h4 class="text-capitalize">add user</h4>
+
+         <div class="breadcrumb-main application-ui mb-30">
+            <div class="breadcrumb-action d-flex">
+               <div class="d-flex align-items-center user-member__title me-sm-25 me-0">
+                  <h4 class="text-capitalize fw-500 breadcrumb-title">Emergency Details</h4>
+               </div>
+               <div class="btn-group-toggle" data-bs-toggle="buttons">
+                  <input type="checkbox" class="btn-check" id="btn-check-2-outlined">
+                  <label class="btn btn-outline-secondary" for="btn-check-2-outlined"> <img src="../img/svg/check.svg" alt="check" class="svg"> Mark as Complete</label>
+               </div>
+            </div>
+            <div class="d-flex text-capitalize">
+               <button type="button" class="breadcrumb-edit btn btn-white border-0 color-primary content-center fs-12 fw-500 radius-md">
+                  <img src="../img/svg/edit-3.svg" alt="edit-3" class="svg">edit</button>
+               <button type="button" class="breadcrumb-remove border-0 color-danger content-center bg-white fs-12 fw-500 ms-10 radius-md">
+                  <img class="svg" src="img/svg/trash-2.svg" alt="trash-2">remove</button>
+            </div>
          </div>
+
       </div>
    </div>
-   <div class="row">
-      <div class="col-lg-12">
-         <div class="user-info-tab w-100 bg-white global-shadow radius-xl mb-50">
-            <div class="ap-tab-wrapper border-bottom ">
-               <ul class="nav px-30 ap-tab-main text-capitalize" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                  <li class="nav-item">
-                     <a class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill" href="#v-pills-home" role="tab" aria-selected="true">
-                        <img src="img/svg/user.svg" alt="user" class="svg">personal info</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill" href="#v-pills-profile" role="tab" aria-selected="false">
-                        <img src="img/svg/briefcase.svg" alt="briefcase" class="svg">work info</a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" id="v-pills-messages-tab" data-bs-toggle="pill" href="#v-pills-messages" role="tab" aria-selected="false">
-                        <img src="img/svg/share-2.svg" alt="share-2" class="svg">Social</a>
-                  </li>
-               </ul>
-            </div>
-            <div class="tab-content" id="v-pills-tabContent">
-               <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
-                  <div class="row justify-content-center">
-                     <div class="col-xxl-4 col-10">
-                        <div class="mt-sm-40 mb-sm-50 mt-20 mb-20">
-                           <div class="user-tab-info-title mb-sm-40 mb-20 text-capitalize">
-                              <h5 class="fw-500">Personal Information</h5>
-                           </div>
-                           <div class="account-profile d-flex align-items-center mb-4 ">
-                              <div class="ap-img pro_img_wrapper">
-                                 <input id="file-upload" type="file" name="fileUpload" class="d-none">
-                                 <!-- Profile picture image-->
-                                 <label for="file-upload">
-                                    <img class="ap-img__main rounded-circle wh-120 bg-lighter d-flex" src="img/author/profile.png" alt="profile">
-                                    <span class="cross" id="remove_pro_pic">
-                                                <img src="img/svg/camera.svg" alt="camera" class="svg">
-                                             </span>
-                                 </label>
-                              </div>
-                              <div class="account-profile__title">
-                                 <h6 class="fs-15 ms-20 fw-500 text-capitalize">profile photo</h6>
-                              </div>
-                           </div>
-                           <div class="edit-profile__body">
-                              <form>
-                                 <div class="form-group mb-25">
-                                    <label for="name1"></label>
-                                    {{ form_label(form.title, 'Title') }}
-                                    {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.title) }}
-                                 </div>
-                                 <div class="form-group mb-25">
-                                    <label for="name1"></label>
-                                    {{ form_label(form.description, 'Description') }}
-                                    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.description) }}
-                                 </div>
-                                 <div class="form-group mb-25">
-                                    <label for="name1"></label>
-                                    {{ form_label(form.bloodType, 'Your Blood Type is') }}
-                                    {{ form_widget(form.bloodType, {'attr': {'class': 'form-control'}}) }}
+   <!-- Tab Menu End -->
+   <div class="projects-tab-content mb-30">
+      <div class="row">
+         <div class="col-xxl-3 col-lg-4 mb-25">
+            <div class="progress-box px-25 pt-25 pb-10 bg-success radius-xl">
 
-                                    {{ form_errors(form.bloodType) }}
-                                 </div>
-                                 <div class="form-group mb-25">
-                                    <label for="name1"></label>
-                                    {{ form_label(form.location, 'Add your Location') }}
-                                    {{ form_widget(form.location, {'attr': {'class': 'form-control'}}) }}
+               <div class="d-flex justify-content-between mb-3">
+                  <h6 class="text-white fw-500 fs-16 text-capitalize">  {{ emergency.status }}</h6>
 
-                                    {{ form_errors(form.location) }}
-                                 </div>
-                                 <div class="form-group mb-25">
-                                    <label for="name1"></label>
-                                    {{ form_label(form.deadline, 'Create your Deadline') }}
-                                    {{ form_widget(form.deadline, {'attr': {'class': 'form-control'}}) }}
+                  <span class="progress-percentage text-white fw-500 fs-16 text-capitalize">64%</span>
 
-                                    {{ form_errors(form.deadline) }}
-                                 </div>
-                                 <div class="form-group mb-25">
-                                    <label for="name1"></label>
-                                    {{ form_label(form.status, 'Choose your Status') }}
-                                    {{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.status) }}
-                                 </div>
-                                 <div class="form-group mb-25">
-                                    <label for="name1"></label>
-                                    {{ form_label(form.createdAt) }}
-                                    {{ form_widget(form.createdAt, {'attr': {'class': 'form-control'}}) }}
-                                    {{ form_errors(form.createdAt) }}
-                                 </div>
-                                 <div class="button-group d-flex pt-sm-25 justify-content-md-end justify-content-start ">
-
-
-                                    <button class="btn btn-light btn-default btn-squared fw-400 text-capitalize radius-md btn-sm">cancel
-                                    </button>
-
-
-
-
-
-
-
-                                    <button class="btn btn-primary btn-default btn-squared text-capitalize radius-md shadow2 btn-sm">Save &amp; Next
-                                    </button>
-
-
-
-
-
-                                 </div>
-                              </form>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
                </div>
-               <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
-                  <div class="row justify-content-center">
-                     <div class="col-xxl-4 col-10">
-                        <div class="user-social-profile mt-40 mb-50">
-                           <div class="user-tab-info-title mb-40 text-capitalize">
-                              <h5>social profiles</h5>
-                           </div>
-                           <div class="edit-profile__body">
-                              <form>
-                                 <div class=" mb-30">
-                                    <label for="socialUrl">facebook</label>
-                                    <div class="input-group flex-nowrap">
-                                       <div class="input-group-prepend">
-                                                   <span class="input-group-text bg-facebook border-facebook text-white wh-44 radius-xs justify-content-center" id="addon-wrapping1">
-                                                      <i class="lab la-facebook-f fs-18"></i>
-                                                   </span>
-                                       </div>
-                                       <input type="text" class="form-control form-control--social" placeholder="Url" aria-label="Username" aria-describedby="addon-wrapping1" id="socialUrl">
-                                    </div>
-                                 </div>
-                                 <div class=" mb-30">
-                                    <label for="twitterUrl">twitter</label>
-                                    <div class="input-group flex-nowrap">
-                                       <div class="input-group-prepend">
-                                                   <span class="input-group-text bg-twitter border-twitter text-white wh-44 radius-xs justify-content-center" id="addon-wrapping2">
-                                                      <i class="lab la-twitter fs-18"></i>
-                                                   </span>
-                                       </div>
-                                       <input type="text" class="form-control form-control--social" placeholder="@Username" aria-label="Username" aria-describedby="addon-wrapping2" id="twitterUrl">
-                                    </div>
-                                 </div>
-                                 <div class=" mb-30">
-                                    <label for="webUrl">Website</label>
-                                    <div class="input-group flex-nowrap">
-                                       <div class="input-group-prepend">
-                                                   <span class="input-group-text bg-ruby border-ruby text-white wh-44 radius-xs justify-content-center" id="addon-wrapping3">
-                                                      <i class="las la-basketball-ball fs-18"></i>
-                                                   </span>
-                                       </div>
-                                       <input type="text" class="form-control form-control--social" placeholder="Url" aria-label="Username" aria-describedby="addon-wrapping3" id="webUrl">
-                                    </div>
-                                 </div>
-                                 <div class=" mb-30">
-                                    <label for="instagramUrl">instagram</label>
-                                    <div class="input-group flex-nowrap">
-                                       <div class="input-group-prepend">
-                                                   <span class="input-group-text bg-instagram border-instagram text-white wh-44 radius-xs justify-content-center" id="addon-wrapping4">
-                                                      <i class="lab la-instagram fs-18"></i>
-                                                   </span>
-                                       </div>
-                                       <input type="text" class="form-control form-control--social" aria-describedby="addon-wrapping4" placeholder="Url" id="instagramUrl">
-                                    </div>
-                                 </div>
-                                 <div class=" mb-30">
-                                    <label for="githubUrl">github</label>
-                                    <div class="input-group flex-nowrap">
-                                       <div class="input-group-prepend">
-                                                   <span class="input-group-text bg-dark border-dark  text-white wh-44 radius-xs justify-content-center" id="addon-wrapping5">
-                                                      <i class="lab la-github fs-18"></i>
-                                                   </span>
-                                       </div>
-                                       <input type="text" class="form-control form-control--social" placeholder="Username" aria-label="Username" aria-describedby="addon-wrapping5" id="githubUrl">
-                                    </div>
-                                 </div>
-                                 <div class=" mb-30">
-                                    <label for="mediumUrl">medium</label>
-                                    <div class="input-group flex-nowrap">
-                                       <div class="input-group-prepend">
-                                                   <span class="input-group-text bg-dark border-dark text-white wh-44 radius-xs justify-content-center" id="addon-wrapping6">
-                                                      <i class="lab la-medium fs-18"></i>
-                                                   </span>
-                                       </div>
-                                       <input type="text" class="form-control form-control--social" placeholder="Username" aria-label="medium" aria-describedby="addon-wrapping6" id="mediumUrl">
-                                    </div>
-                                 </div>
-                                 <div class="button-group d-flex pt-20 justify-content-md-end justify-content-start">
+               <div class="progress-wrap d-flex align-items-center mb-15">
+                  <div class="progress progress-height">
+                     <div class="progress-bar bg-white" role="progressbar" style="width: 64%;" aria-valuenow="64" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
 
+               </div>
 
-                                    <button class="btn btn-light btn-default btn-squared fw-400 text-capitalize radius-md">back
-                                    </button>
+            </div>
+            <div class="card mt-25">
+               <div class="card-body">
+                  <div class="application-task d-flex align-items-center mb-25">
 
-
-
-
-
-
-
-                                    <button class="btn btn-primary btn-default btn-squared text-capitalize radius-md shadow2">Save profile
-                                    </button>
-
-
-
-
-
-                                 </div>
-                              </form>
-                           </div>
-                        </div>
+                     <div class="application-task-icon wh-60 bg-opacity-secondary content-center">
+                        <img class="svg wh-25 text-secondary" src="img/svg/at.svg" alt="img">
+                     </div>
+                     <div class="application-task-content">
+                        <h4>Blood Type</h4>
+                        <span class="text-light fs-14 mt-1 text-capitalize"> {{ emergency.bloodType }}<i class="bi bi-heart"></i></span>
                      </div>
                   </div>
                </div>
             </div>
          </div>
+         <div class="col-xxl-6 col-lg-8 mb-25">
+            <div class="card border-0 pb-md-50 pb-15">
+               <div class="card-header py-sm-20 py-3  px-sm-25 px-3 ">
+                  <h6>About Emergency</h6>
+               </div>
+               <div class="card-body">
+                  <div class="about-projects">
+                     <div class="about-projects__details">
+                        <p class="fs-15 mb-25">{{ emergency.description }}</p>
+                     </div>
+                     <ul class="d-flex text-capitalize">
+                        <li>
+                           <span class="color-light fs-13">Location</span>
+                           <p class="color-dark fs-14 mt-1 mb-0 fw-500"> {{ emergency.location }}</p>
+                        </li>
+                        <li>
+                           <span class="color-light fs-13">Created At</span>
+                           <p class="color-primary fs-14 mt-1 mb-0 fw-500"> {{ emergency.createdAt ? emergency.createdAt|date('Y-m-d H:i:s') : '' }}</p>
+                        </li>
+                        <li>
+                           <span class="color-light fs-13">Deadline</span>
+                           <p class="color-danger fs-14 mt-1 mb-0 fw-500">{{ emergency.deadline ? emergency.deadline|date('Y-m-d') : '' }}</p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+
       </div>
    </div>
 </div>
