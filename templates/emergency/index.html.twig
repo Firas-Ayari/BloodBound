@@ -113,15 +113,19 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="" class="edit">
+                                                <a href="{{ path('app_emergency_edit', {'id': emergency.id}) }}" class="edit">
                                                     <span class="iconify" data-icon="uil:edit"></span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="#" class="remove">
-                                                    <span class="iconify" data-icon="uil:trash-alt"></span>
+                                                <a class="remove" href="{{ path('app_emergency_delete', {'id': emergency.id}) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this item?')) document.getElementById('delete-form-{{ emergency.id }}').submit();">
+                                                    <form id="delete-form-{{ emergency.id }}" method="post" action="{{ path('app_emergency_delete', {'id': emergency.id}) }}">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ emergency.id) }}">
+                                                        <span class="iconify" data-icon="uil:trash-alt"></span>
+                                                    </form>
                                                 </a>
                                             </li>
+
                                         </ul>
                                     </td>
                                 </tr>
