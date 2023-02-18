@@ -68,8 +68,10 @@ class Emergency
     #[ManyToOne(targetEntity: User::class, inversedBy: 'emergencies')]
     #[JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private User|null $user = null;
+    //creer temps reel
     public function __construct() {
         $this->createdAt = new \DateTimeImmutable();
+        $this->deadline = new \DateTimeImmutable();
     }
 
 
