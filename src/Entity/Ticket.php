@@ -16,27 +16,21 @@ class Ticket
     private ?int $id = null;
 //controle saisie de price
     #[ORM\Column]
-    /**
-     * @Assert\Type(
-     *     type="float",
-     *     message="The value {{ value }} is not a valid {{ type }}."
-     * )
-     */
+    #[Assert\Type(
+        type: 'float',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
     private ?float $price = null;
 //controle saisie de stock
     #[ORM\Column]
-    /**
-     * @Assert\Type(
-     *     type="int",
-     *     message="The value {{ value }} is not a valid {{ type }}."
-     * )
-     */
+    #[Assert\Type(
+        type: 'int',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
     private ?int $stock = null;
 //controle saisie de status
     #[ORM\Column(length: 255)]
-    /**
-     * @Assert\Choice(choices={"stock terminé", "stock non terminé"}, message="Statut de ticket invalide")
-     */
+    #[Assert\Choice(choices: ['available', 'sold out'], message: 'Invalid ticket status.')]
     private ?string $status = null;
 
     #[ManyToOne(targetEntity: Event::class, inversedBy: 'tickets')]

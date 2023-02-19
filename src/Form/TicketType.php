@@ -6,6 +6,7 @@ use App\Entity\Ticket;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class TicketType extends AbstractType
 {
@@ -14,7 +15,14 @@ class TicketType extends AbstractType
         $builder
             ->add('price')
             ->add('stock')
-            ->add('status')
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    '' => '',
+                    'available' => 'available',
+                    'sold out' => 'sold out',
+
+                ]
+            ])
             ->add('event')
         ;
     }

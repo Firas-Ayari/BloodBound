@@ -6,6 +6,7 @@ use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class EventType extends AbstractType
 {
@@ -14,7 +15,14 @@ class EventType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('status')
+            ->add('status', ChoiceType::class, [
+                'choices' => [
+                    '' => '',
+                    'complet' => 'complet',
+                    'non complet' => 'non complet',
+
+                ]
+            ] )
             ->add('location')
             ->add('image')
             ->add('eventDate')

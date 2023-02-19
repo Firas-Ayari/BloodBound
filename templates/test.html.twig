@@ -155,86 +155,47 @@
                         <table class="table mb-0 table-borderless">
                            <thead>
                               <tr class="userDatatable-header">
-                                 <th>
-                                    <span class="userDatatable-title">Image</span>
-                                 </th>
-                                 <th>
+                                 
                                  <th>
                                     <span class="userDatatable-title">Id</span>
                                  </th>
                                  <th>
 
                                  <th>
-                                    <span class="userDatatable-title">Title</span>
+                                    <span class="userDatatable-title">Price</span>
                                  </th>
                                  <th>
-                                    <span class="userDatatable-title">Description</span>
+                                    <span class="userDatatable-title">Stock</span>
                                  </th>
                                  <th>
                                     <span class="userDatatable-title">Status</span>
                                  </th>
                                  <th>
-                                    <span class="userDatatable-title">Location</span>
-                                 </th>
-                                 <th>
-                                    <span class="userDatatable-title">EventDate</span>
-                                 </th>
-                                 <th>
-                                    <span class="userDatatable-title float-end">StartTime</span>
-                                 </th>
-                                  <th>
-                                    <span class="userDatatable-title">EndTime</span>
+                                    <span class="userDatatable-title">actions</span>
                                  </th>
                               </tr>
                            </thead>
                            <tbody>
- {% for event in events %}
+ {% for ticket in tickets %}
                               <tr>
                                  <td>
                                     <div class="userDatatable-content">
-                                       {{ event.image }}
-                                    </div>
-                                 </td>
-                                 <td>
-                                 
-                                    <div class="userDatatable-content">
-                                       {{ event.id }}
+                                       {{ ticket.id }}
                                     </div>
                                  </td>
                                  <td>
                                     <div class="userDatatable-content">
-                                       {{ event.title }}
+                                       {{ ticket.price }}
                                     </div>
                                  </td>
                                  <td>
                                     <div class="userDatatable-content">
-                                       {{ event.description }}
+                                       {{ ticket.stock }}
                                     </div>
                                  </td>
                                  <td>
                                     <div class="userDatatable-content">
-                                       {{ event.status }}
-                                    </div>
-                                 </td>
-                                  <td>
-                                    <div class="userDatatable-content">
-                                       {{ event.location }}
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <div class="userDatatable-content">
-                                       {{ event.eventDate ? event.eventDate|date('Y-m-d') : '' }}
-                                    </div>
-                                 </td>
-                                 <td>
-                                    <div class="userDatatable-content">
-                                       {{ event.startTime ? event.startTime|date('H:i:s') : '' }}
-                                    </div>
-                                 </td>
-                                 <td>
-
-                                    <div class="userDatatable-content">
-                                       {{ event.endTime ? event.endTime|date('H:i:s') : '' }}
+                                       {{ ticket.status }}
                                     </div>
                                  </td>
                                  <td>
@@ -263,9 +224,9 @@
                                  </td>
                               </tr>
 
-        {% else %}
+         {% else %}
             <tr>
-                <td colspan="10">no records found</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
 
