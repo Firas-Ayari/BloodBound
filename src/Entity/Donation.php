@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\DonationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,24 +16,48 @@ class Donation
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Please enter a value.')]
+    #[Assert\Length(
+        min: 20,
+        max: 255,
+        minMessage: 'The description must be at least {{ limit }} characters',
+        maxMessage: 'The description cannot exceed {{ limit }} characters'
+    )]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Please enter a value.')]
+    #[Assert\Length(
+        min: 5,
+        max: 40,
+        minMessage: 'Location description must be at least {{ limit }} characters',
+        maxMessage: 'Location description cannot exceed {{ limit }} characters'
+    )]
     private ?string $donLocation = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Email(
+        message: 'The email {{ value }} is not a valid email.',
+    )]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::BIGINT)]
+    #[Assert\Type(
+        type: 'integer',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
     private ?string $phoneNumber = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    #[Assert\GreaterThan('today')]
     private ?\DateTimeImmutable $donationDate = null;
 
     #[ManyToOne(targetEntity: Emergency::class, inversedBy: 'donations')]
     #[JoinColumn(name: 'emergency_id', referencedColumnName: 'id')]
     private Emergency|null $emergency = null;
-
+    public function __construct() {
+        $this->donationDate = new \DateTimeImmutable();
+    }
     public function getId(): ?int
     {
         return $this->id;

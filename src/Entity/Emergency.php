@@ -56,7 +56,7 @@ class Emergency
     private ?string $location = null;
 //contrôle saisie de date
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-
+    #[Assert\GreaterThan('today')]
     private ?\DateTimeInterface $deadline = null;
 
     //contrôle saisie de status
