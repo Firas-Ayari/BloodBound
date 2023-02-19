@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -68,10 +70,15 @@ class Emergency
     #[ManyToOne(targetEntity: User::class, inversedBy: 'emergencies')]
     #[JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private User|null $user = null;
+
+    #[ORM\OneToMany(mappedBy: 'emergency', targetEntity: Donation::class)]
+    private Collection $donations;
+
     //creer temps reel
     public function __construct() {
         $this->createdAt = new \DateTimeImmutable();
         $this->deadline = new \DateTimeImmutable();
+        $this->donations = new ArrayCollection();
     }
 
 
@@ -172,6 +179,36 @@ class Emergency
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Donation>
+     */
+    public function getDonations(): Collection
+    {
+        return $this->donations;
+    }
+
+    public function addDonation(Donation $donation): self
+    {
+        if (!$this->donations->contains($donation)) {
+            $this->donations->add($donation);
+            $donation->setEmergency($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDonation(Donation $donation): self
+    {
+        if ($this->donations->removeElement($donation)) {
+            // set the owning side to null (unless already changed)
+            if ($donation->getEmergency() === $this) {
+                $donation->setEmergency(null);
+            }
+        }
 
         return $this;
     }
