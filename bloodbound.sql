@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 15, 2023 at 01:35 AM
+-- Generation Time: Feb 19, 2023 at 12:57 PM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 8.1.10
 
@@ -71,19 +71,22 @@ CREATE TABLE `article_category` (
 CREATE TABLE `basket` (
   `id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
-  `total_number` int(11) NOT NULL,
-  `total_purchase` double NOT NULL
+  `total` double NOT NULL,
+  `created_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
+  `updated_at` datetime DEFAULT NULL COMMENT '(DC2Type:datetime_immutable)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `baskets_products`
+-- Table structure for table `cart_product`
 --
 
-CREATE TABLE `baskets_products` (
-  `product_id` int(11) NOT NULL,
-  `basket_id` int(11) NOT NULL
+CREATE TABLE `cart_product` (
+  `id` int(11) NOT NULL,
+  `basket_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -104,7 +107,8 @@ CREATE TABLE `doctrine_migration_versions` (
 
 INSERT INTO `doctrine_migration_versions` (`version`, `executed_at`, `execution_time`) VALUES
 ('DoctrineMigrations\\Version20230211144711', '2023-02-11 15:47:26', 450),
-('DoctrineMigrations\\Version20230214191114', '2023-02-14 20:12:04', 31);
+('DoctrineMigrations\\Version20230214191114', '2023-02-14 20:12:04', 31),
+('DoctrineMigrations\\Version20230219115613', '2023-02-19 12:56:42', 397);
 
 -- --------------------------------------------------------
 
@@ -212,7 +216,8 @@ CREATE TABLE `product` (
 CREATE TABLE `product_category` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -250,6 +255,13 @@ CREATE TABLE `user` (
   `created_at` datetime NOT NULL COMMENT '(DC2Type:datetime_immutable)',
   `updated_at` datetime DEFAULT NULL COMMENT '(DC2Type:datetime_immutable)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `email`, `roles`, `password`, `name`, `number`, `age`, `location`, `donation_status`, `blood_type`, `is_verified`, `created_at`, `updated_at`) VALUES
+(3, 'admin@gmail.com', '[\"ROLE_USER\"]', '$2y$13$qWGXrl4EbzXWjwDjBkJYveUuCIgdQpkU1aEOfehXxpjeNTzyKuxxS', '', '', 0, '', NULL, '', 1, '2023-02-15 09:57:44', NULL);
 
 -- --------------------------------------------------------
 
@@ -294,12 +306,12 @@ ALTER TABLE `basket`
   ADD UNIQUE KEY `UNIQ_2246507B8D9F6D38` (`order_id`);
 
 --
--- Indexes for table `baskets_products`
+-- Indexes for table `cart_product`
 --
-ALTER TABLE `baskets_products`
-  ADD PRIMARY KEY (`product_id`,`basket_id`),
-  ADD KEY `IDX_4EAC81BF4584665A` (`product_id`),
-  ADD KEY `IDX_4EAC81BF1BE1FB52` (`basket_id`);
+ALTER TABLE `cart_product`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `IDX_2890CCAA1BE1FB52` (`basket_id`),
+  ADD KEY `IDX_2890CCAA4584665A` (`product_id`);
 
 --
 -- Indexes for table `doctrine_migration_versions`
@@ -408,6 +420,12 @@ ALTER TABLE `basket`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `cart_product`
+--
+ALTER TABLE `cart_product`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `emergency`
 --
 ALTER TABLE `emergency`
@@ -459,7 +477,7 @@ ALTER TABLE `ticket`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
@@ -484,11 +502,11 @@ ALTER TABLE `basket`
   ADD CONSTRAINT `FK_2246507B8D9F6D38` FOREIGN KEY (`order_id`) REFERENCES `order` (`id`);
 
 --
--- Constraints for table `baskets_products`
+-- Constraints for table `cart_product`
 --
-ALTER TABLE `baskets_products`
-  ADD CONSTRAINT `FK_4EAC81BF1BE1FB52` FOREIGN KEY (`basket_id`) REFERENCES `basket` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `FK_4EAC81BF4584665A` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`) ON DELETE CASCADE;
+ALTER TABLE `cart_product`
+  ADD CONSTRAINT `FK_2890CCAA1BE1FB52` FOREIGN KEY (`basket_id`) REFERENCES `basket` (`id`),
+  ADD CONSTRAINT `FK_2890CCAA4584665A` FOREIGN KEY (`product_id`) REFERENCES `product` (`id`);
 
 --
 -- Constraints for table `emergency`

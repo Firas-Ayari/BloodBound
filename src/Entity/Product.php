@@ -41,13 +41,12 @@ class Product
     #[JoinColumn(name: 'productCategory_id', referencedColumnName: 'id')]
     private ProductCategory|null $productCategory = null;
 
-    #[ManyToMany(targetEntity: Basket::class, inversedBy: 'products')]
-    #[JoinTable(name: 'baskets_products')]
-    private Collection $baskets;
+    #[ORM\OneToMany(mappedBy: 'product', targetEntity: CartProduct::class)]
+    private Collection $cartProducts;
 
     public function __construct()
     {
-        $this->baskets = new ArrayCollection();
+        $this->cartProducts = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,26 +139,33 @@ class Product
     }
 
     /**
-     * @return Collection<int, Basket>
+     * @return Collection<int, CartProduct>
      */
-    public function getBaskets(): Collection
+    public function getCartProducts(): Collection
     {
-        return $this->baskets;
+        return $this->cartProducts;
     }
 
-    public function addBasket(Basket $basket): self
+    public function addCartProduct(CartProduct $cartProduct): self
     {
-        if (!$this->baskets->contains($basket)) {
-            $this->baskets->add($basket);
+        if (!$this->cartProducts->contains($cartProduct)) {
+            $this->cartProducts->add($cartProduct);
+            $cartProduct->setProduct($this);
         }
 
         return $this;
     }
 
-    public function removeBasket(Basket $basket): self
+    public function removeCartProduct(CartProduct $cartProduct): self
     {
-        $this->baskets->removeElement($basket);
+        if ($this->cartProducts->removeElement($cartProduct)) {
+            // set the owning side to null (unless already changed)
+            if ($cartProduct->getProduct() === $this) {
+                $cartProduct->setProduct(null);
+            }
+        }
 
         return $this;
     }
+    
 }

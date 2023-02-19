@@ -32,24 +32,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Assert\NotBlank(message= "Please enter your name")
+     * @Assert\length(
+     * min=5,
+     * minMessage="your name at least 5 caracteres")
+     */
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Assert\NotBlank(message= "Please enter your number")
+     * @Assert\length(
+     * min=8,
+     * minMessage="your number  at least 8 caracteres")
+     */
     private ?string $number = null;
 
     #[ORM\Column]
+     /**
+     * @Assert\NotBlank(message= "Please enter your number")
+      * @Assert\LessThan(5)
+     */
     private ?int $age = null;
 
     #[ORM\Column(length: 255)]
+
+        /**
+     * @Assert\NotBlank(message= "Please enter your Location")
+     * @Assert\length(
+     * min=5,
+     * minMessage="your Location  at least 5 caracteres")
+     */
     private ?string $location = null;
 
     #[ORM\Column(length: 255, nullable: true)]
+    /**
+     * @Assert\Choice({"panding", "avaible"})
+     */
     private ?string $donationStatus = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Assert\Choice({"A+", "A-", "B+"})
+     */
     private ?string $bloodType = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Event::class)]
