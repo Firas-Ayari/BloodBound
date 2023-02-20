@@ -78,6 +78,7 @@ class Event
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Ticket::class)]
     private Collection $tickets;
 
+    
     public function __construct()
     {
         $this->eventDate = new \DateTimeImmutable();

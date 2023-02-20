@@ -3,10 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Ticket;
+use App\Entity\Event;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class TicketType extends AbstractType
 {
@@ -23,7 +25,10 @@ class TicketType extends AbstractType
 
                 ]
             ])
-            ->add('event')
+            ->add('event', EntityType::class,[
+                "class" => Event::class,
+                "choice_label" => "title"
+        ])
         ;
     }
 
