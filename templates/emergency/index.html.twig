@@ -9,18 +9,19 @@
                 <div class="col-lg-12">
 
                     <div class="breadcrumb-main">
-                        <h4 class="text-capitalize breadcrumb-title">Emergencies</h4>
+                        <h4 class="text-capitalize breadcrumb-title">Emergencies List</h4>
                         <div class="breadcrumb-action justify-content-center flex-wrap">
                             <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item active" aria-current="page">Emergencies</li>
-                                </ol>
                             </nav>
+                        </div>
+                        <div class="action-btn">
+                            <a href="{{ path('app_emergency_new') }}" class="btn px-15 btn-primary" > <i class="las la-plus fs-16"></i>Create new Emergency</a>
                         </div>
                     </div>
 
                 </div>
                 {% for emergency in emergencies %}
+
                     <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
                         <!-- Profile Acoount -->
                         <div class="card">
@@ -36,7 +37,7 @@
                                         <p class="ap-nameAddress__subTitle  fs-14 pt-1 m-0 ">{{ emergency.description }}</p>
                                     </div>
                                     <div class="ap-button account-profile-cards__button button-group d-flex justify-content-center flex-wrap pt-20">
-                                        <a href="{{ url('app_emergency_show', {'id': emergency.id}) }}" class="border text-capitalize px-25 color-gray transparent radius-md">
+                                        <a href="{{ url('app_donation_new', {'id': emergency.id}) }}" class="border text-capitalize px-25 color-gray transparent radius-md">
                                             <i class="fa-solid fa-hand-heart">Donate</i>
                                         </a>
                                         <a href="{{ url('app_emergency_show', {'id': emergency.id}) }}" class="border text-capitalize px-25 color-gray transparent radius-md">
@@ -64,7 +65,6 @@
                         <!-- Profile Acoount End -->
                     </div>
                 {% endfor %}
-
 
 
 
