@@ -6,6 +6,8 @@ use App\Repository\DonationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\ManyToOne;
 
 #[ORM\Entity(repositoryClass: DonationRepository::class)]
 class Donation
@@ -55,6 +57,7 @@ class Donation
     #[ManyToOne(targetEntity: Emergency::class, inversedBy: 'donations')]
     #[JoinColumn(name: 'emergency_id', referencedColumnName: 'id')]
     private Emergency|null $emergency = null;
+
     public function __construct() {
         $this->donationDate = new \DateTimeImmutable();
     }
