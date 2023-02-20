@@ -12,20 +12,11 @@
                         <div class="d-flex align-items-center user-member__title me-sm-25 me-0">
                             <h4 class="text-capitalize fw-500 breadcrumb-title">Emergency Details</h4>
                         </div>
-                        <div class="btn-group-toggle" data-bs-toggle="buttons">
-                            <input type="checkbox" class="btn-check" id="btn-check-2-outlined">
-                            <label class="btn btn-outline-secondary" for="btn-check-2-outlined"> <img src="../img/svg/check.svg" alt="check" class="svg"> Mark as Complete</label>
-                        </div>
                     </div>
                     <div class="d-flex text-capitalize">
                         <form method="post" action="{{ path('app_emergency_edit', {'id': emergency.id}) }}">
                             <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ emergency.id) }}">
                             <button class="breadcrumb-edit btn btn-white border-0 color-primary content-center fs-12 fw-500 radius-md"> <img src="../img/svg/edit-3.svg" alt="edit-3" class="svg">edit</button></button>
-                        </form>
-                        <form method="post" action="{{ path('app_emergency_delete', {'id': emergency.id}) }}"
-                              onsubmit="return confirm ('Are you sure you want to delete this item?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ emergency.id) }}">
-                            <button class="breadcrumb-remove border-0 color-danger content-center bg-white fs-12 fw-500 ms-10 radius-md">Delete</button>
                         </form>
                     </div>
                 </div>

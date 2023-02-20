@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\DonationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
@@ -38,15 +38,16 @@ class Donation
     private ?string $donLocation = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Please enter your email')]
     #[Assert\Email(
         message: 'The email {{ value }} is not a valid email.',
     )]
     private ?string $email = null;
 
     #[ORM\Column(type: Types::BIGINT)]
-    #[Assert\Type(
-        type: 'integer',
-        message: 'The value {{ value }} is not a valid {{ type }}.',
+    #[Assert\Regex(
+        pattern:"/^\d{8}$/",
+        message:"The phone number '{{ value }}' is not a valid phone number."
     )]
     private ?string $phoneNumber = null;
 

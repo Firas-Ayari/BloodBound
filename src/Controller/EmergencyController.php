@@ -13,6 +13,13 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/emergency')]
 class EmergencyController extends AbstractController
 {
+    #[Route('/admin', name: 'app_emergency_indexAdmin', methods: ['GET'])]
+    public function indexAdmin(EmergencyRepository $emergencyRepository): Response
+    {
+        return $this->render('admin/emergency/index.html.twig', [
+            'emergencies' => $emergencyRepository->findAll(),
+        ]);
+    }
     #[Route('/', name: 'app_emergency_index', methods: ['GET'])]
     public function index(EmergencyRepository $emergencyRepository): Response
     {

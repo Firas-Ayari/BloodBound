@@ -1,11 +1,13 @@
 {% extends 'base.html.twig' %}
-
 {% block title %}New Donation{% endblock %}
 
 {% block body %}
-    <h1>Create new Donation</h1>
-
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="d-flex align-items-center user-member__title mb-30 mt-30">
+                <h4 class="text-capitalize">Add Donation</h4>
+            </div>
+        </div>
+    </div>
     {{ include('donation/_form.html.twig') }}
-
-    <a href="{{ path('app_donation_index') }}">back to list</a>
 {% endblock %}
