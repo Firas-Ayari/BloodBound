@@ -7,6 +7,12 @@
         .A {
             display: none;
         }
+        .gradient-text {
+            background: linear-gradient(to right, #660000, #330000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
     </style>
 
     {% block css %}
@@ -72,14 +78,6 @@
 </head>
 
 <body class="layout-light side-menu">
-
-
-<div class="mobile-search">
-    <form action="/" class="search-form">
-        <img src="{{ asset('img/svg/search.svg') }}" alt="search" class="svg">
-        <input class="form-control me-sm-2 box-shadow-none" type="search" placeholder="Search..." aria-label="Search">
-    </form>
-</div>
 <header id="header" class="header fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
@@ -109,7 +107,7 @@
 
     </div>
 </header>
-    <div class="contents" >
+<div class="contents" style="background-color: white; padding-left: 80px; padding-right: 80px;">
         {% block body %}
         {% endblock %}
     </div>
@@ -184,8 +182,6 @@
         </div>
     </div>
 </footer>
-<div class="overlay-dark-sidebar"></div>
-<div class="customizer-overlay"></div>
 
 {% block js %}
     <!-- inject:js-->

@@ -3,22 +3,23 @@
 {% block title %}Emergencies List{% endblock %}
 
 {% block body %}
-    <div class="blog-page2">
         <div class="container-fluid">
             <div class="row">
                 <div class="col-lg-12">
 
                     <div class="breadcrumb-main">
-                        <h4 class="text-capitalize breadcrumb-title">Emergencies List</h4>
-                        <div class="breadcrumb-action justify-content-center flex-wrap">
-                            <nav aria-label="breadcrumb">
-                            </nav>
-                        </div>
+                        <h1 class="text-capitalize fw-500 breadcrumb-title gradient-text"></h1>
                         <div class="action-btn">
-                            <a href="{{ path('app_emergency_new') }}" class="btn px-15 btn-primary" > <i class="las la-plus fs-16"></i>Create new Emergency</a>
+                            <a href="{{ path('app_emergency_new') }}" class="btn px-15 " style="background-color: darkred; color: white;">
+                                <i class="las la-plus fs-16"></i>Create new Emergency
+                            </a>
                         </div>
-                    </div>
 
+                    </div>
+                    <h1 class="text-capitalize fw-500 breadcrumb-title gradient-text"><strong>Emergencies list</strong></h1>
+                    <br>
+                    <br>
+                    <br>
                 </div>
                 {% for emergency in emergencies %}
 
@@ -40,6 +41,7 @@
                                         <a href="{{ url('app_donation_new', {'id': emergency.id}) }}" class="border text-capitalize px-25 color-gray transparent radius-md">
                                             <i class="fa-solid fa-hand-heart">Donate</i>
                                         </a>
+
                                         <a href="{{ url('app_emergency_show', {'id': emergency.id}) }}" class="border text-capitalize px-25 color-gray transparent radius-md">
                                             <i class="fa-regular fa-eye">Show</i>
                                         </a>
@@ -69,35 +71,10 @@
                 <div class="col-12">
                     <div class="d-flex justify-content-end mt-1 mb-50">
 
-                        <nav class="dm-page ">
-                            <ul class="dm-pagination d-flex">
-                                <li class="dm-pagination__item">
-                                    <a href="#" class="dm-pagination__link pagination-control"><span class="la la-angle-left"></span></a>
-                                    <a href="#" class="dm-pagination__link"><span class="page-number">1</span></a>
-                                    <a href="#" class="dm-pagination__link active"><span class="page-number">2</span></a>
-                                    <a href="#" class="dm-pagination__link"><span class="page-number">3</span></a>
-                                    <a href="#" class="dm-pagination__link pagination-control"><span class="page-number">...</span></a>
-                                    <a href="#" class="dm-pagination__link"><span class="page-number">12</span></a>
-                                    <a href="#" class="dm-pagination__link pagination-control"><span class="la la-angle-right"></span></a>
-                                    <a href="#" class="dm-pagination__option">
-                                    </a>
-                                </li>
-                                <li class="dm-pagination__item">
-                                    <div class="paging-option">
-                                        <select name="page-number" class="page-selection">
-                                            <option value="20">20/page</option>
-                                            <option value="40">40/page</option>
-                                            <option value="60">60/page</option>
-                                        </select>
-                                    </div>
-                                </li>
-                            </ul>
-                        </nav>
 
 
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 {% endblock %}
