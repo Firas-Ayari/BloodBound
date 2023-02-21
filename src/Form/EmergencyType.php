@@ -3,6 +3,8 @@
 namespace App\Form;
 
 use App\Entity\Emergency;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -42,7 +44,10 @@ class EmergencyType extends AbstractType
                     ],
                 ])
             ->add('createdAt')
-            ->add('user')
+            ->add('user', EntityType::class,[
+                "class" => User::class,
+                "choice_label" => "email"
+            ])
         ;
     }
 
