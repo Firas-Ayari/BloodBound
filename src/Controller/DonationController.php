@@ -13,10 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/donation')]
 class DonationController extends AbstractController
 {
-    #[Route('/', name: 'app_donation_index', methods: ['GET'])]
-    public function index(DonationRepository $donationRepository): Response
+    #[Route('/', name: 'app_donation_indexAdmin', methods: ['GET'])]
+    public function indexAdmin(DonationRepository $donationRepository): Response
     {
-        return $this->render('donation/index.html.twig', [
+        return $this->render('BackOffice/donation/index.html.twig', [
             'donations' => $donationRepository->findAll(),
         ]);
     }
@@ -31,10 +31,10 @@ class DonationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $donationRepository->save($donation, true);
 
-            return $this->redirectToRoute('app_donation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_emergency_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('donation/new.html.twig', [
+        return $this->renderForm('FrontOffice/donation/new.html.twig', [
             'donation' => $donation,
             'form' => $form,
         ]);

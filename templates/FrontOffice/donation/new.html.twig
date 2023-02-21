@@ -1,15 +1,13 @@
-{% extends 'admin.html.twig' %}
-
-{% block title %}Edit Emergency{% endblock %}
+{% extends 'base.html.twig' %}
+{% block title %}New Donation{% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col-lg-12">
             <div class="d-flex align-items-center user-member__title mb-30 mt-30">
-                <h4 class="text-capitalize">Edit Emergency</h4>
+                <h4 class="text-capitalize">Add Donation</h4>
             </div>
         </div>
     </div>
-    {{ include('emergency/_formEdit.html.twig') }}
-
+    {{ include('FrontOffice/donation/_form.html.twig') }}
 {% endblock %}

@@ -16,14 +16,14 @@ class EmergencyController extends AbstractController
     #[Route('/admin', name: 'app_emergency_indexAdmin', methods: ['GET'])]
     public function indexAdmin(EmergencyRepository $emergencyRepository): Response
     {
-        return $this->render('admin/emergency/index.html.twig', [
+        return $this->render('BackOffice/emergency/index.html.twig', [
             'emergencies' => $emergencyRepository->findAll(),
         ]);
     }
     #[Route('/', name: 'app_emergency_index', methods: ['GET'])]
     public function index(EmergencyRepository $emergencyRepository): Response
     {
-        return $this->render('emergency/index.html.twig', [
+        return $this->render('FrontOffice/emergency/index.html.twig', [
             'emergencies' => $emergencyRepository->findAll(),
         ]);
     }
@@ -41,16 +41,17 @@ class EmergencyController extends AbstractController
             return $this->redirectToRoute('app_emergency_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('emergency/new.html.twig', [
+        return $this->renderForm('FrontOffice/emergency/new.html.twig', [
             'emergency' => $emergency,
             'form' => $form,
         ]);
     }
 
+
     #[Route('/{id}', name: 'app_emergency_show', methods: ['GET'])]
     public function show(Emergency $emergency): Response
     {
-        return $this->render('emergency/show.html.twig', [
+        return $this->render('FrontOffice/emergency/show.html.twig', [
             'emergency' => $emergency,
         ]);
     }
@@ -67,7 +68,24 @@ class EmergencyController extends AbstractController
             return $this->redirectToRoute('app_emergency_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('emergency/edit.html.twig', [
+        return $this->renderForm('FrontOffice/emergency/edit.html.twig', [
+            'emergency' => $emergency,
+            'form' => $form,
+        ]);
+    }
+    #[Route('/admin/{id}/edit', name: 'app_emergency_editAdmin', methods: ['GET', 'POST'])]
+    public function editAdmin(Request $request, Emergency $emergency, EmergencyRepository $emergencyRepository): Response
+    {
+        $form = $this->createForm(EmergencyType::class, $emergency);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $emergencyRepository->save($emergency, true);
+
+            return $this->redirectToRoute('app_emergency_indexAdmin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('BackOffice/emergency/edit.html.twig', [
             'emergency' => $emergency,
             'form' => $form,
         ]);
@@ -80,6 +98,6 @@ class EmergencyController extends AbstractController
             $emergencyRepository->remove($emergency, true);
         }
 
-        return $this->redirectToRoute('app_emergency_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_emergency_indexAdmin', [], Response::HTTP_SEE_OTHER);
     }
 }

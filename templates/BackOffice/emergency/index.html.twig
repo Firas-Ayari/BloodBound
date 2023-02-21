@@ -19,9 +19,6 @@
                         </form>
 
                     </div>
-                    <div class="action-btn">
-                        <a href="{{ path('app_emergency_new') }}" class="btn px-15 btn-primary" > <i class="las la-plus fs-16"></i>Create new Emergency</a>
-                    </div>
                 </div>
 
             </div>
@@ -113,7 +110,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{{ path('app_emergency_edit', {'id': emergency.id}) }}" class="edit">
+                                                <a href="{{ path('app_emergency_editAdmin', {'id': emergency.id}) }}" class="edit">
                                                     <span class="iconify" data-icon="uil:edit"></span>
                                                 </a>
                                             </li>
