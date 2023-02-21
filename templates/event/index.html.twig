@@ -23,6 +23,7 @@
 
                   </div>
                    {% for event in events %}
+                    
                   <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
                  
                      <div class="blog-card blog-card--2">
@@ -67,13 +68,19 @@
                                  </ul>
                               </div>
                            </div>
+                            <div class="ap-button account-profile-cards__button button-group d-flex justify-content-center flex-wrap pt-20">
+                                        <a href="{{ url('app_ticket_show', {'id': event.id}) }}" class="border text-capitalize px-25 color-gray transparent radius-md">
+                                            <i class="fa-solid fa-hand-heart">See More</i>
+                                        </a>                                              
+                                    </div>
+
                         </div>
                        
                      </div>
-                     
-
+                    
                   </div>
                    {% endfor %}
+                  
                
                  
                  
