@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Ticket;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,29 +18,57 @@ class Event
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
+//controle saisie de titre
+    #[ORM\Column(length: 30)]
+    #[assert\NotBlank(message: 'is null,Please enter an event title.')]
+    #[Assert\Length(
+        min: 5,
+        max: 30,
+        minMessage: 'The title must be at least {{ limit }} characters',
+        maxMessage: 'The title cannot exceed {{ limit }} characters'
+    )]
     private ?string $title = null;
-
+//controle saisie de description
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Please enter an event description.')]
+    #[Assert\Length(
+        min: 20,
+        max: 255,
+        minMessage: 'The description must be at least {{ limit }} characters',
+        maxMessage: 'The description cannot exceed {{ limit }} characters'
+    )]
     private ?string $description = null;
-
+//controle saisie de statut
     #[ORM\Column(length: 255)]
+    #[Assert\Choice(choices: ['complet', 'non complet'], message: 'Invalid event status.')]
     private ?string $status = null;
-
-    #[ORM\Column(length: 255)]
+    
+//contrôle saisie de Location
+    #[ORM\Column(length: 40)] //NotBlank !!!! un seul champs
+    #[Assert\NotBlank(message: 'Please enter a location.')]
+    #[Assert\Length(
+        min: 5,
+        max: 40,
+        minMessage: 'Location description must be at least {{ limit }} characters',
+        maxMessage: 'Location description cannot exceed {{ limit }} characters'
+    )]
     private ?string $location = null;
-
-    #[ORM\Column(length: 255)]
+//contrôle saisie de image
+    #[ORM\Column(length: 255)] //NotBlank !!!!
+    #[Assert\NotBlank(message: 'Please enter an image.')]
     private ?string $image = null;
+//contrôle saisie de date event 
+#[ORM\Column(type: Types::DATE_MUTABLE)]
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\GreaterThan('today')]  
     private ?\DateTimeInterface $eventDate = null;
-
+//contrôle saisie de debut heure
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Assert\NotBlank(message: 'Please enter start time.')]
     private ?\DateTimeInterface $startTime = null;
-
+//contrôle saisie de fin heure
     #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[Assert\NotBlank(message: 'Please enter end time.')]
     private ?\DateTimeInterface $endTime = null;
 
     #[ManyToOne(targetEntity: User::class, inversedBy: 'events')]
@@ -50,8 +78,10 @@ class Event
     #[ORM\OneToMany(mappedBy: 'event', targetEntity: Ticket::class)]
     private Collection $tickets;
 
+    
     public function __construct()
     {
+        $this->eventDate = new \DateTimeImmutable();
         $this->tickets = new ArrayCollection();
     }
 

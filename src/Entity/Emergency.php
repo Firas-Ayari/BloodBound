@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,61 +18,69 @@ class Emergency
     #[ORM\Column]
     private ?int $id = null;
 //controle saisie de titre
-    #[ORM\Column(length: 20)]
-    /**
-     * @Assert\NotBlank(message="Le Titre est obligatoire")
-     * @Assert\Length(max=20, maxMessage="Le Titre ne peut pas dépasser 20 caractères")
-     */
+    #[ORM\Column(length: 30)]
+  #[assert\NotBlank(message: 'is null,Please enter a value.')]
+    #[Assert\Length(
+        min: 5,
+        max: 255,
+        minMessage: 'The title must be at least {{ limit }} characters',
+        maxMessage: 'The title cannot exceed {{ limit }} characters'
+    )]
     private ?string $title = null;
 
 //contrôle saisie de description
     #[ORM\Column(length: 255)]
-    /**
-     * @Assert\NotBlank(message="La description est obligatoire")
-     *  min = 20,
-     *     max = 255,
-     *     minMessage = "La description minimum est 20 caractères",
-     *     maxMessage = "La description ne peut pas dépasser 255 caractères"
-     */
+    #[Assert\NotBlank(message: 'Please enter a value.')]
+    #[Assert\Length(
+        min: 20,
+        max: 255,
+        minMessage: 'The description must be at least {{ limit }} characters',
+        maxMessage: 'The description cannot exceed {{ limit }} characters'
+    )]
     private ?string $description = null;
 
     //contrôle saisie de type de sang
     #[ORM\Column(length: 5)]
-    /**
-     * @Assert\Choice(choices={"A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"}, message="Type de sang invalide)
-     */
+    #[Assert\Choice(choices: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], message: 'Invalid type of blood ')]
     private ?string $bloodType = null;
 
     //contrôle saisie de Location
     #[ORM\Column(length: 40)]
-    /**
-     * @Assert\NotBlank(message="La description est obligatoire")
-     *  min = 5,
-     *     max = 40,
-     *     minMessage = "Emplacement description minimum est 5 caractères",
-     *     maxMessage = "Emplacement description ne peut pas dépasser 40 caractères"
-     */
+    #[Assert\NotBlank(message: 'Please enter a value.')]
+    #[Assert\Length(
+        min: 5,
+        max: 40,
+        minMessage: 'Location description must be at least {{ limit }} characters',
+        maxMessage: 'Location description cannot exceed {{ limit }} characters'
+    )]
     private ?string $location = null;
 //contrôle saisie de date
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    /**
-     * @Assert\Date(message="La date limite doit être une date valide")
-     */
+    #[Assert\GreaterThan('today')]
     private ?\DateTimeInterface $deadline = null;
 
     //contrôle saisie de status
     #[ORM\Column(length: 255)]
-    /**
-     * @Assert\Choice(choices={"pas commencé", "en cours", "complété"}, message="Statut de traitement invalide")
-     */
+    #[Assert\Choice(choices: ['not started', 'in progress', 'completed'], message: 'Invalid processing status')]
     private ?string $status = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private \DateTimeImmutable $createdAt;
 
     #[ManyToOne(targetEntity: User::class, inversedBy: 'emergencies')]
     #[JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private User|null $user = null;
+
+    #[ORM\OneToMany(mappedBy: 'emergency', targetEntity: Donation::class)]
+    private Collection $donations;
+
+    //creer temps reel
+    public function __construct() {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->deadline = new \DateTimeImmutable();
+        $this->donations = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -169,6 +179,36 @@ class Emergency
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Donation>
+     */
+    public function getDonations(): Collection
+    {
+        return $this->donations;
+    }
+
+    public function addDonation(Donation $donation): self
+    {
+        if (!$this->donations->contains($donation)) {
+            $this->donations->add($donation);
+            $donation->setEmergency($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDonation(Donation $donation): self
+    {
+        if ($this->donations->removeElement($donation)) {
+            // set the owning side to null (unless already changed)
+            if ($donation->getEmergency() === $this) {
+                $donation->setEmergency(null);
+            }
+        }
 
         return $this;
     }

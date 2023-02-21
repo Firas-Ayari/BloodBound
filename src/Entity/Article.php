@@ -2,10 +2,16 @@
 
 namespace App\Entity;
 
+use Assert\NotBlank;
+use Doctrine\DBAL\Types\Types;
+use App\Entity\ArticleCategory;
 use Doctrine\ORM\Mapping as ORM;
+use App\Model\TimestampedInterface;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
 use App\Repository\ArticleRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: ArticleRepository::class)]
 class Article
@@ -16,8 +22,25 @@ class Article
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Assert\NotBlank(message = "Please enter a title.")
+     * @Assert\Length(
+     *     min=5,
+     *     max=30,
+     *     minMessage="Le nom doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="Le nom ne peut pas dépasser {{ limit }} caractères"
+     * )
+     */
     private ?string $title = null;
-
+/**
+     * @Assert\NotBlank(message = "Please enter a featured Text.")
+     * @Assert\Length(
+     *     min=5,
+     *     max=30,
+     *     minMessage="Le nom doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="Le nom ne peut pas dépasser {{ limit }} caractères"
+     * )
+     */
     #[ORM\Column(length: 255)]
     private ?string $featuredText = null;
 
@@ -25,18 +48,30 @@ class Article
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
+    /**
+     * @Assert\NotBlank(message = "Please enter a content.")
+     * @Assert\Length(
+     *     min=5,
+     *     max=30,
+     *     minMessage="Le nom doit comporter au moins {{ limit }} caractères",
+     *     maxMessage="Le nom ne peut pas dépasser {{ limit }} caractères"
+     * )
+     */
     private ?string $content = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private \DateTimeInterface $createdAt;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $updatedAt = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private \DateTimeInterface $updatedAt;
 
     #[ManyToOne(targetEntity: ArticleCategory::class, inversedBy: 'articles')]
-    #[JoinColumn(name: 'articleCategory_id', referencedColumnName: 'id')]
+    #[JoinColumn(name: 'articleCategory_id', referencedColumnName: 'id', onDelete:"CASCADE")]
     private ArticleCategory|null $articleCategory = null;
-
+    public function __construct(){
+        $this->createdAt=new \DateTimeImmutable();
+        $this->updatedAt=new \DateTimeImmutable();
+    }
     public function getId(): ?int
     {
         return $this->id;
@@ -89,27 +124,25 @@ class Article
 
         return $this;
     }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
     }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
-        $this->updatedAt = $updatedAt;
+        $this->updatedAt = new \DateTimeImmutable();
 
         return $this;
     }
@@ -125,4 +158,6 @@ class Article
 
         return $this;
     }
+    
+    
 }

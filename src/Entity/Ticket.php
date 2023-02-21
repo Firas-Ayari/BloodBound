@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
 use App\Repository\TicketRepository;
@@ -14,18 +14,27 @@ class Ticket
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
+//controle saisie de price
     #[ORM\Column]
+    #[Assert\Type(
+        type: 'float',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
     private ?float $price = null;
-
+//controle saisie de stock
     #[ORM\Column]
+    #[Assert\Type(
+        type: 'int',
+        message: 'The value {{ value }} is not a valid {{ type }}.',
+    )]
     private ?int $stock = null;
-
+//controle saisie de status
     #[ORM\Column(length: 255)]
+    #[Assert\Choice(choices: ['available', 'sold out'], message: 'Invalid ticket status.')]
     private ?string $status = null;
 
     #[ManyToOne(targetEntity: Event::class, inversedBy: 'tickets')]
-    #[JoinColumn(name: 'event_id', referencedColumnName: 'id')]
+    #[JoinColumn(name: 'event_id', referencedColumnName: 'id', onDelete:"CASCADE")]
     private Event|null $event = null;
 
     public function getId(): ?int

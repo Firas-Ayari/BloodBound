@@ -38,7 +38,7 @@ class Product
     private ?float $rating = null;
 
     #[ManyToOne(targetEntity: ProductCategory::class, inversedBy: 'products')]
-    #[JoinColumn(name: 'productCategory_id', referencedColumnName: 'id')]
+    #[JoinColumn(name: 'productCategory_id', referencedColumnName: 'id', onDelete:"CASCADE")]
     private ProductCategory|null $productCategory = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: CartProduct::class)]

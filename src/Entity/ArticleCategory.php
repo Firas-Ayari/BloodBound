@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\ArticleCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use app\Model\TimestampedInterface;
+
 
 #[ORM\Entity(repositoryClass: ArticleCategoryRepository::class)]
 class ArticleCategory

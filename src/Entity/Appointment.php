@@ -2,9 +2,10 @@
 
 namespace App\Entity;
 
-use App\Repository\AppointmentRepository;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
+use App\Repository\AppointmentRepository;
 
 #[ORM\Entity(repositoryClass: AppointmentRepository::class)]
 class Appointment
@@ -14,37 +15,84 @@ class Appointment
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
-
     #[ORM\Column(length: 255)]
-    private ?string $status = null;
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $date = null;
+
+    #[ORM\Column]
+    private ?bool $status = null;
+
+    #[ManyToOne(targetEntity: Facility::class, inversedBy: 'appointments')]
+    #[JoinColumn(name: 'facility_id', referencedColumnName: 'id', onDelete:"CASCADE")]
+    private ?Facility $facility = null;
+
+    #[ManyToOne(targetEntity: User::class, inversedBy: 'appointments')]
+    #[JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete:"CASCADE")]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getDate(): ?\DateTimeImmutable
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(\DateTimeImmutable $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    public function getStatus(): ?string
+    public function isStatus(): ?bool
     {
         return $this->status;
     }
 
-    public function setStatus(string $status): self
+    public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getFacility(): ?Facility
+    {
+        return $this->facility;
+    }
+
+    public function setFacility(?Facility $facility): self
+    {
+        $this->facility = $facility;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
