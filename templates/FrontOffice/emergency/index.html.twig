@@ -29,7 +29,8 @@
                                 <div class="account-profile-cards ">
                                     <div class="ap-img d-flex justify-content-center">
                                         <!-- Profile picture image-->
-                                        <img class="ap-img__main bg-opacity-primary  wh-120 rounded-circle mb-3 " src="" alt="Icon">
+                                        <img class="ap-img__main bg-opacity-primary  wh-120 rounded-circle mb-3 " src="/img/svg/emergency1.svg" alt="Icon" style="background-color: RGBA(0,0,0,0.08);">
+
                                     </div>
                                     <div class="ap-nameAddress">
                                         <h6 class="ap-nameAddress__title">{{ emergency.title }}</h6>
@@ -49,7 +50,9 @@
 
                                     <div class="profile-overview d-flex justify-content-between flex-wrap">
                                         <div class="po-details">
-                                            <h3 class="po-details__title">{{ emergency.deadline ? emergency.deadline|date('Y-m-d') : '' }}</h3>
+                                            <h3 class="po-details__title" style="background-image: linear-gradient(to right, #FF4136, #000000); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">{{ emergency.deadline ? emergency.deadline|date('Y-m-d') : '' }}</h3>
+
+
                                             <span class="po-details__sTitle">Deadline</span>
                                         </div>
                                         <div class="po-details">

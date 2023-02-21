@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OnDelete;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
 use App\Repository\EmergencyRepository;
@@ -70,6 +71,7 @@ class Emergency
     #[ManyToOne(targetEntity: User::class, inversedBy: 'emergencies')]
     #[JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private User|null $user = null;
+
 
     #[ORM\OneToMany(mappedBy: 'emergency', targetEntity: Donation::class)]
     private Collection $donations;

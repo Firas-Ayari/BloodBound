@@ -57,7 +57,7 @@ class Donation
     private ?\DateTimeImmutable $donationDate = null;
 
     #[ManyToOne(targetEntity: Emergency::class, inversedBy: 'donations')]
-    #[JoinColumn(name: 'emergency_id', referencedColumnName: 'id')]
+    #[JoinColumn(name: 'emergency_id', referencedColumnName: 'id', onDelete:"CASCADE")]
     private Emergency|null $emergency = null;
 
     public function __construct()
