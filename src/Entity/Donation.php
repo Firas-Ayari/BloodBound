@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Entity;
-use Symfony\Component\Validator\Constraints as Assert;
+
 use App\Repository\DonationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\JoinColumn;
@@ -20,7 +21,7 @@ class Donation
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: 'Please enter a value.')]
     #[Assert\Length(
-        min: 20,
+        min: 15,
         max: 255,
         minMessage: 'The description must be at least {{ limit }} characters',
         maxMessage: 'The description cannot exceed {{ limit }} characters'
@@ -45,6 +46,7 @@ class Donation
     private ?string $email = null;
 
     #[ORM\Column(type: Types::BIGINT)]
+    #[Assert\NotBlank(message: 'Please enter your number')]
     #[Assert\Regex(
         pattern:"/^\d{8}$/",
         message:"The phone number '{{ value }}' is not a valid phone number."
@@ -52,16 +54,17 @@ class Donation
     private ?string $phoneNumber = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
-    #[Assert\GreaterThan('today')]
     private ?\DateTimeImmutable $donationDate = null;
 
     #[ManyToOne(targetEntity: Emergency::class, inversedBy: 'donations')]
     #[JoinColumn(name: 'emergency_id', referencedColumnName: 'id')]
     private Emergency|null $emergency = null;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->donationDate = new \DateTimeImmutable();
     }
+
     public function getId(): ?int
     {
         return $this->id;
