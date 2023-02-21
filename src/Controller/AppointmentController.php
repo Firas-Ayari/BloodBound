@@ -16,7 +16,7 @@ class AppointmentController extends AbstractController
     #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
     public function index(AppointmentRepository $appointmentRepository): Response
     {
-        return $this->render('appointment/index.html.twig', [
+        return $this->render('BackOffice/appointment/index.html.twig', [
             'appointments' => $appointmentRepository->findAll(),
         ]);
     }
@@ -34,7 +34,7 @@ class AppointmentController extends AbstractController
             return $this->redirectToRoute('app_appointment_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('appointment/new.html.twig', [
+        return $this->renderForm('BackOffice/appointment/new.html.twig', [
             'appointment' => $appointment,
             'form' => $form,
         ]);
@@ -43,7 +43,7 @@ class AppointmentController extends AbstractController
     #[Route('/{id}', name: 'app_appointment_show', methods: ['GET'])]
     public function show(Appointment $appointment): Response
     {
-        return $this->render('appointment/show.html.twig', [
+        return $this->render('BackOffice/appointment/show.html.twig', [
             'appointment' => $appointment,
         ]);
     }
@@ -60,7 +60,7 @@ class AppointmentController extends AbstractController
             return $this->redirectToRoute('app_appointment_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('appointment/edit.html.twig', [
+        return $this->renderForm('BackOffice/appointment/edit.html.twig', [
             'appointment' => $appointment,
             'form' => $form,
         ]);

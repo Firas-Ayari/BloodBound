@@ -18,8 +18,7 @@ class Appointment
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     /**
-     * @Assert\DateTime
-     * @var string A "Y-m-d H:i" formatted value
+     * @Assert\NotBlank(message = "Please pick an appointment date.")
      */
     private ?\DateTimeInterface $date = null;
 
@@ -28,7 +27,7 @@ class Appointment
 
     #[ORM\Column(length: 255)]
     /**
-     * @Assert\Choice(choices={"missed", "établie"}, message="Status of the appointment invalid")
+     * @Assert\Choice(choices={"missed", "done"}, message="Status of the appointment invalid")
      */
     private ?string $status = null;
 

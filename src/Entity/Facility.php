@@ -46,7 +46,7 @@ class Facility
 
     #[ORM\Column(length: 255)]
     /**
-     * @Assert\Positive
+     * @Assert\NotBlank(message = "Please give a rank.")
      */
     private ?string $rank = null;
 

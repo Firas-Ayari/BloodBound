@@ -1,0 +1,408 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}Appointment index{% endblock %}
+
+{% block body %}
+<h1>Appointment index</h1>
+
+<table class="table">
+
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>actions</th>
+        </tr>
+
+        
+    </thead>
+
+    <tbody>
+        {% for appointment in appointments %}
+        <tr>
+            <td>{{ appointment.id }}</td>
+            <td>{{ appointment.date ? appointment.date|date('Y-m-d H:i:s') : '' }}</td>
+            <td>{{ appointment.status }}</td>
+            <td>
+                <a href="{{ path('app_appointment_show', {'id': appointment.id}) }}">show</a>
+                <a href="{{ path('app_appointment_edit', {'id': appointment.id}) }}">edit</a>
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="4">no records found</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+
+
+
+
+
+    
+</table>
+
+
+
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="breadcrumb-main">
+                <h4 class="text-capitalize breadcrumb-title">calendar</h4>
+                <div class="breadcrumb-action justify-content-center flex-wrap">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#"><i class="uil uil-estate"></i>Home</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">calendar</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row calendar-grid justify-content-center">
+        <div class="col-xxl-3 col-xl-5 col-md-6 col-sm-8">
+            <div class="dm-calendar-left">
+                <button class="btn btn-primary btn-lg btn-create-event" data-bs-toggle="modal"
+                    data-bs-target="#c-event-modal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="svg replaced-svg">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>Create New Event</button>
+                <div class="card card-md mb-4">
+                    <div class="card-body px-10">
+                        <div class="date-picker">
+                            <div class="date-picker__calendar hasDatepicker" id="dp1676558858655">
+                                <div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
+                                    style="display: block;">
+                                    <div class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
+                                        <a class="ui-datepicker-prev ui-corner-all" data-handler="prev"
+                                            data-event="click" title="Prev"><span
+                                                class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a
+                                            class="ui-datepicker-next ui-corner-all" data-handler="next"
+                                            data-event="click" title="Next"><span
+                                                class="ui-icon ui-icon-circle-triangle-e">Next</span></a>
+                                        <div class="ui-datepicker-title"><span
+                                                class="ui-datepicker-month">February</span>&nbsp;<span
+                                                class="ui-datepicker-year">2023</span></div>
+                                    </div>
+                                    <table class="ui-datepicker-calendar">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col" class="ui-datepicker-week-end"><span
+                                                        title="Sunday">Su</span></th>
+                                                <th scope="col"><span title="Monday">Mo</span></th>
+                                                <th scope="col"><span title="Tuesday">Tu</span></th>
+                                                <th scope="col"><span title="Wednesday">We</span></th>
+                                                <th scope="col"><span title="Thursday">Th</span></th>
+                                                <th scope="col"><span title="Friday">Fr</span></th>
+                                                <th scope="col" class="ui-datepicker-week-end"><span
+                                                        title="Saturday">Sa</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td
+                                                    class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                    &nbsp;</td>
+                                                <td
+                                                    class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                    &nbsp;</td>
+                                                <td
+                                                    class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                    &nbsp;</td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="1">1</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="2">2</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="3">3</a></td>
+                                                <td class=" ui-datepicker-week-end " data-handler="selectDay"
+                                                    data-event="click" data-month="1" data-year="2023"><a
+                                                        class="ui-state-default" href="#" aria-current="false"
+                                                        data-date="4">4</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td class=" ui-datepicker-week-end " data-handler="selectDay"
+                                                    data-event="click" data-month="1" data-year="2023"><a
+                                                        class="ui-state-default" href="#" aria-current="false"
+                                                        data-date="5">5</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="6">6</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="7">7</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="8">8</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="9">9</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="10">10</a></td>
+                                                <td class=" ui-datepicker-week-end " data-handler="selectDay"
+                                                    data-event="click" data-month="1" data-year="2023"><a
+                                                        class="ui-state-default" href="#" aria-current="false"
+                                                        data-date="11">11</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td class=" ui-datepicker-week-end " data-handler="selectDay"
+                                                    data-event="click" data-month="1" data-year="2023"><a
+                                                        class="ui-state-default" href="#" aria-current="false"
+                                                        data-date="12">12</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="13">13</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="14">14</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="15">15</a></td>
+                                                <td class=" ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today"
+                                                    data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a
+                                                        class="ui-state-default ui-state-highlight ui-state-active"
+                                                        href="#" aria-current="true" data-date="16">16</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="17">17</a></td>
+                                                <td class=" ui-datepicker-week-end " data-handler="selectDay"
+                                                    data-event="click" data-month="1" data-year="2023"><a
+                                                        class="ui-state-default" href="#" aria-current="false"
+                                                        data-date="18">18</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td class=" ui-datepicker-week-end " data-handler="selectDay"
+                                                    data-event="click" data-month="1" data-year="2023"><a
+                                                        class="ui-state-default" href="#" aria-current="false"
+                                                        data-date="19">19</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="20">20</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="21">21</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="22">22</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="23">23</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="24">24</a></td>
+                                                <td class=" ui-datepicker-week-end " data-handler="selectDay"
+                                                    data-event="click" data-month="1" data-year="2023"><a
+                                                        class="ui-state-default" href="#" aria-current="false"
+                                                        data-date="25">25</a></td>
+                                            </tr>
+                                            <tr>
+                                                <td class=" ui-datepicker-week-end " data-handler="selectDay"
+                                                    data-event="click" data-month="1" data-year="2023"><a
+                                                        class="ui-state-default" href="#" aria-current="false"
+                                                        data-date="26">26</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="27">27</a></td>
+                                                <td class=" " data-handler="selectDay" data-event="click" data-month="1"
+                                                    data-year="2023"><a class="ui-state-default" href="#"
+                                                        aria-current="false" data-date="28">28</a></td>
+                                                <td
+                                                    class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                    &nbsp;</td>
+                                                <td
+                                                    class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                    &nbsp;</td>
+                                                <td
+                                                    class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                    &nbsp;</td>
+                                                <td
+                                                    class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                    &nbsp;</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card card-md mb-4">
+                    <div class="card-body">
+                        <div class="draggable-events" id="draggable-events">
+                            <div class="draggable-events__top d-flex justify-content-between">
+                                <h6>My Calendars</h6>
+                                <a href="#">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                        stroke-linejoin="round" class="svg replaced-svg">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    </svg></a>
+                            </div>
+                            <ul class="draggable-event-list">
+                                <li class="draggable-event-list__single d-flex align-items-center" data-class="primary">
+                                    <span class="badge-dot badge-primary"></span>
+                                    <span class="event-text">Family Events</span>
+                                </li>
+
+                                <li class="draggable-event-list__single d-flex align-items-center"
+                                    data-class="secondary">
+                                    <span class="badge-dot badge-secondary"></span>
+                                    <span class="event-text">Product Launch</span>
+                                </li>
+
+                                <li class="draggable-event-list__single d-flex align-items-center" data-class="success">
+                                    <span class="badge-dot badge-success"></span>
+                                    <span class="event-text">Team Meeting</span>
+                                </li>
+
+                                <li class="draggable-event-list__single d-flex align-items-center" data-class="primary">
+                                    <span class="badge-dot badge-primary"></span>
+                                    <span class="event-text">UI/UX Tasks</span>
+                                </li>
+
+                                <li class="draggable-event-list__single d-flex align-items-center" data-class="warning">
+                                    <span class="badge-dot badge-warning"></span>
+                                    <span class="event-text">Project Update</span>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-xxl-9 col-xl-7">
+            <div class="card card-default card-md mb-4">
+                <div class="card-body">
+                    <div id="full-calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-standard">
+                        <div class="fc-header-toolbar fc-toolbar fc-toolbar-ltr">
+                            <div class="fc-toolbar-chunk">
+                                <div class=""><button disabled="" class="fc-today-button fc-button fc-button-primary"
+                                        type="button">today</button><button
+                                        class="fc-prev-button fc-button fc-button-primary" type="button"
+                                        aria-label="prev"><span class="fc-icon fc-icon-chevron-left"></span></button>
+                                    <h2 class="fc-toolbar-title">Feb Wed – Tue</h2><button
+                                        class="fc-next-button fc-button fc-button-primary" type="button"
+                                        aria-label="next"><span class="fc-icon fc-icon-chevron-right"></span></button>
+                                </div>
+                            </div>
+                            <div class="fc-toolbar-chunk"></div>
+                            <div class="fc-toolbar-chunk">
+                                <div class="fc-button-group"><button
+                                        class="fc-timeGridDay-button fc-button fc-button-primary"
+                                        type="button">day</button><button
+                                        class="fc-timeGridWeek-button fc-button fc-button-primary"
+                                        type="button">week</button><button
+                                        class="fc-dayGridMonth-button fc-button fc-button-primary"
+                                        type="button">month</button><button
+                                        class="fc-listMonth-button fc-button fc-button-primary fc-button-active"
+                                        type="button"><i class="las la-list"></i>Schedule</button></div>
+                            </div>
+                        </div>
+                        <div class="fc-view-harness fc-view-harness-active" style="height: 800px;">
+                            <div class="fc-list  fc-list-sticky fc-listMonth-view fc-view">
+                                <div class="fc-scroller fc-scroller-liquid" style="overflow: hidden auto;">
+                                    <table class="fc-list-table ">
+                                        <tbody>
+                                            <tr class="fc-list-day fc-day fc-day-thu fc-day-today "
+                                                data-date="2023-02-16">
+                                                <th colspan="3">
+                                                    <div class="fc-list-day-cushion fc-cell-shaded"><a
+                                                            class="fc-list-day-side-text">Thursday</a></div>
+                                                </th>
+                                            </tr>
+                                            <tr
+                                                class="fc-list-event  fc-event fc-event-start fc-event-end fc-event-today fc-event-future warning">
+                                                <td class="fc-list-event-time">7:00am - 8:30am</td>
+                                                <td class="fc-list-event-graphic"><span
+                                                        class="fc-list-event-dot"></span></td>
+                                                <td class="fc-list-event-title"><a>HexaDash Calendar App</a></td>
+                                            </tr>
+                                            <tr
+                                                class="fc-list-event  fc-event fc-event-start fc-event-end fc-event-today fc-event-future primary">
+                                                <td class="fc-list-event-time">10:30am - 12:00pm</td>
+                                                <td class="fc-list-event-graphic"><span
+                                                        class="fc-list-event-dot"></span></td>
+                                                <td class="fc-list-event-title"><a>Dinner with Family</a></td>
+                                            </tr>
+                                            <tr
+                                                class="fc-list-event  fc-event fc-event-start fc-event-end fc-event-today fc-event-future success">
+                                                <td class="fc-list-event-time">6:30pm</td>
+                                                <td class="fc-list-event-graphic"><span
+                                                        class="fc-list-event-dot"></span></td>
+                                                <td class="fc-list-event-title"><a>Team Meeting</a></td>
+                                            </tr>
+                                            <tr class="fc-list-day fc-day fc-day-fri fc-day-future"
+                                                data-date="2023-02-17">
+                                                <th colspan="3">
+                                                    <div class="fc-list-day-cushion fc-cell-shaded"><a
+                                                            class="fc-list-day-side-text">Friday</a></div>
+                                                </th>
+                                            </tr>
+                                            <tr
+                                                class="fc-list-event  fc-event fc-event-start fc-event-end fc-event-future primary">
+                                                <td class="fc-list-event-time">8:30am</td>
+                                                <td class="fc-list-event-graphic"><span
+                                                        class="fc-list-event-dot"></span></td>
+                                                <td class="fc-list-event-title"><a>Family Events</a></td>
+                                            </tr>
+                                            <tr class="fc-list-day fc-day fc-day-mon fc-day-future"
+                                                data-date="2023-02-20">
+                                                <th colspan="3">
+                                                    <div class="fc-list-day-cushion fc-cell-shaded"><a
+                                                            class="fc-list-day-side-text">Monday</a></div>
+                                                </th>
+                                            </tr>
+                                            <tr
+                                                class="fc-list-event  fc-event fc-event-start fc-event-end fc-event-future secondary">
+                                                <td class="fc-list-event-time">1:00am</td>
+                                                <td class="fc-list-event-graphic"><span
+                                                        class="fc-list-event-dot"></span></td>
+                                                <td class="fc-list-event-title"><a>Product Lunch</a></td>
+                                            </tr>
+                                            <tr class="fc-list-day fc-day fc-day-sat fc-day-future"
+                                                data-date="2023-02-25">
+                                                <th colspan="3">
+                                                    <div class="fc-list-day-cushion fc-cell-shaded"><a
+                                                            class="fc-list-day-side-text">Saturday</a></div>
+                                                </th>
+                                            </tr>
+                                            <tr
+                                                class="fc-list-event  fc-event fc-event-start fc-event-end fc-event-future warning">
+                                                <td class="fc-list-event-time">11:00am</td>
+                                                <td class="fc-list-event-graphic"><span
+                                                        class="fc-list-event-dot"></span></td>
+                                                <td class="fc-list-event-title"><a>Team Meeting</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<a href="{{ path('app_appointment_new') }}">Create new</a>
+{% endblock %}

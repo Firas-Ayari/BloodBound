@@ -16,7 +16,7 @@ class FacilityController extends AbstractController
     #[Route('/', name: 'app_facility_index', methods: ['GET'])]
     public function index(FacilityRepository $facilityRepository): Response
     {
-        return $this->render('facility/index.html.twig', [
+        return $this->render('BackOffice/facility/index.html.twig', [
             'facilities' => $facilityRepository->findAll(),
         ]);
     }
@@ -34,19 +34,23 @@ class FacilityController extends AbstractController
             return $this->redirectToRoute('app_facility_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('facility/new.html.twig', [
+        return $this->renderForm('BackOffice/facility/new.html.twig', [
             'facility' => $facility,
             'form' => $form,
         ]);
     }
 
+
+
     #[Route('/{id}', name: 'app_facility_show', methods: ['GET'])]
     public function show(Facility $facility): Response
     {
-        return $this->render('facility/show.html.twig', [
+        return $this->render('BackOffice/facility/show.html.twig', [
             'facility' => $facility,
         ]);
     }
+
+
 
     #[Route('/{id}/edit', name: 'app_facility_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Facility $facility, FacilityRepository $facilityRepository): Response
@@ -60,7 +64,7 @@ class FacilityController extends AbstractController
             return $this->redirectToRoute('app_facility_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('facility/edit.html.twig', [
+        return $this->renderForm('BackOffice/facility/edit.html.twig', [
             'facility' => $facility,
             'form' => $form,
         ]);
