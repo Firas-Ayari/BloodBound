@@ -1,4 +1,4 @@
-{% extends '../admin.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Donations List{% endblock %}
 
@@ -18,9 +18,6 @@
                             <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search by Name" aria-label="Search">
                         </form>
 
-                    </div>
-                    <div class="action-btn">
-                        <a href="{{ path('app_donation_new') }}" class="btn px-15 btn-primary" > <i class="las la-plus fs-16"></i>Create new Donation</a>
                     </div>
                 </div>
 
@@ -92,7 +89,7 @@
                                     <td>
                                         <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
                                             <li>
-                                                <a href="{{ donation.id }}" class="view">
+                                                <a href="{{ path('app_donation_show', {'id': donation.id}) }}" class="view">
                                                     <span class="iconify" data-icon="uil:eye"></span>
                                                 </a>
                                             </li>

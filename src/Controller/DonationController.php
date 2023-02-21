@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/donation')]
 class DonationController extends AbstractController
 {
-    #[Route('/', name: 'app_donation_indexAdmin', methods: ['GET'])]
+    #[Route('/admin', name: 'app_donation_indexAdmin', methods: ['GET'])]
     public function indexAdmin(DonationRepository $donationRepository): Response
     {
         return $this->render('BackOffice/donation/index.html.twig', [
@@ -40,15 +40,15 @@ class DonationController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_donation_show', methods: ['GET'])]
+    #[Route('/admin/{id}}', name: 'app_donation_show', methods: ['GET'])]
     public function show(Donation $donation): Response
     {
-        return $this->render('donation/show.html.twig', [
+        return $this->render('BackOffice/donation/show.html.twig', [
             'donation' => $donation,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_donation_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/{id}/edit', name: 'app_donation_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Donation $donation, DonationRepository $donationRepository): Response
     {
         $form = $this->createForm(DonationType::class, $donation);
@@ -57,10 +57,10 @@ class DonationController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $donationRepository->save($donation, true);
 
-            return $this->redirectToRoute('app_donation_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_donation_indexAdmin', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('donation/edit.html.twig', [
+        return $this->renderForm('Backoffice/donation/edit.html.twig', [
             'donation' => $donation,
             'form' => $form,
         ]);
