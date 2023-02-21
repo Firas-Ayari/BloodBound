@@ -28,7 +28,7 @@
                      
                      <!-- PRICE +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
                         <div class="col-xxl-3 col-sm-6  col-ssm-12 mb-30">
-
+ {% for ticket in tickets %}
 <div class="ap-po-details ap-po-details--ticket radius-xl d-flex justify-content-between">
 <div class="overview-content w-100">
 <div class=" ap-po-details-content d-flex flex-wrap justify-content-between">
@@ -98,7 +98,11 @@
 
                      </div> -->
                      <!-- Card 2 End  -->
-                  
+                  {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
                   </div>
 
                   <div class="col-xxl-3 col-sm-6  col-ssm-12 mb-30">

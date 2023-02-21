@@ -13,10 +13,18 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/event')]
 class EventController extends AbstractController
 {
+    #[Route('/admin', name: 'app_event_index_admin', methods: ['GET'])]
+    public function indexAdmin(EventRepository $eventRepository): Response
+    {
+        return $this->render('BackOffice/event/index.html.twig', [
+            'events' => $eventRepository->findAll(),
+        ]);
+    }
+
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
     public function index(EventRepository $eventRepository): Response
     {
-        return $this->render('event/index.html.twig', [
+        return $this->render('FrontOffice/event/index.html.twig', [
             'events' => $eventRepository->findAll(),
         ]);
     }
@@ -34,9 +42,19 @@ class EventController extends AbstractController
             return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('event/new.html.twig', [
+        return $this->renderForm('BackOffice/event/new.html.twig', [
             'event' => $event,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('/admin/{id}', name: 'app_event_show_admin', methods: ['GET'])]
+    public function showAdmin(Event $event): Response
+    {
+        $tickets = $event->getTickets();
+        return $this->render('BackOffice/event/show.html.twig', [
+            'event' => $event,
+            'tickets' => $tickets
         ]);
     }
 
@@ -44,14 +62,14 @@ class EventController extends AbstractController
     public function show(Event $event): Response
     {
         $tickets = $event->getTickets();
-        return $this->render('event/show.html.twig', [
+        return $this->render('FrontOffice/event/show.html.twig', [
             'event' => $event,
             'tickets' => $tickets
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_event_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Event $event, EventRepository $eventRepository): Response
+    #[Route('/admin/{id}/edit', name: 'app_event_editAdmin', methods: ['GET', 'POST'])]
+    public function editAdmin(Request $request, Event $event, EventRepository $eventRepository): Response
     {
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
@@ -59,10 +77,10 @@ class EventController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $eventRepository->save($event, true);
 
-            return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_event_indexAdmin', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('event/edit.html.twig', [
+        return $this->renderForm('BackOffice/event/edit.html.twig', [
             'event' => $event,
             'form' => $form,
         ]);
