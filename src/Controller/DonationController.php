@@ -73,6 +73,6 @@ class DonationController extends AbstractController
             $donationRepository->remove($donation, true);
         }
 
-        return $this->redirectToRoute('app_donation_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_donation_indexAdmin', [], Response::HTTP_SEE_OTHER);
     }
 }
