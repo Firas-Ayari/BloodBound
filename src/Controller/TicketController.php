@@ -29,7 +29,7 @@ class TicketController extends AbstractController
         ]);
     }
 
-    #[Route('new', name: 'app_ticket_newAdmin', methods: ['GET', 'POST'])]
+    #[Route('/admin/new', name: 'app_ticket_newAdmin', methods: ['GET', 'POST'])]
     public function new(Request $request, TicketRepository $ticketRepository): Response
     {
         $ticket = new Ticket();
@@ -39,7 +39,7 @@ class TicketController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $ticketRepository->save($ticket, true);
 
-            return $this->redirectToRoute('app_ticket_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_ticket_indexAdmin', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('BackOffice/ticket/new.html.twig', [
@@ -48,13 +48,13 @@ class TicketController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/{id}', name: 'app_ticket_show_admin', methods: ['GET'])]
-    public function showAdmin(Ticket $ticket): Response
-    {
-        return $this->render('BackOffice/ticket/show.html.twig', [
-            'ticket' => $ticket,
-        ]);
-    }
+   // #[Route('/admin/{id}', name: 'app_ticket_show_admin', methods: ['GET'])]
+   // public function showAdmin(Ticket $ticket): Response
+    //{
+    //    return $this->render('BackOffice/ticket/show.html.twig', [
+    //        'ticket' => $ticket,
+    //    ]);
+   // }
     
     #[Route('/{id}', name: 'app_ticket_show', methods: ['GET'])]
     public function show(Ticket $ticket): Response
