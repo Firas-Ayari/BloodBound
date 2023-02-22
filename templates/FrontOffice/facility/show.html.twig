@@ -29,9 +29,18 @@
                     </div>
                 </div>
                 <div class="d-flex text-capitalize">
-                    <button type="button"
-                        class="breadcrumb-edit btn btn-white border-0 color-primary content-center fs-12 fw-500 radius-md">
-                        <img src="../img/svg/edit-3.svg" alt="edit-3" class="svg">edit</button>
+
+
+                        <form method="post" action="{{ path('app_facility_edit', {'id': donation.id}) }}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ donation.id) }}">
+                            <button class="breadcrumb-edit btn btn-white border-0 color-primary content-center fs-12 fw-500 radius-md"> <img src="../img/svg/edit-3.svg" alt="edit-3" class="svg">edit</button></button>
+                        </form>
+                    
+
+
+
+
+
                     <button type="button"
                         class="breadcrumb-remove border-0 color-danger content-center bg-white fs-12 fw-500 ms-10 radius-md">
                         <img class="svg" src="../img/svg/trash-2.svg" alt="trash-2">remove</button>

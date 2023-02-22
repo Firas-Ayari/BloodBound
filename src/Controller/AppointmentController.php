@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/appointment')]
 class AppointmentController extends AbstractController
 {
-    #[Route('/', name: 'app_appointment_index', methods: ['GET'])]
+    #[Route('/admin', name: 'app_appointment_index', methods: ['GET'])]
     public function index(AppointmentRepository $appointmentRepository): Response
     {
         return $this->render('BackOffice/appointment/index.html.twig', [
@@ -48,7 +48,7 @@ class AppointmentController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_appointment_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/{id}/edit', name: 'app_appointment_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Appointment $appointment, AppointmentRepository $appointmentRepository): Response
     {
         $form = $this->createForm(AppointmentType::class, $appointment);

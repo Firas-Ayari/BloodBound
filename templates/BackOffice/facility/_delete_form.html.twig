@@ -1,4 +1,4 @@
 <form method="post" action="{{ path('app_facility_delete', {'id': facility.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ facility.id) }}">
-    <button class="btn">Delete</button>
+    <button type="btn" class="breadcrumb-remove border-0 color-danger content-center bg-white fs-12 fw-500 ms-10 radius-md"><img class="svg" src="../img/svg/trash-2.svg" alt="trash-2">remove</button>
 </form>

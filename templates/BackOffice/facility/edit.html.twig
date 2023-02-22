@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Edit Facility{% endblock %}
 
@@ -7,7 +7,7 @@
 
     {{ include('BackOffice/facility/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_facility_index') }}">back to list</a>
+    <a href="{{ path('app_facility_indexAdmin') }}">back to list</a>
 
     {{ include('BackOffice/facility/_delete_form.html.twig') }}
 {% endblock %}

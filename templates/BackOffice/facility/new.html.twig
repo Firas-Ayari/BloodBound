@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}New Facility{% endblock %}
 
@@ -7,5 +7,5 @@
 
     {{ include('BackOffice/facility/_form.html.twig') }}
 
-    <a href="{{ path('app_facility_index') }}">back to list</a>
+    <a href="{{ path('app_facility_indexAdmin') }}">back to list</a>
 {% endblock %}

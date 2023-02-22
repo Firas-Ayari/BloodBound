@@ -16,48 +16,294 @@
             <div class="breadcrumb-main application-ui mb-30">
                 <div class="breadcrumb-action d-flex">
                     <div class="d-flex align-items-center user-member__title me-sm-25 me-0">
-                        <h4 class="text-capitalize fw-500 breadcrumb-title">{{ facility.name }}</h4>
+                        <h4 class="text-capitalize fw-500 breadcrumb-title" style="color:gray;">{{ facility.name }}</h4>
                     </div>
                     <div class="action-btn me-10 my-sm-0">
                         <a href="#" class="btn btn-primary bg-primary fs-12 fw-500"><img src="../img/svg/plus.svg"
                                 alt="plus" class="svg">Check History</a>
                     </div>
-                    <div class="btn-group-toggle" data-bs-toggle="buttons">
-                        <input type="checkbox" class="btn-check" id="btn-check-2-outlined">
-                        <label class="btn btn-outline-secondary" for="btn-check-2-outlined"> <img
-                                src="../img/svg/check.svg" alt="check" class="svg">..</label>
-                    </div>
+
                 </div>
                 <div class="d-flex text-capitalize">
-                    <button type="button"
-                        class="breadcrumb-edit btn btn-white border-0 color-primary content-center fs-12 fw-500 radius-md">
-                        <img src="../img/svg/edit-3.svg" alt="edit-3" class="svg">edit</button>
-                    <button type="button"
-                        class="breadcrumb-remove border-0 color-danger content-center bg-white fs-12 fw-500 ms-10 radius-md">
-                        <img class="svg" src="../img/svg/trash-2.svg" alt="trash-2">remove</button>
-                </div>
-            </div>
 
+                    <form method="post" action="{{ path('app_facility_edit', {'id': facility.id}) }}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ facility.id) }}">
+                        <button
+                            class="breadcrumb-edit btn btn-white border-0 color-primary content-center fs-12 fw-500 radius-md">
+                            <img src="../img/svg/edit-3.svg" alt="edit-3" class="svg">edit</button></button>
+                    </form>
+
+
+                    {{ include('BackOffice/facility/_delete_form.html.twig') }}
+
+
+
+                </div>
+
+            </div>
         </div>
     </div>
     <!-- Tab Menu End -->
     <div class="projects-tab-content mb-30">
         <div class="row">
             <div class="col-xxl-3 col-lg-4 mb-25">
-                
 
-                    <div class="card card-default card-md mb-4" >
-                        <div class="card-header py-20">
-                           <h6>Rank</h6>
+
+                <div class="card card-default card-md mb-4">
+                    <div class="card-header py-20">
+                        <h6>Rank</h6>
+                    </div>
+
+                    <div class="card-body" style="background-color:transparent;">
+                        <div class="dm-rating-wrap d-flex align-items-center">
+                            <span class="rater">
+                                <div class="jq-star" style="width:12px;height:12px;"><svg version="1.0"
+                                        class="jq-star-svg" shape-rendering="geometricPrecision"
+                                        xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px"
+                                        viewBox="60 -62 309 309"
+                                        style="enable-background:new 64 -59 305 305; stroke-width:6px;"
+                                        xml:space="preserve">
+                                        <style type="text/css">
+                                            .svg-empty-622 {
+                                                fill: url(#622_SVGID_1_);
+                                            }
+
+                                            .svg-hovered-622 {
+                                                fill: url(#622_SVGID_2_);
+                                            }
+
+                                            .svg-active-622 {
+                                                fill: url(#622_SVGID_3_);
+                                            }
+
+                                            .svg-rated-622 {
+                                                fill: #FA8B0C;
+                                            }
+                                        </style>
+                                        <linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#C6D0DC"></stop>
+                                            <stop offset="1" style="stop-color:#C6D0DC"></stop>
+                                        </linearGradient>
+                                        <linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                            <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                        </linearGradient>
+                                        <linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                            <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                        </linearGradient>
+                                        <polygon data-side="center" class="svg-empty-622"
+                                            points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 "
+                                            style="fill: transparent; stroke: black;"></polygon>
+                                        <polygon data-side="left" class="svg-active-622"
+                                            points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 "
+                                            style="stroke-opacity: 0;"></polygon>
+                                        <polygon data-side="right" class="svg-active-622"
+                                            points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 "
+                                            style="stroke-opacity: 0;"></polygon>
+                                    </svg></div>
+                                <div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0"
+                                        class="jq-star-svg" shape-rendering="geometricPrecision"
+                                        xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px"
+                                        viewBox="60 -62 309 309"
+                                        style="enable-background:new 64 -59 305 305; stroke-width:6px;"
+                                        xml:space="preserve">
+                                        <style type="text/css">
+                                            .svg-empty-622 {
+                                                fill: url(#622_SVGID_1_);
+                                            }
+
+                                            .svg-hovered-622 {
+                                                fill: url(#622_SVGID_2_);
+                                            }
+
+                                            .svg-active-622 {
+                                                fill: url(#622_SVGID_3_);
+                                            }
+
+                                            .svg-rated-622 {
+                                                fill: #FA8B0C;
+                                            }
+                                        </style>
+                                        <linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#C6D0DC"></stop>
+                                            <stop offset="1" style="stop-color:#C6D0DC"></stop>
+                                        </linearGradient>
+                                        <linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                            <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                        </linearGradient>
+                                        <linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                            <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                        </linearGradient>
+                                        <polygon data-side="center" class="svg-empty-622"
+                                            points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 "
+                                            style="fill: transparent; stroke: black;"></polygon>
+                                        <polygon data-side="left" class="svg-active-622"
+                                            points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 "
+                                            style="stroke-opacity: 0;"></polygon>
+                                        <polygon data-side="right" class="svg-active-622"
+                                            points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 "
+                                            style="stroke-opacity: 0;"></polygon>
+                                    </svg></div>
+                                <div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0"
+                                        class="jq-star-svg" shape-rendering="geometricPrecision"
+                                        xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px"
+                                        viewBox="60 -62 309 309"
+                                        style="enable-background:new 64 -59 305 305; stroke-width:6px;"
+                                        xml:space="preserve">
+                                        <style type="text/css">
+                                            .svg-empty-622 {
+                                                fill: url(#622_SVGID_1_);
+                                            }
+
+                                            .svg-hovered-622 {
+                                                fill: url(#622_SVGID_2_);
+                                            }
+
+                                            .svg-active-622 {
+                                                fill: url(#622_SVGID_3_);
+                                            }
+
+                                            .svg-rated-622 {
+                                                fill: #FA8B0C;
+                                            }
+                                        </style>
+                                        <linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#C6D0DC"></stop>
+                                            <stop offset="1" style="stop-color:#C6D0DC"></stop>
+                                        </linearGradient>
+                                        <linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                            <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                        </linearGradient>
+                                        <linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                            <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                        </linearGradient>
+                                        <polygon data-side="center" class="svg-empty-622"
+                                            points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 "
+                                            style="fill: transparent; stroke: black;"></polygon>
+                                        <polygon data-side="left" class="svg-empty-622"
+                                            points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 "
+                                            style="stroke-opacity: 0;"></polygon>
+                                        <polygon data-side="right" class="svg-empty-622"
+                                            points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 "
+                                            style="stroke-opacity: 0;"></polygon>
+                                    </svg></div>
+                                <div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0"
+                                        class="jq-star-svg" shape-rendering="geometricPrecision"
+                                        xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px"
+                                        viewBox="60 -62 309 309"
+                                        style="enable-background:new 64 -59 305 305; stroke-width:6px;"
+                                        xml:space="preserve">
+                                        <style type="text/css">
+                                            .svg-empty-622 {
+                                                fill: url(#622_SVGID_1_);
+                                            }
+
+                                            .svg-hovered-622 {
+                                                fill: url(#622_SVGID_2_);
+                                            }
+
+                                            .svg-active-622 {
+                                                fill: url(#622_SVGID_3_);
+                                            }
+
+                                            .svg-rated-622 {
+                                                fill: #FA8B0C;
+                                            }
+                                        </style>
+                                        <linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#C6D0DC"></stop>
+                                            <stop offset="1" style="stop-color:#C6D0DC"></stop>
+                                        </linearGradient>
+                                        <linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                            <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                        </linearGradient>
+                                        <linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                            <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                        </linearGradient>
+                                        <polygon data-side="center" class="svg-empty-622"
+                                            points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 "
+                                            style="fill: transparent; stroke: black;"></polygon>
+                                        <polygon data-side="left" class="svg-empty-622"
+                                            points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 "
+                                            style="stroke-opacity: 0;"></polygon>
+                                        <polygon data-side="right" class="svg-empty-622"
+                                            points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 "
+                                            style="stroke-opacity: 0;"></polygon>
+                                    </svg></div>
+                                <div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0"
+                                        class="jq-star-svg" shape-rendering="geometricPrecision"
+                                        xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px"
+                                        viewBox="60 -62 309 309"
+                                        style="enable-background:new 64 -59 305 305; stroke-width:6px;"
+                                        xml:space="preserve">
+                                        <style type="text/css">
+                                            .svg-empty-622 {
+                                                fill: url(#622_SVGID_1_);
+                                            }
+
+                                            .svg-hovered-622 {
+                                                fill: url(#622_SVGID_2_);
+                                            }
+
+                                            .svg-active-622 {
+                                                fill: url(#622_SVGID_3_);
+                                            }
+
+                                            .svg-rated-622 {
+                                                fill: #FA8B0C;
+                                            }
+                                        </style>
+                                        <linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#C6D0DC"></stop>
+                                            <stop offset="1" style="stop-color:#C6D0DC"></stop>
+                                        </linearGradient>
+                                        <linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                            <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                        </linearGradient>
+                                        <linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                            x2="0" y2="250">
+                                            <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                            <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                        </linearGradient>
+                                        <polygon data-side="center" class="svg-empty-622"
+                                            points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 "
+                                            style="fill: transparent; stroke: black;"></polygon>
+                                        <polygon data-side="left" class="svg-empty-622"
+                                            points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 "
+                                            style="stroke-opacity: 0;"></polygon>
+                                        <polygon data-side="right" class="svg-empty-622"
+                                            points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 "
+                                            style="stroke-opacity: 0;"></polygon>
+                                    </svg></div>
+                            </span>
+                            <span class="rater-text">
+                                <span class="rate-count">2</span>Stars</span>
                         </div>
-                        <div class="card-body" style="background-color:transparent;">
-                           <div class="dm-rating-wrap d-flex align-items-center">
-                              <span class="rater"><div class="jq-star" style="width:12px;height:12px;"><svg version="1.0" class="jq-star-svg" shape-rendering="geometricPrecision" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px" viewBox="60 -62 309 309" style="enable-background:new 64 -59 305 305; stroke-width:6px;" xml:space="preserve"><style type="text/css">.svg-empty-622{fill:url(#622_SVGID_1_);}.svg-hovered-622{fill:url(#622_SVGID_2_);}.svg-active-622{fill:url(#622_SVGID_3_);}.svg-rated-622{fill:#FA8B0C;}</style><linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#C6D0DC"></stop><stop offset="1" style="stop-color:#C6D0DC"></stop> </linearGradient><linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#FA8B0C"></stop><stop offset="1" style="stop-color:#FA8B0C"></stop> </linearGradient><linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#FA8B0C"></stop><stop offset="1" style="stop-color:#FA8B0C"></stop> </linearGradient><polygon data-side="center" class="svg-empty-622" points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 " style="fill: transparent; stroke: black;"></polygon><polygon data-side="left" class="svg-active-622" points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 " style="stroke-opacity: 0;"></polygon><polygon data-side="right" class="svg-active-622" points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 " style="stroke-opacity: 0;"></polygon></svg></div><div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0" class="jq-star-svg" shape-rendering="geometricPrecision" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px" viewBox="60 -62 309 309" style="enable-background:new 64 -59 305 305; stroke-width:6px;" xml:space="preserve"><style type="text/css">.svg-empty-622{fill:url(#622_SVGID_1_);}.svg-hovered-622{fill:url(#622_SVGID_2_);}.svg-active-622{fill:url(#622_SVGID_3_);}.svg-rated-622{fill:#FA8B0C;}</style><linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#C6D0DC"></stop><stop offset="1" style="stop-color:#C6D0DC"></stop> </linearGradient><linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#FA8B0C"></stop><stop offset="1" style="stop-color:#FA8B0C"></stop> </linearGradient><linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#FA8B0C"></stop><stop offset="1" style="stop-color:#FA8B0C"></stop> </linearGradient><polygon data-side="center" class="svg-empty-622" points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 " style="fill: transparent; stroke: black;"></polygon><polygon data-side="left" class="svg-active-622" points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 " style="stroke-opacity: 0;"></polygon><polygon data-side="right" class="svg-active-622" points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 " style="stroke-opacity: 0;"></polygon></svg></div><div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0" class="jq-star-svg" shape-rendering="geometricPrecision" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px" viewBox="60 -62 309 309" style="enable-background:new 64 -59 305 305; stroke-width:6px;" xml:space="preserve"><style type="text/css">.svg-empty-622{fill:url(#622_SVGID_1_);}.svg-hovered-622{fill:url(#622_SVGID_2_);}.svg-active-622{fill:url(#622_SVGID_3_);}.svg-rated-622{fill:#FA8B0C;}</style><linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#C6D0DC"></stop><stop offset="1" style="stop-color:#C6D0DC"></stop> </linearGradient><linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#FA8B0C"></stop><stop offset="1" style="stop-color:#FA8B0C"></stop> </linearGradient><linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#FA8B0C"></stop><stop offset="1" style="stop-color:#FA8B0C"></stop> </linearGradient><polygon data-side="center" class="svg-empty-622" points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 " style="fill: transparent; stroke: black;"></polygon><polygon data-side="left" class="svg-empty-622" points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 " style="stroke-opacity: 0;"></polygon><polygon data-side="right" class="svg-empty-622" points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 " style="stroke-opacity: 0;"></polygon></svg></div><div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0" class="jq-star-svg" shape-rendering="geometricPrecision" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px" viewBox="60 -62 309 309" style="enable-background:new 64 -59 305 305; stroke-width:6px;" xml:space="preserve"><style type="text/css">.svg-empty-622{fill:url(#622_SVGID_1_);}.svg-hovered-622{fill:url(#622_SVGID_2_);}.svg-active-622{fill:url(#622_SVGID_3_);}.svg-rated-622{fill:#FA8B0C;}</style><linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#C6D0DC"></stop><stop offset="1" style="stop-color:#C6D0DC"></stop> </linearGradient><linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#FA8B0C"></stop><stop offset="1" style="stop-color:#FA8B0C"></stop> </linearGradient><linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#FA8B0C"></stop><stop offset="1" style="stop-color:#FA8B0C"></stop> </linearGradient><polygon data-side="center" class="svg-empty-622" points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 " style="fill: transparent; stroke: black;"></polygon><polygon data-side="left" class="svg-empty-622" points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 " style="stroke-opacity: 0;"></polygon><polygon data-side="right" class="svg-empty-622" points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 " style="stroke-opacity: 0;"></polygon></svg></div><div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0" class="jq-star-svg" shape-rendering="geometricPrecision" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px" viewBox="60 -62 309 309" style="enable-background:new 64 -59 305 305; stroke-width:6px;" xml:space="preserve"><style type="text/css">.svg-empty-622{fill:url(#622_SVGID_1_);}.svg-hovered-622{fill:url(#622_SVGID_2_);}.svg-active-622{fill:url(#622_SVGID_3_);}.svg-rated-622{fill:#FA8B0C;}</style><linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#C6D0DC"></stop><stop offset="1" style="stop-color:#C6D0DC"></stop> </linearGradient><linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#FA8B0C"></stop><stop offset="1" style="stop-color:#FA8B0C"></stop> </linearGradient><linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50" x2="0" y2="250"><stop offset="0" style="stop-color:#FA8B0C"></stop><stop offset="1" style="stop-color:#FA8B0C"></stop> </linearGradient><polygon data-side="center" class="svg-empty-622" points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 " style="fill: transparent; stroke: black;"></polygon><polygon data-side="left" class="svg-empty-622" points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 " style="stroke-opacity: 0;"></polygon><polygon data-side="right" class="svg-empty-622" points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 " style="stroke-opacity: 0;"></polygon></svg></div></span>
-                              <span class="rater-text">
-                                 <span class="rate-count">2</span>Stars</span>
-                           </div>
-                        </div>
-                     </div>
+                    </div>
+
+                </div>
 
 
 
@@ -68,47 +314,37 @@
                         <div class="application-task d-flex align-items-center mb-25">
 
                             <div class="application-task-icon wh-60 bg-opacity-secondary content-center">
-                                <img class="svg wh-25 text-secondary" src="img/svg/at.svg" alt="img">
+                                <i class="uil uil-print"></i>
                             </div>
                             <div class="application-task-content">
-                                <h4>47</h4>
-                                <span class="text-light fs-14 mt-1 text-capitalize">total task</span>
+                                <h4>Fax</h4>
+                                <span class="text-light fs-14 mt-1 text-capitalize">new attribute fax</span>
                             </div>
 
                         </div>
                         <div class="application-task d-flex align-items-center mb-25">
 
                             <div class="application-task-icon wh-60 bg-opacity-primary content-center">
-                                <img class="svg wh-25 text-primary" src="img/svg/at2.svg" alt="img">
+                                <i class="uil uil-phone"></i>
                             </div>
                             <div class="application-task-content">
-                                <h4>34</h4>
-                                <span class="text-light fs-14 mt-1 text-capitalize">task completed</span>
+                                <h4>Phone</h4>
+                                <span class="text-light fs-14 mt-1 text-capitalize">72333555</span>
                             </div>
 
                         </div>
                         <div class="application-task d-flex align-items-center mb-25">
 
                             <div class="application-task-icon wh-60 bg-opacity-success content-center">
-                                <img class="svg wh-25 text-success" src="img/svg/at4.svg" alt="img">
+                                <i class="uil uil-map"></i>
                             </div>
                             <div class="application-task-content">
-                                <h4>$27,500</h4>
-                                <span class="text-light fs-14 mt-1 text-capitalize">Spendings</span>
+                                <h4>Location</h4>
+                                <span class="text-light fs-14 mt-1 text-capitalize">{{facility.address}}</span>
                             </div>
 
                         </div>
-                        <div class="application-task d-flex align-items-center">
 
-                            <div class="application-task-icon wh-60 bg-opacity-warning content-center">
-                                <img class="svg wh-25 text-warning" src="img/svg/at3.svg" alt="img">
-                            </div>
-                            <div class="application-task-content">
-                                <h4>250</h4>
-                                <span class="text-light fs-14 mt-1 text-capitalize">hours spent</span>
-                            </div>
-
-                        </div>
                     </div>
                 </div>
                 <!-- ends: .card -->
@@ -116,918 +352,354 @@
             <div class="col-xxl-6 col-lg-8 mb-25">
                 <div class="card border-0 pb-md-50 pb-15">
                     <div class="card-header py-sm-20 py-3  px-sm-25 px-3 ">
-                        <h6>About Facility</h6>
+                        <h6>About {{facility.name}}</h6>
                     </div>
                     <div class="card-body">
-                        <div class="about-projects">
-                            <div class="about-projects__details">
-                                <p class="fs-15 mb-25">Many support queries and technical questions will already
-                                    be
-                                    answered in
-                                    supporting
+                        <div class="about-projects" style="padding-bottom:0%;">
+                            <div class="about-projects__details" style="background-color:transparant;">
+                                <p>Many support queries and technical questions will alreadybe answered in supporting
                                     documentation such as FAQ's and comments from previous buyers. Anim pariatur
-                                    cliche
-                                    reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
-                                    wolf moon
-                                    officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa
-                                    nesciunt laborum
-                                    eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid
-                                    single-origin
-                                    coffee nulla assumenda shoreditch.</p>
-                                <p class="fs-15"> Anim pariatur cliche reprehenderit, enim eiusmod high
+                                    cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3
+                                    wolf moon.<br>
+                                    Anim pariatur cliche reprehenderit, enim eiusmod high
                                     life accusamus terry richardson ad squid. 3 wolf moon officia aute, non
                                     cupidatat
                                     skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch
                                     3 wolf moon
                                     tempor</p>
                             </div>
-                            <ul class="d-flex text-capitalize">
+                            <ul class="d-flex text-capitalize" style="background-color:transparent;margin-bottom:0%;">
                                 <li>
-                                    <span class="color-light fs-13">Project owner</span>
-                                    <p class="color-dark fs-14 mt-1 mb-0 fw-500">Peter Jackson</p>
+                                    <span class="color-light fs-13" style="background-color:transparant;">Open
+                                        from</span>
+                                    <p class="color-dark fs-14 mt-1 mb-0 fw-500">08:00 am</p>
                                 </li>
                                 <li>
-                                    <span class="color-light fs-13">Budget</span>
-                                    <p class="color-dark fs-14 mt-1 mb-0 fw-500">$56,700</p>
+                                    <span class="color-light fs-13">Closed by</span>
+                                    <p class="color-danger fs-14 mt-1 mb-0 fw-500">17:00 am</p>
                                 </li>
                                 <li>
-                                    <span class="color-light fs-13">Start Date</span>
-                                    <p class="color-primary fs-14 mt-1 mb-0 fw-500">26 Dec 2019</p>
+                                    <span class="color-light fs-13">Now</span>
+                                    <p class="color-primary fs-14 mt-1 mb-0 fw-500">Open</p>
                                 </li>
-                                <li>
-                                    <span class="color-light fs-13">Deadline</span>
-                                    <p class="color-danger fs-14 mt-1 mb-0 fw-500">18 Mar 2020</p>
-                                </li>
+
                             </ul>
                         </div>
                     </div>
                 </div>
                 <!-- ends: col -->
             </div>
-            <!-- ends: .card -->
-            <div class="col-xxl-3 col-lg-6 col-12 mb-25 order-xxl-0 order-lg-1">
-                <div class="card h-100">
-                    <div class="card-header d-flex justify-content-between align-items-center py-10  px-sm-25 px-3">
-                        <h6 class="fw-500 ">users</h6>
-                        <button type="button"
-                            class="border radius-lg color-primary fw-500 fs-12 bg-transparent acButton">
-                            <img class="svg" src="img/svg/user-plus.svg" alt=""> add user</button>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex align-items-center mb-25">
-
-                            <img src="img/tm1.png" class="wh-46 me-15" alt="img">
-                            <div>
-                                <p class="fs-14 fw-600 color-dark mb-0">Meyri Carles</p>
-                                <span class=" mt-1 fs-14  color-light ">UI Designer</span>
-                            </div>
-
-                        </div>
-                        <div class="d-flex align-items-center mb-25">
-
-                            <img src="img/tm2.png" class="wh-46 me-15" alt="img">
-                            <div>
-                                <p class="fs-14 fw-600 color-dark mb-0">Shreyu Neu</p>
-                                <span class=" mt-1 fs-14  color-light ">Web Developer</span>
-                            </div>
-
-                        </div>
-                        <div class="d-flex align-items-center mb-25">
-
-                            <img src="img/tm3.png" class="wh-46 me-15" alt="img">
-                            <div>
-                                <p class="fs-14 fw-600 color-dark mb-0">Tuhin Molla</p>
-                                <span class=" mt-1 fs-14  color-light ">Project Manager</span>
-                            </div>
-
-                        </div>
-                        <div class="d-flex align-items-center mb-25">
-
-                            <img src="img/tm4.png" class="wh-46 me-15" alt="img">
-                            <div>
-                                <p class="fs-14 fw-600 color-dark mb-0">Billal Hossain</p>
-                                <span class=" mt-1 fs-14  color-light ">App Developer</span>
-                            </div>
-
-                        </div>
-                        <div class="d-flex align-items-center">
-
-                            <img src="img/tm5.png" class="wh-46 me-15" alt="img">
-                            <div>
-                                <p class="fs-14 fw-600 color-dark mb-0">Khalid Hasan</p>
-                                <span class=" mt-1 fs-14  color-light ">App Developer</span>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- ends: .card -->
-            </div>
-
-            <!-- ends: col -->
-            <div class="col-xxl-8  mb-25">
-                <div class="card">
-                    <div class="card-header p-0">
-                        <ul class="nav px-25 ap-tab-main app-ui-tab" id="project-ap-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="project-overview-tab" data-bs-toggle="pill"
-                                    href="#project-overview" role="tab" aria-selected="true">task list</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="project-timeline-tab" data-bs-toggle="pill"
-                                    href="#project-timeline" role="tab" aria-selected="false">Activities</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="tab-content w-100" id="projectContent">
-                        <div class="tab-pane fade show active" id="project-overview" role="tabpanel"
-                            aria-labelledby="project-overview-tab">
-                            <div class="card-body px-0 pt-15 pb-15">
-                                <div class="project-task table-responsive table-responsive--dynamic">
-                                    <table class="table table-borderless">
-                                        <tbody>
-
-                                            <tr class="project-task-list ptl--hover draggable " draggable="true">
-                                                <td>
-                                                    <div class="checkbox-group d-flex">
-                                                        <div
-                                                            class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                            <input class="checkbox" type="checkbox"
-                                                                id="check-grp-taske1" checked="">
-                                                            <label for="check-grp-taske1"
-                                                                class="fs-14 color-light strikethrough">
-                                                                Add images to the product
-                                                                gallery
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="project-task-list__right">
-                                                        <ul class="d-flex align-content-center">
-                                                            <li>
-                                                                <span class="fs-12 text-light time-completed">09:30
-                                                                    AM</span>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="cross">
-                                                                    <i class="uil uil-times"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="plus">
-                                                                    <img src="img/svg/move.svg" alt="move" class="svg">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <div class="dropdown dropleft">
-                                                                    <button class="btn-link border-0 bg-transparent p-0"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <img src="img/svg/more-horizontal.svg"
-                                                                            alt="more-horizontal" class="svg">
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu--dynamic">
-                                                                        <a class="dropdown-item" href="#">view</a>
-                                                                        <a class="dropdown-item" href="#">edit</a>
-                                                                        <a class="dropdown-item" href="#">leave</a>
-                                                                        <a class="dropdown-item" href="#">delete</a>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
 
 
-                                            <tr class="project-task-list ptl--hover draggable " draggable="true">
-                                                <td>
-                                                    <div class="checkbox-group d-flex">
-                                                        <div
-                                                            class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                            <input class="checkbox" type="checkbox"
-                                                                id="check-grp-taske2" checked="">
-                                                            <label for="check-grp-taske2"
-                                                                class="fs-14 color-light strikethrough">
-                                                                Update user profile page
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="project-task-list__right">
-                                                        <ul class="d-flex align-content-center">
-                                                            <li>
-                                                                <span class="fs-12 text-light time-completed">09:30
-                                                                    AM</span>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="cross">
-                                                                    <i class="uil uil-times"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="plus">
-                                                                    <img src="img/svg/move.svg" alt="move" class="svg">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <div class="dropdown dropleft">
-                                                                    <button class="btn-link border-0 bg-transparent p-0"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <img src="img/svg/more-horizontal.svg"
-                                                                            alt="more-horizontal" class="svg">
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu--dynamic">
-                                                                        <a class="dropdown-item" href="#">view</a>
-                                                                        <a class="dropdown-item" href="#">edit</a>
-                                                                        <a class="dropdown-item" href="#">leave</a>
-                                                                        <a class="dropdown-item" href="#">delete</a>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-
-                                            <tr class="project-task-list ptl--hover draggable " draggable="true">
-                                                <td>
-                                                    <div class="checkbox-group d-flex">
-                                                        <div
-                                                            class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                            <input class="checkbox" type="checkbox"
-                                                                id="check-grp-taske3">
-                                                            <label for="check-grp-taske3"
-                                                                class="fs-14 color-light strikethrough">
-                                                                Support tickets list doesn't support commas
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="project-task-list__right">
-                                                        <ul class="d-flex align-content-center">
-                                                            <li>
-                                                                <span class="fs-12 text-light time-completed">8:30
-                                                                    AM</span>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="cross">
-                                                                    <i class="uil uil-times"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="plus">
-                                                                    <img src="img/svg/move.svg" alt="move" class="svg">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <div class="dropdown dropleft">
-                                                                    <button class="btn-link border-0 bg-transparent p-0"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <img src="img/svg/more-horizontal.svg"
-                                                                            alt="more-horizontal" class="svg">
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu--dynamic">
-                                                                        <a class="dropdown-item" href="#">view</a>
-                                                                        <a class="dropdown-item" href="#">edit</a>
-                                                                        <a class="dropdown-item" href="#">leave</a>
-                                                                        <a class="dropdown-item" href="#">delete</a>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-
-                                            <tr class="project-task-list ptl--hover draggable " draggable="true">
-                                                <td>
-                                                    <div class="checkbox-group d-flex">
-                                                        <div
-                                                            class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                            <input class="checkbox" type="checkbox"
-                                                                id="check-grp-taske4">
-                                                            <label for="check-grp-taske4"
-                                                                class="fs-14 color-light strikethrough">
-                                                                Changing title text on single locations pages
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="project-task-list__right">
-                                                        <ul class="d-flex align-content-center">
-                                                            <li>
-                                                                <span class="fs-12 text-light time-completed">10:00
-                                                                    AM</span>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="cross">
-                                                                    <i class="uil uil-times"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="plus">
-                                                                    <img src="img/svg/move.svg" alt="move" class="svg">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <div class="dropdown dropleft">
-                                                                    <button class="btn-link border-0 bg-transparent p-0"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <img src="img/svg/more-horizontal.svg"
-                                                                            alt="more-horizontal" class="svg">
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu--dynamic">
-                                                                        <a class="dropdown-item" href="#">view</a>
-                                                                        <a class="dropdown-item" href="#">edit</a>
-                                                                        <a class="dropdown-item" href="#">leave</a>
-                                                                        <a class="dropdown-item" href="#">delete</a>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-
-                                            <tr class="project-task-list ptl--hover draggable " draggable="true">
-                                                <td>
-                                                    <div class="checkbox-group d-flex">
-                                                        <div
-                                                            class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                            <input class="checkbox" type="checkbox"
-                                                                id="check-grp-taske5">
-                                                            <label for="check-grp-taske5"
-                                                                class="fs-14 color-light strikethrough">
-                                                                Registration Confirmation! Email is missing some
-                                                                information
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="project-task-list__right">
-                                                        <ul class="d-flex align-content-center">
-                                                            <li>
-                                                                <span class="fs-12 text-light time-completed">8:30
-                                                                    PM</span>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="cross">
-                                                                    <i class="uil uil-times"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="plus">
-                                                                    <img src="img/svg/move.svg" alt="move" class="svg">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <div class="dropdown dropleft">
-                                                                    <button class="btn-link border-0 bg-transparent p-0"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <img src="img/svg/more-horizontal.svg"
-                                                                            alt="more-horizontal" class="svg">
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu--dynamic">
-                                                                        <a class="dropdown-item" href="#">view</a>
-                                                                        <a class="dropdown-item" href="#">edit</a>
-                                                                        <a class="dropdown-item" href="#">leave</a>
-                                                                        <a class="dropdown-item" href="#">delete</a>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-
-                                            <tr class="project-task-list ptl--hover draggable " draggable="true">
-                                                <td>
-                                                    <div class="checkbox-group d-flex">
-                                                        <div
-                                                            class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                            <input class="checkbox" type="checkbox" id="check-grp-6">
-                                                            <label for="check-grp-6"
-                                                                class="fs-14 color-light strikethrough">
-                                                                Login page not redirecting wrong
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="project-task-list__right">
-                                                        <ul class="d-flex align-content-center">
-                                                            <li>
-                                                                <span
-                                                                    class="fs-12 text-light time-completed">Yesterday</span>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="cross">
-                                                                    <i class="uil uil-times"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="plus">
-                                                                    <img src="img/svg/move.svg" alt="move" class="svg">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <div class="dropdown dropleft">
-                                                                    <button class="btn-link border-0 bg-transparent p-0"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <img src="img/svg/more-horizontal.svg"
-                                                                            alt="more-horizontal" class="svg">
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu--dynamic">
-                                                                        <a class="dropdown-item" href="#">view</a>
-                                                                        <a class="dropdown-item" href="#">edit</a>
-                                                                        <a class="dropdown-item" href="#">leave</a>
-                                                                        <a class="dropdown-item" href="#">delete</a>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-
-                                            <tr class="project-task-list ptl--hover draggable " draggable="true">
-                                                <td>
-                                                    <div class="checkbox-group d-flex">
-                                                        <div
-                                                            class="checkbox-theme-default custom-checkbox checkbox-group__single d-flex">
-                                                            <input class="checkbox" type="checkbox" id="check-grp-7">
-                                                            <label for="check-grp-7"
-                                                                class="fs-14 color-light strikethrough">
-                                                                Custom Field for Registration
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="project-task-list__right">
-                                                        <ul class="d-flex align-content-center">
-                                                            <li>
-                                                                <span class="fs-12 text-light time-completed">Wed</span>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="cross">
-                                                                    <i class="uil uil-times"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="#" class="plus">
-                                                                    <img src="img/svg/move.svg" alt="move" class="svg">
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <div class="dropdown dropleft">
-                                                                    <button class="btn-link border-0 bg-transparent p-0"
-                                                                        data-bs-toggle="dropdown" aria-haspopup="true"
-                                                                        aria-expanded="false">
-                                                                        <img src="img/svg/more-horizontal.svg"
-                                                                            alt="more-horizontal" class="svg">
-                                                                    </button>
-                                                                    <div class="dropdown-menu dropdown-menu--dynamic">
-                                                                        <a class="dropdown-item" href="#">view</a>
-                                                                        <a class="dropdown-item" href="#">edit</a>
-                                                                        <a class="dropdown-item" href="#">leave</a>
-                                                                        <a class="dropdown-item" href="#">delete</a>
-                                                                    </div>
-                                                                </div>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
-                                                </td>
-                                            </tr>
-
-                                        </tbody>
-                                    </table>
-                                    <div class="task-list-btn px-25 my-10">
-                                        <button class="text-primary">
-                                            <img class="svg" src="img/svg/plus.svg" alt="">Add New
-                                            Task</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="project-timeline" role="tabpanel"
-                            aria-labelledby="project-timeline-tab">
-                            <div class="card-body px-0 mx-25 border-bottom">
-                                <div class="task-activities d-flex align-items-center">
-                                    <div class="task-activities__left d-flex">
-                                        <div
-                                            class="content-center border bg-normal radius-xl me-sm-20 me-0 task-activities__month">
-                                            <div class=" px-20 text-center">
-                                                <h5>22</h5>
-                                                <span class="fs-13 color-gray">December</span>
-                                            </div>
-                                        </div>
-                                        <div class="task-activities__right">
-                                            <ul>
-
-                                                <li class="">
-                                                    <div
-                                                        class="ffp d-flex justify-content-between align-items-center w-100">
-                                                        <div class="d-flex">
-                                                            <div
-                                                                class="me-3 ffp__imgWrapper d-flex align-items-center ">
-                                                                <span
-                                                                    class=" wh-24 me-15 rounded-circle content-center color-danger bg-opacity-danger">
-                                                                    <img src="img/svg/plus.svg" alt="plus"
-                                                                        class="svg"></span>
-                                                                <span
-                                                                    class="profile-image rounded-circle d-block wh-34 m-0 "
-                                                                    style="background-image:url('img/tm5.png'); background-size: cover;"></span>
-                                                            </div>
-                                                            <div>
-                                                                <a href="#">
-                                                                    <p class="fw-500 fs-14 text-dark mb-0">Mumtahin
-                                                                        <span class="color-light mx-1 fw-400">added new
-                                                                            task</span>Mumtahin Dashboard Project
-                                                                    </p>
-                                                                </a>
-                                                                <span class="pt-1 d-block color-extra-light fs-12">
-                                                                    3:30 PM
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-
-                                                <li class="">
-                                                    <div
-                                                        class="ffp d-flex justify-content-between align-items-center w-100">
-                                                        <div class="d-flex">
-                                                            <div
-                                                                class="me-3 ffp__imgWrapper d-flex align-items-center ">
-                                                                <span
-                                                                    class=" wh-24 me-15 rounded-circle content-center color-primary bg-opacity-primary">
-                                                                    <img src="img/svg/code.svg" alt="code"
-                                                                        class="svg"></span>
-                                                                <span
-                                                                    class="profile-image rounded-circle d-block wh-34 m-0 "
-                                                                    style="background-image:url('img/tm6.png'); background-size: cover;"></span>
-                                                            </div>
-                                                            <div>
-                                                                <a href="#">
-                                                                    <p class="fw-500 fs-14 text-dark mb-0">Mike Greene
-                                                                        <span class="color-light mx-1 fw-400">pushed
-                                                                            commit</span>#652364
-                                                                    </p>
-                                                                </a>
-                                                                <span class="pt-1 d-block color-extra-light fs-12">
-                                                                    9:30 PM
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-
-                                                <li class="">
-                                                    <div
-                                                        class="ffp d-flex justify-content-between align-items-center w-100">
-                                                        <div class="d-flex">
-                                                            <div
-                                                                class="me-3 ffp__imgWrapper d-flex align-items-center ">
-                                                                <span
-                                                                    class=" wh-24 me-15 rounded-circle content-center color-success bg-opacity-success">
-                                                                    <img src="img/svg/check.svg" alt="check"
-                                                                        class="svg"></span>
-                                                                <span
-                                                                    class="profile-image rounded-circle d-block wh-34 m-0 "
-                                                                    style="background-image:url('img/tm2.png'); background-size: cover;"></span>
-                                                            </div>
-                                                            <div>
-                                                                <a href="#">
-                                                                    <p class="fw-500 fs-14 text-dark mb-0">Tomlinson
-                                                                        <span class="color-light mx-1 fw-400">completed
-                                                                            task</span>Invoice template
-                                                                    </p>
-                                                                </a>
-                                                                <span class="pt-1 d-block color-extra-light fs-12">
-                                                                    10:30 PM
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-body px-0 mx-25">
-                                <div class="task-activities d-flex align-items-center">
-                                    <div class="task-activities__left d-flex">
-                                        <div
-                                            class="content-center border bg-normal radius-xl me-sm-20 me-0 task-activities__month">
-                                            <div class=" px-20 text-center">
-                                                <h5>21</h5>
-                                                <span class="fs-13 color-gray">December</span>
-                                            </div>
-                                        </div>
-                                        <div class="task-activities__right">
-                                            <ul>
-
-                                                <li class="">
-                                                    <div
-                                                        class="ffp d-flex justify-content-between align-items-center w-100">
-                                                        <div class="d-flex">
-                                                            <div
-                                                                class="me-3 ffp__imgWrapper d-flex align-items-center ">
-                                                                <span
-                                                                    class=" wh-24 me-15 rounded-circle content-center color-info bg-opacity-info">
-                                                                    <img src="img/svg/user-plus.svg" alt="user-plus"
-                                                                        class="svg"></span>
-                                                                <span
-                                                                    class="profile-image rounded-circle d-block wh-34 m-0 "
-                                                                    style="background-image:url('img/tm2.png'); background-size: cover;"></span>
-                                                            </div>
-                                                            <div>
-                                                                <a href="#">
-                                                                    <p class="fw-500 fs-14 text-dark mb-0">Mumtahin
-                                                                        <span class="color-light mx-1 fw-400">added new
-                                                                            task</span>Mumtahin Dashboard Project
-                                                                    </p>
-                                                                </a>
-                                                                <span class="pt-1 d-block color-extra-light fs-12">
-                                                                    3:30 PM
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-
-                                                <li class="">
-                                                    <div
-                                                        class="ffp d-flex justify-content-between align-items-center w-100">
-                                                        <div class="d-flex">
-                                                            <div
-                                                                class="me-3 ffp__imgWrapper d-flex align-items-center ">
-                                                                <span
-                                                                    class=" wh-24 me-15 rounded-circle content-center color-primary bg-opacity-primary">
-                                                                    <img src="img/svg/code.svg" alt="code"
-                                                                        class="svg"></span>
-                                                                <span
-                                                                    class="profile-image rounded-circle d-block wh-34 m-0 "
-                                                                    style="background-image:url('img/tm3.png'); background-size: cover;"></span>
-                                                            </div>
-                                                            <div>
-                                                                <a href="#">
-                                                                    <p class="fw-500 fs-14 text-dark mb-0">Mike Greene
-                                                                        <span class="color-light mx-1 fw-400">pushed
-                                                                            commit</span>#652364
-                                                                    </p>
-                                                                </a>
-                                                                <span class="pt-1 d-block color-extra-light fs-12">
-                                                                    9:30 PM
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-
-                                                <li class="">
-                                                    <div
-                                                        class="ffp d-flex justify-content-between align-items-center w-100">
-                                                        <div class="d-flex">
-                                                            <div
-                                                                class="me-3 ffp__imgWrapper d-flex align-items-center ">
-                                                                <span
-                                                                    class=" wh-24 me-15 rounded-circle content-center color-warning bg-opacity-warning">
-                                                                    <img src="img/svg/upload.svg" alt="upload"
-                                                                        class="svg"></span>
-                                                                <span
-                                                                    class="profile-image rounded-circle d-block wh-34 m-0 "
-                                                                    style="background-image:url('img/tm4.png'); background-size: cover;"></span>
-                                                            </div>
-                                                            <div>
-                                                                <a href="#">
-                                                                    <p class="fw-500 fs-14 text-dark mb-0">Tomlinson
-                                                                        <span class="color-light mx-1 fw-400">completed
-                                                                            task</span>Invoice template
-                                                                    </p>
-                                                                </a>
-                                                                <span class="pt-1 d-block color-extra-light fs-12">
-                                                                    10:30 PM
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                            </ul>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- ends: .card -->
-            </div>
             <!-- ends: col -->
             <div class="col-xxl-4 col-lg-6 order-xxl-0 order-lg-1">
-                <div class="card pb-10 border-0">
-                    <div class="card-header py-20  px-sm-25 px-3 ">
-                        <h6>files</h6>
+
+
+                <div class="row calendar-grid">
+                    <div class="col-8-offset-5">
+                        <div class="dm-calendar">
+
+
+                            <div class="card card-md mb-4">
+                                <div class="card-body px-10">
+                                    <div class="date-picker">
+                                        <div class="date-picker__calendar hasDatepicker" id="dp1676558858655">
+                                            <div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
+                                                style="display: block;">
+                                                <div
+                                                    class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
+                                                    <a class="ui-datepicker-prev ui-corner-all" data-handler="prev"
+                                                        data-event="click" title="Prev"><span
+                                                            class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a
+                                                        class="ui-datepicker-next ui-corner-all" data-handler="next"
+                                                        data-event="click" title="Next"><span
+                                                            class="ui-icon ui-icon-circle-triangle-e">Next</span></a>
+                                                    <div class="ui-datepicker-title"><span
+                                                            class="ui-datepicker-month">February</span>&nbsp;<span
+                                                            class="ui-datepicker-year">2023</span></div>
+                                                </div>
+                                                <table class="ui-datepicker-calendar">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col" class="ui-datepicker-week-end"><span
+                                                                    title="Sunday">Su</span></th>
+                                                            <th scope="col"><span title="Monday">Mo</span></th>
+                                                            <th scope="col"><span title="Tuesday">Tu</span></th>
+                                                            <th scope="col"><span title="Wednesday">We</span></th>
+                                                            <th scope="col"><span title="Thursday">Th</span></th>
+                                                            <th scope="col"><span title="Friday">Fr</span></th>
+                                                            <th scope="col" class="ui-datepicker-week-end"><span
+                                                                    title="Saturday">Sa</span></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td
+                                                                class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                &nbsp;</td>
+                                                            <td
+                                                                class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                &nbsp;</td>
+                                                            <td
+                                                                class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                &nbsp;</td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="1">1</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="2">2</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="3">3</a></td>
+                                                            <td class=" ui-datepicker-week-end "
+                                                                data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="4">4</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class=" ui-datepicker-week-end "
+                                                                data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="5">5</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="6">6</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="7">7</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="8">8</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="9">9</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="10">10</a></td>
+                                                            <td class=" ui-datepicker-week-end "
+                                                                data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="11">11</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class=" ui-datepicker-week-end "
+                                                                data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="12">12</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="13">13</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="14">14</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="15">15</a></td>
+                                                            <td class=" ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today"
+                                                                data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default ui-state-highlight ui-state-active"
+                                                                    href="#" aria-current="true" data-date="16">16</a>
+                                                            </td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="17">17</a></td>
+                                                            <td class=" ui-datepicker-week-end "
+                                                                data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="18">18</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class=" ui-datepicker-week-end "
+                                                                data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="19">19</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="20">20</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="21">21</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="22">22</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="23">23</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="24">24</a></td>
+                                                            <td class=" ui-datepicker-week-end "
+                                                                data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="25">25</a></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class=" ui-datepicker-week-end "
+                                                                data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="26">26</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="27">27</a></td>
+                                                            <td class=" " data-handler="selectDay" data-event="click"
+                                                                data-month="1" data-year="2023"><a
+                                                                    class="ui-state-default" href="#"
+                                                                    aria-current="false" data-date="28">28</a></td>
+                                                            <td
+                                                                class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                &nbsp;</td>
+                                                            <td
+                                                                class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                &nbsp;</td>
+                                                            <td
+                                                                class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                &nbsp;</td>
+                                                            <td
+                                                                class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                &nbsp;</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card card-md mb-4">
+                                <div class="card-body">
+                                    <div class="draggable-events" id="draggable-events">
+
+
+
+                                        {# with every add #}
+                                        <button class="btn btn-light btn-default btn-rounded " disabled="">
+                                            {#<img src="img/svg/layers.svg" alt="layers" class="svg">#}
+                                            10h-11h
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <div class="mb-20">
 
-                            <div class="files-area d-flex justify-content-between align-items-center">
-                                <div class="files-area__left d-flex align-items-center">
-                                    <div class="files-area__img">
-                                        <img src="img/zip@2x.png" alt="img" class="wh-42">
+                </div>
+            </div>
+
+            <!-- ends: col -->
+            <div class="col-xxl-4 col-lg-6 order-xxl-0 order-lg-1">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title">Add a free Slot</h6>
+
+                    </div>
+                    <div class="modal-body">
+                        <div class="c-event-form">
+                            <form action="#">
+
+                                <!-- ends: .e-form-row -->
+                                <div class="e-form-row d-flex">
+
+
+                                </div>
+                                <!-- ends: .e-form-row -->
+                                <div class="e-form-row d-flex">
+                                    <div class="e-form-row__left">
+                                        <label>Start</label>
                                     </div>
-                                    <div class="files-area__title">
-                                        <p class="mb-0 fs-14 fw-500 color-dark text-capitalize">Main-admin-design.zip
-                                        </p>
-                                        <span class="color-light fs-12 d-flex ">7.05 MB</span>
-                                        <div class="d-flex text-capitalize">
-                                            <a href="#" class="fs-12 fw-500 color-primary ">download</a>
-                                            <a href="#" class="fs-12 fw-500 color-primary ms-10"></a>
+                                    <div class="e-form-row__right d-flex">
+                                        <div class="input-container icon-left position-relative me-2">
+                                            <span class="input-icon icon-left">
+                                                <img class="svg" src="../img/svg/chevron-right.svg"
+                                                    alt="chevron-right.svg">
+                                            </span>
+
+                                        </div>
+                                        <div class="input-container icon-left position-relative">
+                                            <span class="input-icon icon-left">
+                                                <img class="svg" src="../img/svg/clock.svg" alt="clock">
+                                            </span>
+                                            <input type="text" class="form-control form-control-md" name="s-time"
+                                                placeholder="Select Time">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- ends: .e-form-row -->
+                                <div class="e-form-row d-flex">
+                                    <div class="e-form-row__left">
+                                        <label>End</label>
+                                    </div>
+                                    <div class="e-form-row__right d-flex">
+                                        <div class="input-container icon-left position-relative me-2">
+                                            <span class="input-icon icon-left">
+                                                <img class="svg" src="../img/svg/chevron-right.svg"
+                                                    alt="chevron-right.svg">
+                                            </span>
+                                        </div>
+                                        <div class="input-container icon-left position-relative">
+
+                                            <span class="input-icon icon-left">
+                                                <img class="svg" src="../img/svg/clock.svg" alt="clock">
+                                            </span>
+
+                                            <input type="text" class="form-control form-control-md" name="e-time"
+                                                placeholder="Select Time">
                                         </div>
                                     </div>
 
+
+
+
+
+
+
                                 </div>
-                                <div class="files-area__right">
-                                    <div class="dropdown dropleft">
-                                        <button class="btn-link border-0 bg-transparent p-0" data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <img src="img/svg/more-horizontal.svg" alt="more-horizontal" class="svg">
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu--dynamic">
-                                            <a class="dropdown-item" href="#">view</a>
-                                            <a class="dropdown-item" href="#">edit</a>
-                                            <a class="dropdown-item" href="#">leave</a>
-                                            <a class="dropdown-item" href="#">delete</a>
-                                        </div>
+                                <!-- ends: .e-form-row -->
+                                <div class="e-form-row d-flex">
+                                    <div class="e-form-row__left">
+                                        <label>Description</label>
+                                    </div>
+                                    <div class="e-form-row__right">
+                                        <textarea name="e-description" class="form-control form-control-md"
+                                            placeholder="Add Description"></textarea>
                                     </div>
                                 </div>
-                            </div>
-
+                                <!-- ends: .e-form-row -->
+                            </form>
                         </div>
-                        <div class="mb-20">
-
-                            <div class="files-area d-flex justify-content-between align-items-center">
-                                <div class="files-area__left d-flex align-items-center">
-                                    <div class="files-area__img">
-                                        <img src="img/pdf@2x.png" alt="img" class="wh-42">
-                                    </div>
-                                    <div class="files-area__title">
-                                        <p class="mb-0 fs-14 fw-500 color-dark text-capitalize">Product-guidelines.pdf
-                                        </p>
-                                        <span class="color-light fs-12 d-flex ">5.07 KB</span>
-                                        <div class="d-flex text-capitalize">
-                                            <a href="#" class="fs-12 fw-500 color-primary ">view</a>
-                                            <a href="#" class="fs-12 fw-500 color-primary ms-10">download</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="files-area__right">
-                                    <div class="dropdown dropleft">
-                                        <button class="btn-link border-0 bg-transparent p-0" data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <img src="img/svg/more-horizontal.svg" alt="more-horizontal" class="svg">
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu--dynamic">
-                                            <a class="dropdown-item" href="#">view</a>
-                                            <a class="dropdown-item" href="#">edit</a>
-                                            <a class="dropdown-item" href="#">leave</a>
-                                            <a class="dropdown-item" href="#">delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="mb-20">
-
-                            <div class="files-area d-flex justify-content-between align-items-center">
-                                <div class="files-area__left d-flex align-items-center">
-                                    <div class="files-area__img">
-                                        <img src="img/psd@2x.png" alt="img" class="wh-42">
-                                    </div>
-                                    <div class="files-area__title">
-                                        <p class="mb-0 fs-14 fw-500 color-dark text-capitalize">admin-wireframe.psd</p>
-                                        <span class="color-light fs-12 d-flex ">2.05 MB</span>
-                                        <div class="d-flex text-capitalize">
-                                            <a href="#" class="fs-12 fw-500 color-primary ">download</a>
-                                            <a href="#" class="fs-12 fw-500 color-primary ms-10"></a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="files-area__right">
-                                    <div class="dropdown dropleft">
-                                        <button class="btn-link border-0 bg-transparent p-0" data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <img src="img/svg/more-horizontal.svg" alt="more-horizontal" class="svg">
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu--dynamic">
-                                            <a class="dropdown-item" href="#">view</a>
-                                            <a class="dropdown-item" href="#">edit</a>
-                                            <a class="dropdown-item" href="#">leave</a>
-                                            <a class="dropdown-item" href="#">delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="mb-20">
-
-                            <div class="files-area d-flex justify-content-between align-items-center">
-                                <div class="files-area__left d-flex align-items-center">
-                                    <div class="files-area__img">
-                                        <img src="img/jpg@2x.png" alt="img" class="wh-42">
-                                    </div>
-                                    <div class="files-area__title">
-                                        <p class="mb-0 fs-14 fw-500 color-dark text-capitalize">
-                                            Wirefram-escreenshots.jpg</p>
-                                        <span class="color-light fs-12 d-flex ">522 KB</span>
-                                        <div class="d-flex text-capitalize">
-                                            <a href="#" class="fs-12 fw-500 color-primary ">view</a>
-                                            <a href="#" class="fs-12 fw-500 color-primary ms-10">download</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="files-area__right">
-                                    <div class="dropdown dropleft">
-                                        <button class="btn-link border-0 bg-transparent p-0" data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <img src="img/svg/more-horizontal.svg" alt="more-horizontal" class="svg">
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu--dynamic">
-                                            <a class="dropdown-item" href="#">view</a>
-                                            <a class="dropdown-item" href="#">edit</a>
-                                            <a class="dropdown-item" href="#">leave</a>
-                                            <a class="dropdown-item" href="#">delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div>
-
-                            <div class="files-area d-flex justify-content-between align-items-center">
-                                <div class="files-area__left d-flex align-items-center">
-                                    <div class="files-area__img">
-                                        <img src="img/png@2x.png" alt="img" class="wh-42">
-                                    </div>
-                                    <div class="files-area__title">
-                                        <p class="mb-0 fs-14 fw-500 color-dark text-capitalize">Logo.png</p>
-                                        <span class="color-light fs-12 d-flex ">522 KB</span>
-                                        <div class="d-flex text-capitalize">
-                                            <a href="#" class="fs-12 fw-500 color-primary ">view</a>
-                                            <a href="#" class="fs-12 fw-500 color-primary ms-10">download</a>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="files-area__right">
-                                    <div class="dropdown dropleft">
-                                        <button class="btn-link border-0 bg-transparent p-0" data-bs-toggle="dropdown"
-                                            aria-haspopup="true" aria-expanded="false">
-                                            <img src="img/svg/more-horizontal.svg" alt="more-horizontal" class="svg">
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu--dynamic">
-                                            <a class="dropdown-item" href="#">view</a>
-                                            <a class="dropdown-item" href="#">edit</a>
-                                            <a class="dropdown-item" href="#">leave</a>
-                                            <a class="dropdown-item" href="#">delete</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white btn-sm" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary btn-sm">Save</button>
                     </div>
                 </div>
                 <!-- ends: .card -->
@@ -1230,7 +902,7 @@
 #}
 
 
-{{ include('BackOffice/facility/_delete_form.html.twig') }}
+
 
 
 

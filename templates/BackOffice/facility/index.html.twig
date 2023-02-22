@@ -24,11 +24,12 @@
                 </svg>
                 <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search by Name"
                     aria-label="Search">
-            </form>
+                </form>
         </div>
         <div class="action-btn">
+            
             <a href="{{ path('app_facility_new') }}" class="btn px-15 btn-primary" data-bs-toggle="modal"
-                data-bs-target="#add-contact">
+                data-bs-target="BackOffice/facility/_form.html.twig">
                 <i class="las la-plus fs-16"></i>Add New
             </a>
 
@@ -51,7 +52,7 @@
                         <div class="modal-body">
                             <div class="add-new-contact">
 
-                               
+
                                 <form action="/">
                                     <div class="form-group mb-20">
                                         <label>Name:</label>
@@ -157,12 +158,12 @@
                                         <div class="userDatatable-inline-title">
 
                                             <h6>{{ facility.name }}</h6>
-                                            
+
                                             {#
                                             <p class="d-block mb-0">
                                                 ...
                                             </p>
-                                            #} 
+                                            #}
 
 
 
@@ -205,9 +206,11 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="{{ path('app_facility_edit', {'id': facility.id}) }}" class="edit">
+
+                                        <a href="{{ path('app_facility_edit', {'id': facility.id}) }}"
+                                                value="{{ csrf_token('edit' ~ facility.id) }}" class="edit">
                                                 <i class="uil uil-edit"></i>
-                                            </a>
+                                        </a>
                                         </li>
                                         <li>
                                             <a href="{{ path('app_facility_delete', {'id': facility.id}) }}"
@@ -215,7 +218,7 @@
                                                 <i class="uil uil-trash-alt"></i>
                                             </a>
 
-                                            
+
                                             {#
                                             <form method="post"
                                                 action="{{ path('app_facility_delete', {'id': facility.id}) }}"
@@ -227,7 +230,7 @@
                                             #}
 
 
-                                            
+
                                         </li>
 
                                     </ul>

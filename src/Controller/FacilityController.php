@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/facility')]
 class FacilityController extends AbstractController
 {
-    #[Route('/', name: 'app_facility_index', methods: ['GET'])]
+    #[Route('/admin', name: 'app_facility_indexAdmin', methods: ['GET'])]
     public function index(FacilityRepository $facilityRepository): Response
     {
         return $this->render('BackOffice/facility/index.html.twig', [
@@ -21,7 +21,15 @@ class FacilityController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_facility_new', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_emergency_index', methods: ['GET'])]
+    public function indexAdmin(FacilityRepository $facilityRepository): Response
+    {
+        return $this->render('FrontOffice/facility/index.html.twig', [
+            'emergencies' => $facilityRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/admin/new', name: 'app_facility_new', methods: ['GET', 'POST'])]
     public function new(Request $request, FacilityRepository $facilityRepository): Response
     {
         $facility = new Facility();
@@ -52,7 +60,7 @@ class FacilityController extends AbstractController
 
 
 
-    #[Route('/{id}/edit', name: 'app_facility_edit', methods: ['GET', 'POST'])]
+    #[Route('/admin/{id}/edit', name: 'app_facility_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Facility $facility, FacilityRepository $facilityRepository): Response
     {
         $form = $this->createForm(FacilityType::class, $facility);
