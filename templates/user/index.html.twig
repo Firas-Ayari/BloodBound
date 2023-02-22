@@ -10,7 +10,6 @@
             <tr>
                 <th>Id</th>
                 <th>Email</th>
-                <th>Roles</th>
                 <th>Password</th>
                 <th>Name</th>
                 <th>Number</th>
@@ -18,9 +17,10 @@
                 <th>Location</th>
                 <th>DonationStatus</th>
                 <th>BloodType</th>
-                <th>IsVerified</th>
                 <th>CreatedAt</th>
                 <th>UpdatedAt</th>
+                <th>IsVerified</th>
+                <th>UserRole</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -29,7 +29,6 @@
             <tr>
                 <td>{{ user.id }}</td>
                 <td>{{ user.email }}</td>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
                 <td>{{ user.password }}</td>
                 <td>{{ user.name }}</td>
                 <td>{{ user.number }}</td>
@@ -37,17 +36,18 @@
                 <td>{{ user.location }}</td>
                 <td>{{ user.donationStatus }}</td>
                 <td>{{ user.bloodType }}</td>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
                 <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+                <td>{{ user.userRole }}</td>
                 <td>
-                    <a href="{{ path('app_user_show', {'id': user.id}) }}">show</a>
+                    <a href="{{ path('app_show_user', {'id': user.id}) }}">show</a>
                     <a href="{{ path('app_user_edit', {'id': user.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="14">no records found</td>
+                <td colspan="15">no records found</td>
             </tr>
         {% endfor %}
         </tbody>

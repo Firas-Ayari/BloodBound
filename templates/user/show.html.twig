@@ -16,10 +16,6 @@
                 <td>{{ user.email }}</td>
             </tr>
             <tr>
-                <th>Roles</th>
-                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
-            </tr>
-            <tr>
                 <th>Password</th>
                 <td>{{ user.password }}</td>
             </tr>
@@ -48,16 +44,20 @@
                 <td>{{ user.bloodType }}</td>
             </tr>
             <tr>
-                <th>IsVerified</th>
-                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
                 <th>CreatedAt</th>
                 <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
             </tr>
             <tr>
                 <th>UpdatedAt</th>
                 <td>{{ user.updatedAt ? user.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>IsVerified</th>
+                <td>{{ user.isVerified ? 'Yes' : 'No' }}</td>
+            </tr>
+            <tr>
+                <th>UserRole</th>
+                <td>{{ user.userRole }}</td>
             </tr>
         </tbody>
     </table>

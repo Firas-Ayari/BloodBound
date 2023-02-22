@@ -3,9 +3,11 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Enum\UserRole;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class UserType extends AbstractType
 {
@@ -13,18 +15,36 @@ class UserType extends AbstractType
     {
         $builder
             ->add('email')
-            ->add('roles')
             ->add('password')
             ->add('name')
             ->add('number')
             ->add('age')
             ->add('location')
-            ->add('donationStatus')
-            ->add('bloodType')
-            ->add('isVerified')
-            ->add('createdAt')
-            ->add('updatedAt')
-            ->add('facilities')
+            ->add('donationStatus', ChoiceType::class, [
+                'choices'  => [
+                    'Ready' => 'Ready',
+                    'Waiting' => 'Waiting'
+                ]
+            ])
+            ->add('bloodType', ChoiceType::class, [
+                'choices'  => [
+                    'A+' => 'A+',
+                    'A-' => 'A-',
+                    'B+' => 'B+',
+                    'B-' => 'B-',
+                    'AB+' => 'AB+',
+                    'AB-' => 'AB-',
+                    'O+' => 'O+',
+                    'O-' => 'O-',
+                ]
+            ])
+            ->add('userRole', ChoiceType::class, [
+                'choices' => [
+                    'Donor' => 'Donor',
+                    'Patient' => 'Patient',
+                    'Association' => 'Association'
+                ]
+            ])
         ;
     }
 

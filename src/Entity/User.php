@@ -2,14 +2,17 @@
 
 namespace App\Entity;
 
+
+use App\Enum\UserRole;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping\JoinTable;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -32,54 +35,48 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-
+    #[Assert\NotBlank(message: 'Please enter a password')]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    /**
-     * @Assert\NotBlank(message= "Please enter your name")
-     * @Assert\length(
-     * min=5,
-     * minMessage="your name at least 5 caracteres")
-     */
+    #[Assert\NotBlank(message: 'Please enter a name')]
+    #[Assert\Length(
+        min: 5,
+        max: 255,
+        minMessage: 'The name must be at least {{ limit }} characters',
+        maxMessage: 'The name cannot exceed {{ limit }} characters'
+    )]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
-    /**
-     * @Assert\NotBlank(message= "Please enter your number")
-     * @Assert\length(
-     * min=8,
-     * minMessage="your number  at least 8 caracteres")
-     */
+    #[Assert\NotBlank(message: 'Please enter a valid phone number')]
+    #[Assert\Length(
+        min: 8,
+        max: 12,
+        minMessage: 'The phone number must be at least {{ limit }} digits',
+        maxMessage: 'The phone number cannot exceed {{ limit }} digits'
+    )]
     private ?string $number = null;
 
     #[ORM\Column]
-     /**
-     * @Assert\NotBlank(message= "Please enter your number")
-      * @Assert\LessThan(5)
-     */
+    #[Assert\GreaterThan(20)]
     private ?int $age = null;
 
     #[ORM\Column(length: 255)]
-
-        /**
-     * @Assert\NotBlank(message= "Please enter your Location")
-     * @Assert\length(
-     * min=5,
-     * minMessage="your Location  at least 5 caracteres")
-     */
+    #[Assert\Length(
+        min: 5,
+        max: 255,
+        minMessage: 'The location address be at least {{ limit }} characters',
+        maxMessage: 'The location address cannot exceed {{ limit }} characters'
+    )]
     private ?string $location = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    /**
-     * @Assert\Choice({"panding", "avaible"})
-     */
+    #[Assert\Choice(choices: ['Ready', 'Waiting'], message: 'Invalid Status')]
     private ?string $donationStatus = null;
 
     #[ORM\Column(length: 255)]
-    /**
-     * @Assert\Choice({"A+", "A-", "B+"})
-     */
+    #[Assert\Choice(choices: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], message: 'Invalid type of blood ')]
     private ?string $bloodType = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Event::class)]
@@ -88,18 +85,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ProductCategory::class)]
     private Collection $productCategories;
 
-    #[ManyToMany(targetEntity: Facility::class, inversedBy: 'users')]
-    #[JoinTable(name: 'users_facilities')]
-    private Collection $facilities;
-
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Emergency::class)]
     private Collection $emergencies;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ArticleCategory::class)]
     private Collection $articleCategories;
-
-    #[ORM\Column(type: 'boolean')]
-    private $isVerified = false;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $createdAt = null;
@@ -110,11 +100,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Appointment::class)]
     private Collection $appointments;
 
+    #[ORM\Column(type: 'boolean')]
+    private $isVerified = false;
+
+    #[ORM\Column(length: 255)]
+    private ?string $userRole = null;
+
     public function __construct()
     {
+        $this->createdAt = new \DateTimeImmutable();
         $this->events = new ArrayCollection();
         $this->productCategories = new ArrayCollection();
-        $this->facilities = new ArrayCollection();
         $this->emergencies = new ArrayCollection();
         $this->articleCategories = new ArrayCollection();
         $this->appointments = new ArrayCollection();
@@ -124,7 +120,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return $this->id;
     }
-
     public function getEmail(): ?string
     {
         return $this->email;
@@ -342,30 +337,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Facility>
-     */
-    public function getFacilities(): Collection
-    {
-        return $this->facilities;
-    }
-
-    public function addFacility(Facility $facility): self
-    {
-        if (!$this->facilities->contains($facility)) {
-            $this->facilities->add($facility);
-        }
-
-        return $this;
-    }
-
-    public function removeFacility(Facility $facility): self
-    {
-        $this->facilities->removeElement($facility);
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Emergency>
      */
     public function getEmergencies(): Collection
@@ -425,18 +396,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function isVerified(): bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
@@ -487,6 +446,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $appointment->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getUserRole(): ?string
+    {
+        return $this->userRole;
+    }
+
+    public function setUserRole(string $userRole): self
+    {
+        $this->userRole = $userRole;
 
         return $this;
     }
