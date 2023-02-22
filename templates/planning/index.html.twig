@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Planning index{% endblock %}
+
+{% block body %}
+    <h1>Planning index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Weekday</th>
+                <th>Hourtime</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for planning in plannings %}
+            <tr>
+                <td>{{ planning.id }}</td>
+                <td>{{ planning.weekday ? planning.weekday|date('Y-m-d') : '' }}</td>
+                <td>{{ planning.hourtime ? planning.hourtime|date('H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_planning_show', {'id': planning.id}) }}">show</a>
+                    <a href="{{ path('app_planning_edit', {'id': planning.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_planning_new') }}">Create new</a>
+{% endblock %}

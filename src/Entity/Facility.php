@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Entity;
-use Symfony\Component\Validator\Constraints as Assert;
+
 use App\Repository\FacilityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+
 
 #[ORM\Entity(repositoryClass: FacilityRepository::class)]
 class Facility
@@ -15,49 +17,43 @@ class Facility
     #[ORM\Column]
     private ?int $id = null;
 
-
     #[ORM\Column(length: 255)]
-    /**
-     * @Assert\NotBlank(message = "Please enter a value.")
-     * @Assert\Length(
-     *     min=5,
-     *     max=30,
-     *     minMessage="Le nom doit comporter au moins {{ limit }} caractères",
-     *     maxMessage="Le nom ne peut pas dépasser {{ limit }} caractères"
-     * )
-     */
     private ?string $name = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $location = null;
 
+    #[ORM\Column(type: Types::BIGINT)]
+    private ?string $phone = null;
+
+    #[ORM\Column(type: Types::BIGINT, nullable: true)]
+    private ?string $fax = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $rank = null;
+
+    #[ORM\Column]
+    private ?bool $status = null;
 
     #[ORM\Column(length: 255)]
-     /**
-     * @Assert\NotBlank(message = "Please enter a value.")
-     * @Assert\Length(
-     *     min=5,
-     *     max=40,
-     *     minMessage="La description d'emplacement doit comporter au moins {{ limit }} caractères",
-     *     maxMessage="Le description d'emplacement ne peut pas dépasser {{ limit }} caractères"
-     * )
-     */
-    private ?string $address = null;
+    private ?string $description = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $startTime = null;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $endTime = null;
 
-    #[ORM\Column(length: 255)]
-    /**
-     * @Assert\NotBlank(message = "Please give a rank.")
-     */
-    private ?string $rank = null;
+    #[ORM\OneToMany(mappedBy: 'facility', targetEntity: Planning::class)]
+    private Collection $plannings;
 
-
-
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'facilities')]
-    private Collection $users;
+    #[ORM\OneToMany(mappedBy: 'facility', targetEntity: Appointment::class)]
+    private Collection $appointments;
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->plannings = new ArrayCollection();
+        $this->appointments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -77,52 +73,157 @@ class Facility
         return $this;
     }
 
-    public function getAddress(): ?string
+    public function getLocation(): ?string
     {
-        return $this->address;
+        return $this->location;
     }
 
-    public function setAddress(string $address): self
+    public function setLocation(string $location): self
     {
-        $this->address = $address;
+        $this->location = $location;
 
         return $this;
     }
 
-    public function getRank(): ?string
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
+    }
+
+    public function getFax(): ?string
+    {
+        return $this->fax;
+    }
+
+    public function setFax(?string $fax): self
+    {
+        $this->fax = $fax;
+
+        return $this;
+    }
+
+    public function getRank(): ?int
     {
         return $this->rank;
     }
 
-    public function setRank(string $rank): self
+    public function setRank(?int $rank): self
     {
         $this->rank = $rank;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
+    public function isStatus(): ?bool
     {
-        return $this->users;
+        return $this->status;
     }
 
-    public function addUser(User $user): self
+    public function setStatus(bool $status): self
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addFacility($this);
+        $this->status = $status;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getStartTime(): ?\DateTimeImmutable
+    {
+        return $this->startTime;
+    }
+
+    public function setStartTime(\DateTimeImmutable $startTime): self
+    {
+        $this->startTime = $startTime;
+
+        return $this;
+    }
+
+    public function getEndTime(): ?\DateTimeImmutable
+    {
+        return $this->endTime;
+    }
+
+    public function setEndTime(\DateTimeImmutable $endTime): self
+    {
+        $this->endTime = $endTime;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Planning>
+     */
+    public function getPlannings(): Collection
+    {
+        return $this->plannings;
+    }
+
+    public function addPlanning(Planning $planning): self
+    {
+        if (!$this->plannings->contains($planning)) {
+            $this->plannings->add($planning);
+            $planning->setFacility($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): self
+    public function removePlanning(Planning $planning): self
     {
-        if ($this->users->removeElement($user)) {
-            $user->removeFacility($this);
+        if ($this->plannings->removeElement($planning)) {
+            // set the owning side to null (unless already changed)
+            if ($planning->getFacility() === $this) {
+                $planning->setFacility(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Appointment>
+     */
+    public function getAppointments(): Collection
+    {
+        return $this->appointments;
+    }
+
+    public function addAppointment(Appointment $appointment): self
+    {
+        if (!$this->appointments->contains($appointment)) {
+            $this->appointments->add($appointment);
+            $appointment->setFacility($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAppointment(Appointment $appointment): self
+    {
+        if ($this->appointments->removeElement($appointment)) {
+            // set the owning side to null (unless already changed)
+            if ($appointment->getFacility() === $this) {
+                $appointment->setFacility(null);
+            }
         }
 
         return $this;
