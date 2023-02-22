@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Ticket List{% endblock %}
 
@@ -21,7 +21,7 @@
 
                      </div>
                      <div class="action-btn">
-                        <a href="{{path('app_ticket_newAdmin')}}" class="btn px-15 btn-primary">
+                        <a href="{{path('app_ticket_newAdmin')}}" class="btn px-15 btn-primary" style="background: darkred;">
                            <i class="las la-plus fs-16"></i>Add Ticket
                         </a>
                         
@@ -92,13 +92,15 @@
                                           </a>
                                        </li>
                                        <li>
-                                          <a a class="remove" href="{{ path('app_ticket_delete', {'id': ticket.id}) }}" onclick="ticket.preventDefault(); if(confirm('Are you sure you want to delete this item?')) document.getElementById('delete-form-{{ ticket.id }}').submit();">
-                                             <form id="delete-form-{{ ticket.id }}" method="post" action="{{ path('app_ticket_delete', {'id': ticket.id}) }}">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ticket.id) }}">
-                                                        <span class="iconify" data-icon="uil:trash-alt"></span>
-                                                    </form>
-                                          </a>
-                                       </li>
+                                               <a class="remove" href="{{ path('app_ticket_delete', {'id': ticket.id}) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this item?')) document.getElementById('delete-form-{{ ticket.id }}').submit();">
+                                                   <form id="delete-form-{{ ticket.id }}" method="post" action="{{ path('app_ticket_delete', {'id': ticket.id}) }}">
+                                                      <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ ticket.id) }}">
+                                                       <span class="iconify" data-icon="uil:trash-alt"></span>
+                                                   </form>
+
+                                                </a>
+                                                
+                                            </li>
                                     </ul>
                                  </td>
                               </tr>

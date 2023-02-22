@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'admin.html.twig' %}
 
 {% block title %}Events List{% endblock %}
 
@@ -15,13 +15,13 @@
                         </div>
 
                         <form action="/" class="d-flex align-items-center user-member__form my-sm-0 my-2">
-                           <img src="img/svg/search.svg" alt="search" class="svg">
-                           <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search by Name" aria-label="Search">
+                           <img src="../img/svg/search.svg" alt="search" class="svg">
+                           <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search by Id" aria-label="Search">
                         </form>
 
                      </div>
                      <div class="action-btn">
-                            <a href="{{ path('app_event_new_admin') }}" class="btn px-15 btn-primary" > <i class="las la-plus fs-16"></i>Create new Event</a>
+                            <a href="{{ path('app_event_new_admin') }}" class="btn px-15 btn-primary" style="background: darkred;"> <i class="las la-plus fs-16"></i>Create new Event</a>
                         </div>
                   </div>
 

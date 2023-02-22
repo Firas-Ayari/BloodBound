@@ -64,8 +64,8 @@
                                  <p>Ticket Status</p>
                               </div>
                               <div class="ap-po-details__icon-area">
-                                 <div class="svg-icon order-bg-opacity-secondary" style="background-color: lightgray; color: #0000">
-                                    <img class="svg" src="../img/svg/verified.svg" alt="img"> 
+                                 <div class="svg-icon order-bg-opacity-secondary" style="background-color: lightgray;">
+                                    <img class="svg" src="../img/svg/flag1.svg" alt="img"> 
                                  </div>
                               </div>
                            </div>
@@ -915,7 +915,7 @@
                </div> #}
                <!-- ends: .row -->
             </div>
-            <div class="col-lg-8 col-sm-12 mb-30">
+            <div class="col-xxl-3 col-sm-12 mb-30">
                      <div class="ticket-details-contact">
                         <h4>Need to help for better world</h4>
                         
@@ -926,25 +926,40 @@
                         </div>
                      </div>
                   </div>
-            <div class="col-xxl-3 col-sm-6  mb-md-50 mb-30">
-                     <div class="card banner-feature banner-feature--3">
+            <div class="col-xxl-3 col-sm-12  mb-30">
+                     <div class="card banner-feature banner-feature--3" style="background: #B90100;">
                         <div class="banner-feature__shape">
                            <img src="../img/svg/group9060.svg" alt="img">
                         </div>
                         <div class="d-flex justify-content-center">
                            <div class="card-body">
-                              <h1 class="banner-feature__heading color-white">Earn More Money</h1>
+                              <h1 class="banner-feature__heading color-white">Make A Difference, Buy A Ticket!</h1>
                               <button class="banner-feature__btn btn color-primary btn-md px-20 bg-white radius-xs fs-15 mt-sm-35 mt-15" type="button">Buy Ticket</button>
                            </div>
                         </div>
                      </div>
                   </div>
-         </div>    
+          {#  <div class="col-xxl-3 col-md-12  mb-md-100 mb-90">
+                     <div class="card banner-feature--11">
+                        <div class="banner-feature__shape">
+                           <img src="../img/svg/group9060.svg" alt="img">
+                        </div>
+                        <div class="d-flex justify-content-center">
+                           <div class="card-body">
+                              <h1 class="banner-feature__heading color-white">Make A Difference, Buy A Ticket!</h1>
+                              <p class="banner-feature__para ">This Ticket once it's purchased cannot be refund, all the revenues generated from these event tickets will be donated to associations that support blood donation and help to organaize sensiblisation compains and to help raise awareness within youth. All your contributions are higly appreciated
+                              </p>
+                              <button class="banner-feature__btn btn color-primary btn-md px-20 bg-white radius-xs fs-15" type="button">Buy Ticket</button>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+         </div>  #}  
                    
 
     
-    <a href="{{ path('app_ticket_index') }}">back to list aaaaa</a>
+    <a href="{{ path('app_ticket_index') }}">back to list </a>
 
-    <a href="{{ path('app_ticket_editAdmin', {'id': ticket.id}) }}">edit</a>
+    {#<a href="{{ path('app_ticket_editAdmin', {'id': ticket.id}) }}">edit</a> #}
 
 {% endblock %}
