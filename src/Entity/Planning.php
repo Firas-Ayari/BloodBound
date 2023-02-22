@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
 use App\Repository\PlanningRepository;
+use App\Entity\Facility;
 
 #[ORM\Entity(repositoryClass: PlanningRepository::class)]
 class Planning
