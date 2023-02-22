@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emergency index{% endblock %}
+
+{% block body %}
+    <h1>Emergency index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>BloodType</th>
+                <th>Location</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>CreatedAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for emergency in emergencies %}
+            <tr>
+                <td>{{ emergency.id }}</td>
+                <td>{{ emergency.title }}</td>
+                <td>{{ emergency.description }}</td>
+                <td>{{ emergency.bloodType }}</td>
+                <td>{{ emergency.location }}</td>
+                <td>{{ emergency.deadline ? emergency.deadline|date('Y-m-d') : '' }}</td>
+                <td>{{ emergency.status }}</td>
+                <td>{{ emergency.createdAt ? emergency.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_emergency_show', {'id': emergency.id}) }}">show</a>
+                    <a href="{{ path('app_emergency_edit', {'id': emergency.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_emergency_new') }}">Create new</a>
+{% endblock %}

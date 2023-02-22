@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Emergency{% endblock %}
+
+{% block body %}
+    <h1>Emergency</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ emergency.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ emergency.title }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ emergency.description }}</td>
+            </tr>
+            <tr>
+                <th>BloodType</th>
+                <td>{{ emergency.bloodType }}</td>
+            </tr>
+            <tr>
+                <th>Location</th>
+                <td>{{ emergency.location }}</td>
+            </tr>
+            <tr>
+                <th>Deadline</th>
+                <td>{{ emergency.deadline ? emergency.deadline|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ emergency.status }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ emergency.createdAt ? emergency.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_emergency_index') }}">back to list</a>
+
+    <a href="{{ path('app_emergency_edit', {'id': emergency.id}) }}">edit</a>
+
+    {{ include('emergency/_delete_form.html.twig') }}
+{% endblock %}

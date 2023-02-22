@@ -1,0 +1,101 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Product{% endblock %}
+
+{% block body %}
+
+         <div class="container-fluid">
+            <div class="row">
+               <div class="col-lg-12">
+
+                  <div class="breadcrumb-main user-member justify-content-sm-between ">
+                     <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
+                        <div class="d-flex align-items-center user-member__title justify-content-center me-sm-25">
+                           <h4 class="text-capitalize fw-500 breadcrumb-title">Products List</h4>
+                           <span class="sub-title ms-sm-25 ps-sm-25">Home</span>
+                        </div>
+
+                        <form action="/" class="d-flex align-items-center user-member__form my-sm-0 my-2">
+                           <i class="fa-solid fa-magnifying-glass"></i>
+                           <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search" aria-label="Search">
+                        </form>
+
+                     </div>
+                     <div class="action-btn">
+                        <a href="{{ path('app_product_new') }}" class="btn px-15 btn-primary"  style="background:#A40E1C;">
+                           <i class="las la-plus fs-16"></i>Add New Product</a>
+
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+
+            {% for product in products %}
+            <div class="row product-page-list">
+            
+               <div class="col-12 mb-30 px-10">
+                           <div class="card product product--list">    
+                              <div class="h-100">
+                                 <div class="product-item">
+                                    <div class="product-item__image">
+                                       <img src="{{ asset('img/products/Donate Blood Tshirt.jpg') }}" alt="digital-chair">
+                                    </div>
+                                    <div class="product-item__body mt-xl-20 mt-0 position-relative">
+                                       <span class="like-icon">
+                                          <button type="button" class="content-center">
+                                             <i class="lar la-heart icon"></i>
+                                          </button>
+                                       </span>
+                                       <div class="product-item__title">
+                                          <a href="{{ path('app_product_show_admin', {'id': product.id}) }}"  >
+                                             <h6 class="card-title" style="color:#A40E1C;">{{ product.name }}</h6>
+                                          </a>
+                                          <p class="mb-0">
+                                          {{ product.description }}
+                                          </p>
+                                       </div>
+                                       <div class="product-item__content text-capitalize">
+                                          <div class="d-flex align-items-center mb-2 flex-wrap">
+                                             <span class="product-desc-price " style="font-size :20px ; color:#A40E1C;" >{{ product.price }} Points</span>
+                                          </div>
+                                          <div>
+                                            <span class="fs-13 fw-400 color-light my-sm-0 my-10">{{ product.stock }} pieces available</span>
+                                          </div>
+                                          <div class="stars-rating d-flex align-items-center flex-wrap">
+                                             <span class="star-icon las la-star active"></span>
+                                             <span class="star-icon las la-star active"></span>
+                                             <span class="star-icon las la-star active"></span>
+                                             <span class="star-icon las la-star active"></span>
+                                             <span class="star-icon las la-star-half-alt active"></span>
+                                             <span class="stars-rating__point">{{ product.rating }}</span>
+                                             <span class="stars-rating__review">
+                                                <span>778</span> Reviews</span>
+                                          </div>
+                                             <div class="product-item__button d-flex mt-20 flex-wrap">
+                                                <a href="{{ path('app_product_edit', {'id': product.id}) }}">
+                                                <button class="btn btn-default btn-squared color-light btn-outline-light px-20 "><i class="fa-solid fa-pen-to-square"></i>
+                                                   Edit Product
+                                                </button>
+                                                </a>     
+                                                <button class="btn btn-primary btn-default btn-squared border-0 px-25"  style="background:#A40E1C;"> <i class="fa-solid fa-trash-can"></i> Delete Product
+                                                </button>
+
+                                             </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+               </div>
+
+            </div>
+                            {% else %}
+                                <tr>
+                                    <td colspan="8">no records found</td>
+                                </tr>
+                            {% endfor %}
+         </div>
+<br>
+
+{% endblock %}
