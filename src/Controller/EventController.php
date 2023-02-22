@@ -29,8 +29,9 @@ class EventController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_event_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EventRepository $eventRepository): Response
+
+    #[Route('/admin/new', name: 'app_event_new_admin', methods: ['GET', 'POST'])]
+    public function newAdmin(Request $request, EventRepository $eventRepository): Response
     {
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
@@ -39,8 +40,9 @@ class EventController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $eventRepository->save($event, true);
 
-            return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_event_index_admin', [], Response::HTTP_SEE_OTHER);
         }
+        
 
         return $this->renderForm('BackOffice/event/new.html.twig', [
             'event' => $event,
@@ -77,7 +79,7 @@ class EventController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $eventRepository->save($event, true);
 
-            return $this->redirectToRoute('app_event_indexAdmin', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_event_index_admin', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('BackOffice/event/edit.html.twig', [
@@ -93,6 +95,6 @@ class EventController extends AbstractController
             $eventRepository->remove($event, true);
         }
 
-        return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_event_index_admin', [], Response::HTTP_SEE_OTHER);
     }
 }

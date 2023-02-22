@@ -34,7 +34,7 @@ class Ticket
     private ?string $status = null;
 
     #[ManyToOne(targetEntity: Event::class, inversedBy: 'tickets')]
-    #[JoinColumn(name: 'event_id', referencedColumnName: 'id')]
+    #[JoinColumn(name: 'event_id', referencedColumnName: 'id', onDelete:"CASCADE")]
     private Event|null $event = null;
 
     public function getId(): ?int

@@ -46,9 +46,10 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_event_index') }}">back to list</a>
+    <div class="action-btn">
+                            <a href="{{ path('app_event_editAdmin', {'id': event.id}) }}" class="btn px-15 btn-primary" > <i class="las la-plus fs-16"></i>Edit Event</a>
+                        </div>
+    {#<a href="{{ path('app_event_editAdmin', {'id': event.id}) }}">edit</a> #}
 
-    <a href="{{ path('app_event_edit', {'id': event.id}) }}">edit</a>
-
-    {{ include('event/_delete_form.html.twig') }}
+    {{ include('BackOffice/event/_delete_form.html.twig') }}
 {% endblock %}

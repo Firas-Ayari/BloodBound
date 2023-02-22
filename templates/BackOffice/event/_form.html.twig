@@ -84,7 +84,72 @@
 
 
                                             </div>
-                                            {{ form_end(form) }}
+                                            {{ form_end(form) }} 
+
+                                         {#  <div class="row">
+                              <div class="col-md-6 mb-25">
+                              
+                                 <label for="name1"></label>
+                                                {{ form_label(form.title, 'Title') }}
+                                                {{ form_widget(form.title, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.title) }}
+                              </div>
+                              </div>
+                              <div class="col-md-6 mb-20">
+                                 
+                                 {{ form_label(form.description, 'Description') }}
+                                                {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.description) }} 
+                                 </div>
+                              </div>
+                              <div class="col-md-6 mb-25">
+                                 {{ form_label(form.status, 'Choose your Status') }}
+                                                {{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.status) }}
+                              </div>
+                              <div class="col-md-6 mb-25">
+                                 <label for="name1"></label>
+                                                {{ form_label(form.location, 'Add your Location') }}
+                                                {{ form_widget(form.location, {'attr': {'class': 'form-control'}}) }}
+
+                                                {{ form_errors(form.location) }}
+                              </div>
+                              <div class="col-md-6 mb-25">
+                                 <label for="name1"></label>
+                                                {{ form_label(form.image, 'Add an image') }}
+                                                {{ form_widget(form.image, {'attr': {'class': 'form-control'}}) }}
+
+                                                {{ form_errors(form.image) }}
+                              </div>
+                              <div class="col-md-6 mb-25">
+                                 <label for="name1"></label>
+                                                {{ form_label(form.eventDate) }}
+                                                {{ form_widget(form.eventDate, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.eventDate) }}
+                              </div>
+                              <div class="col-md-6 mb-25">
+                                 <label for="name1"></label>
+                                                {{ form_label(form.startTime) }}
+                                                {{ form_widget(form.startTime, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.startTime) }}
+
+                              </div>
+                              <div class="col-md-6 mb-25">
+                                 <label for="name1"></label>
+                                                {{ form_label(form.endTime) }}
+                                                {{ form_widget(form.endTime, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.endTime) }}
+
+                              </div>
+                              <div class="col-md-6">
+                                 <div class="layout-button mt-0">
+                                   
+                                    <button class="btn btn-primary btn-default btn-squared text-capitalize radius-md shadow2 btn-sm">{{ button_label|default('Save') }}</button>
+                                 </div>
+                              </div>
+                           </div>
+                           {{ form_end(form) }} #} 
+
                                         </form>
 
                                     </div>

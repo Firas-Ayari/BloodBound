@@ -48,13 +48,13 @@ class TicketController extends AbstractController
         ]);
     }
 
-   // #[Route('/admin/{id}', name: 'app_ticket_show_admin', methods: ['GET'])]
-   // public function showAdmin(Ticket $ticket): Response
-    //{
-    //    return $this->render('BackOffice/ticket/show.html.twig', [
-    //        'ticket' => $ticket,
-    //    ]);
-   // }
+    #[Route('/admin/{id}', name: 'app_ticket_show_admin', methods: ['GET'])]
+    public function showAdmin(Ticket $ticket): Response
+    {
+      return $this->render('BackOffice/ticket/show.html.twig', [
+            'ticket' => $ticket,
+        ]);
+   }
     
     #[Route('/{id}', name: 'app_ticket_show', methods: ['GET'])]
     public function show(Ticket $ticket): Response
