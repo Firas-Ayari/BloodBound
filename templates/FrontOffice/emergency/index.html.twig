@@ -3,40 +3,62 @@
 {% block title %}Emergencies List{% endblock %}
 
 {% block body %}
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-lg-12">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
 
-                    <div class="breadcrumb-main">
-                        <h1 class="text-capitalize fw-500 breadcrumb-title gradient-text"></h1>
-                        <div class="action-btn">
-                            <a href="{{ path('app_emergency_new') }}" class="btn px-15 " style="background-color: darkred; color: white;">
-                                <i class="las la-plus fs-16"></i>Create new Emergency
-                            </a>
-                        </div>
-
+                <div class="breadcrumb-main">
+                    <h1 class="text-capitalize fw-500 breadcrumb-title gradient-text"></h1>
+                    <div class="action-btn">
+                        <a href="{{ path('app_emergency_new') }}" class="btn px-15 " style="background-color: darkred; color: white;">
+                            <i class="las la-plus fs-16"></i>Create new Emergency
+                        </a>
                     </div>
-                    <h1 class="text-capitalize fw-500 breadcrumb-title gradient-text"><strong>Emergencies list</strong></h1>
-                    <br>
-                    <br>
-                    <br>
+
                 </div>
-                {% for emergency in emergencies %}
+                <h1 class="text-capitalize fw-500 breadcrumb-title gradient-text"><strong>Emergencies list</strong></h1>
 
-                    <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                        <div class="card">
-                            <div class="card-body text-center pt-30 px-25 pb-0">
+                <form method="GET" action="{{ path('app_emergency_index') }}">
+                    <div class="form-group row mt-4">
+                        <label class="col-sm-2 col-form-label">Blood Type</label>
+                        <div class="col-sm-10">
+                            <select name="bloodType" class="form-control">
+                                <option value="">All</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col-sm-10 offset-sm-2">
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </div>
+                    </div>
+                </form>
 
-                                <div class="account-profile-cards ">
-                                    <div class="ap-img d-flex justify-content-center">
-                                        <!-- Profile picture image-->
-                                        <img class="ap-img__main bg-opacity-primary  wh-120 rounded-circle mb-3 " src="/img/svg/Amb.svg" alt="Icon" style="background-color: RGBA(0,0,0,0.08);">
+            </div>
+            {% for emergency in emergencies %}
+                {% if not app.request.query.get('bloodType') or emergency.bloodType == app.request.query.get('bloodType') %}
+                <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
+                    <div class="card">
+                        <div class="card-body text-center pt-30 px-25 pb-0">
 
-                                    </div>
-                                    <div class="ap-nameAddress">
-                                        <h6 class="ap-nameAddress__title">{{ emergency.title }}</h6>
-                                        <p class="ap-nameAddress__subTitle  fs-14 pt-1 m-0 ">{{ emergency.description }}</p>
-                                    </div>
+                            <div class="account-profile-cards ">
+                                <div class="ap-img d-flex justify-content-center">
+                                    <!-- Profile picture image-->
+                                    <img class="ap-img__main bg-opacity-primary  wh-120 rounded-circle mb-3 " src="/img/svg/Amb.svg" alt="Icon" style="background-color: RGBA(0,0,0,0.08);">
+
+                                </div>
+                                <div class="ap-nameAddress">
+                                    <h6 class="ap-nameAddress__title">{{ emergency.title }}</h6>
+                                    <p class="ap-nameAddress__subTitle  fs-14 pt-1 m-0 ">{{ emergency.description }}</p>
+                                </div>
                                     <div class="ap-button account-profile-cards__button button-group d-flex justify-content-center flex-wrap pt-20">
                                         <a href="{{ url('app_donation_new', {'id': emergency.id}) }}" class="border text-capitalize px-25 color-gray transparent radius-md">
                                             <i class="fa-solid fa-hand-heart">Donate</i>
@@ -67,6 +89,7 @@
                             </div>
                         </div>
                     </div>
+            {% endif %}
                 {% endfor %}
                 <div class="col-12">
                     <div class="d-flex justify-content-end mt-1 mb-50">

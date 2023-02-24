@@ -1,54 +1,107 @@
-{% extends 'base.html.twig' %}
-{% block title %}New Donation{% endblock %}
+<?php
 
-{% block body %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="shop-breadcrumb">
+namespace App\Controller;
 
-                    <div class="breadcrumb-main">
+use App\Entity\Emergency;
+use App\Form\EmergencyType;
+use App\Repository\EmergencyRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
-                        <div class="breadcrumb-action justify-content-center flex-wrap">
+#[Route('/emergency')]
+class EmergencyController extends AbstractController
+{
+    #[Route('/admin', name: 'app_emergency_indexAdmin', methods: ['GET'])]
+    public function indexAdmin(EmergencyRepository $emergencyRepository): Response
+    {
+        return $this->render('BackOffice/emergency/index.html.twig', [
+'emergencies' => $emergencyRepository->findAll(),
+]);
+}
+#[Route('/', name: 'app_emergency_index', methods: ['GET'])]
+public function index(Request $request, EmergencyRepository $emergencyRepository): Response
+{
+$bloodType = $request->query->get('bloodType');
 
-                        </div>
-                    </div>
+return $this->render('FrontOffice/emergency/index.html.twig', [
+'emergencies' => $emergencyRepository->findAll(),
+'bloodType' => $bloodType
+]);
+}
 
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid">
-        <div class=" checkout wizard8 global-shadow border-0 px-sm-50 px-20 mb-30 bg-white radius-xl w-100">
-            <div class="row justify-content-center">
-                <div class="col-xl-8">
-                    <div class="row justify-content-center">
-                        <div class="col-xl-5">
-                            <div class="checkout-progress-indicator ">
 
-                                <div class="card-header border-bottom-0">
-                                    <h1 class="text-capitalize fw-500 breadcrumb-title gradient-text"><strong>Make Your Donation</strong></h1>
-                                    <br>
-                                    <br>
-                                    <br>
-                                    <div class="div">
-                                        <img class="svg w-100" src=" /img/svg/emergency-logo.svg" alt="img">
-                                    </div>
-                                </div>
-                            </div><!-- checkout -->
-                        </div>
-                        <div class="col-xl-7 col-lg-8 col-sm-10">
-                            <div class="card checkout-shipping-form shadow-none h-100vh">
-                                <div class="card-body p-0">
-                                    <div class="edit-profile__body">
-                                        {{ include('FrontOffice/donation/_form.html.twig') }}
-                                    </div>
-                                </div>
-                            </div><!-- ends: card -->
-                        </div><!-- ends: col -->
-                    </div>
-                </div><!-- ends: col -->
-            </div>
-        </div><!-- End: .global-shadow-->
-    </div>
-{% endblock %}
+#[Route('/new', name: 'app_emergency_new', methods: ['GET', 'POST'])]
+public function new(Request $request, EmergencyRepository $emergencyRepository): Response
+{
+$emergency = new Emergency();
+$form = $this->createForm(EmergencyType::class, $emergency);
+$form->handleRequest($request);
+
+if ($form->isSubmitted() && $form->isValid()) {
+$emergencyRepository->save($emergency, true);
+
+return $this->redirectToRoute('app_emergency_index', [], Response::HTTP_SEE_OTHER);
+}
+
+return $this->renderForm('FrontOffice/emergency/new.html.twig', [
+'emergency' => $emergency,
+'form' => $form,
+]);
+}
+
+
+#[Route('/{id}', name: 'app_emergency_show', methods: ['GET'])]
+public function show(Emergency $emergency): Response
+{
+return $this->render('FrontOffice/emergency/show.html.twig', [
+'emergency' => $emergency,
+]);
+}
+
+#[Route('/{id}/edit', name: 'app_emergency_edit', methods: ['GET', 'POST'])]
+public function edit(Request $request, Emergency $emergency, EmergencyRepository $emergencyRepository): Response
+{
+$form = $this->createForm(EmergencyType::class, $emergency);
+$form->handleRequest($request);
+
+if ($form->isSubmitted() && $form->isValid()) {
+$emergencyRepository->save($emergency, true);
+
+return $this->redirectToRoute('app_emergency_index', [], Response::HTTP_SEE_OTHER);
+}
+
+return $this->renderForm('FrontOffice/emergency/edit.html.twig', [
+'emergency' => $emergency,
+'form' => $form,
+]);
+}
+#[Route('/admin/{id}/edit', name: 'app_emergency_editAdmin', methods: ['GET', 'POST'])]
+public function editAdmin(Request $request, Emergency $emergency, EmergencyRepository $emergencyRepository): Response
+{
+$form = $this->createForm(EmergencyType::class, $emergency);
+$form->handleRequest($request);
+
+if ($form->isSubmitted() && $form->isValid()) {
+$emergencyRepository->save($emergency, true);
+
+return $this->redirectToRoute('app_emergency_indexAdmin', [], Response::HTTP_SEE_OTHER);
+}
+
+return $this->renderForm('BackOffice/emergency/edit.html.twig', [
+'emergency' => $emergency,
+'form' => $form,
+]);
+}
+
+#[Route('/{id}', name: 'app_emergency_delete', methods: ['POST'])]
+public function delete(Request $request, Emergency $emergency, EmergencyRepository $emergencyRepository): Response
+{
+if ($this->isCsrfTokenValid('delete'.$emergency->getId(), $request->request->get('_token'))) {
+$emergencyRepository->remove($emergency, true);
+}
+
+return $this->redirectToRoute('app_emergency_indexAdmin', [], Response::HTTP_SEE_OTHER);
+}
+}
