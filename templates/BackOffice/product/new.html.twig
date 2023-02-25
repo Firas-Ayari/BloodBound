@@ -34,15 +34,15 @@
                         <div class="col-xl-5">
                            <div class="checkout-progress-indicator ">
                               <div class="card-header border-bottom-0">
-                                 <h4>Add New Product</h4>
-                                 <p>Lorem Ipsum is simply dummy text of the
-                                    dummy typesetting industry.</p>
+                                 <h4 style="color:#A40E1C;">Add New Product</h4>
+                                 <p  style="color:#37474F;">Please ensure that all required information is filled out accurately and
+                                  that each field is respected according to its specified format</p>
                                  <div class="div">
                                     <img class="svg w-100" src="{{ asset('img/products/Product quality-amico.png') }}" alt="img">
                                  </div>
                                   <a href="{{ path('app_product_index_admin')}}">
                                     <div class="product-item__button d-flex mt-20 flex-wrap">
-                                                <button class="btn btn-primary btn-default btn-squared border-0 px-25"><i class="fa-solid fa-angle-left"></i><strong>Back to products</strong>
+                                                <button class="btn btn-primary btn-default btn-squared border-0 px-25" style="background:#37474F;"><i class="fa-solid fa-angle-left"></i><strong>Back to products</strong>
                                                 </button>
                                     </div>
                                   </a>  
@@ -56,7 +56,7 @@
                               </div>
                               <div class="card-body p-0">
                                  
-                                        {{ include('BackOffice/product/_form.html.twig', {'button_label': 'Update'}) }}
+                                        {{ include('BackOffice/product/_form.html.twig', {'button_label': 'Add Product'}) }}
                               
                               </div>
                            </div><!-- ends: card -->

@@ -134,7 +134,11 @@
                                     <div class="product-item__button mt-lg-30 mt-sm-25 mt-20 d-flex flex-wrap">
                                        <div class=" d-flex flex-wrap product-item__action align-items-center"> 
 
-                                          <a href="{{ path('app_product_edit', {'id': product.id}) }}"><button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2" style="background:#A40E1C;"> <i class="fa-solid fa-pen-to-square"></i>Edit Product</button></a>
+                                          <a href="{{ path('app_product_edit', {'id': product.id}) }}">
+                                             <button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2" style="background:#A40E1C;"> <i class="fa-solid fa-pen-to-square"></i>
+                                                Edit Product
+                                             </button>
+                                          </a>
                                           {{ include('BackOffice/product/_delete_form.html.twig') }}
 
                                        </div>

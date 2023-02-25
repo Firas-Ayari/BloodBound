@@ -60,11 +60,16 @@ class Product
 
     #[ORM\Column]
     #[Assert\NotBlank(message:'Please enter a rating')]
-    #[Assert\Choice(choices: [1, 2, 3, 4, 5], message: 'The rating must be either 1, 2, 3, 4, or 5')]
+    #[Assert\Range(
+        min: 1,
+        max: 5,
+        minMessage: "The price must be > than {{ limit }}",
+        maxMessage: "The price must be < than {{ limit }}"
+    )]
     private ?float $rating = null;
 
     #[ManyToOne(targetEntity: ProductCategory::class, inversedBy: 'products')]
-    #[JoinColumn(name: 'productCategory_id', referencedColumnName: 'id')]
+    #[JoinColumn(name: 'productCategory_id', referencedColumnName: 'id', onDelete:"CASCADE")] 
     private ProductCategory|null $productCategory = null;
 
     #[ORM\OneToMany(mappedBy: 'product', targetEntity: CartProduct::class)]
