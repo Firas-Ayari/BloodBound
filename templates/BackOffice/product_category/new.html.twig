@@ -12,7 +12,7 @@
                   <div class="col-lg-12">
 
                      <div class="breadcrumb-main">
-                        <h4 class="text-capitalize breadcrumb-title">Create new Category</h4>
+                        <h4 class="text-capitalize breadcrumb-title"></h4>
                         <div class="breadcrumb-action justify-content-center flex-wrap">
                            <nav aria-label="breadcrumb">
                               <ol class="breadcrumb">
@@ -27,12 +27,12 @@
                   <div class="col-lg-6">
                      <div class="card card-default card-md mb-4">
                         <div class="card-header">
-                           <h6>Create new Category</h6>
+                           <h6 style="color:#A40E1C;">Create new Category</h6>
                         </div>
                         <div class="card-body">
                            <div class="basic-form-wrapper">
 
-                                {# {{ include('BackOffice/product_category/_form.html.twig', {'button_label': 'Update'}) }} #}
+                                {{ include('BackOffice/product_category/_form.html.twig', {'button_label': 'Add Category'}) }} 
 
                            </div>
                            <div><br><br></div>
@@ -52,7 +52,7 @@
                         <div class="d-flex justify-content-center">
                            <div class="card-body">
                               <h1 class="banner-feature__heading color-white">Create new Category</h1>
-                              <p class="banner-feature__para ">Lorem ipsum lorem ipsum</p>
+                              <p class="banner-feature__para ">You can add a new category from this page <br> by filling out the required fields and submitting <br> the form.</p>
                               <a href="{{ path('app_product_category_index') }}">
                                     <button class="banner-feature__btn btn color-secondary btn-md px-20 radius-xs fs-15" style="background:#A40E1C;" type="button">Back to categories</button>
                               </a>

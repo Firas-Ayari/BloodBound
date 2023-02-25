@@ -61,13 +61,13 @@ class ProductCategoryController extends AbstractController
     public function edit(Request $request, $id): Response
     {
         $productCategory = $this->productCategoryRepository->find($id);
-        $form = $this->createForm(ProductCategoryType::class,$productCategory);
+        $form = $this->createForm(ProductCategoryType::class, $productCategory);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->em->flush();
 
-            return $this->redirectToRoute('BackOffice/app_product_category_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_product_category_index', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('BackOffice/product_category/edit.html.twig', [
@@ -76,14 +76,16 @@ class ProductCategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_category_delete', methods: ['POST'])]
-    public function delete(Request $request, ProductCategory $productCategory, ProductCategoryRepository $productCategoryRepository): Response
+    #[Route('/{id}/delete', name: 'app_product_category_delete', methods: ['POST'])]
+    public function delete($id): Response
     {
 
-        if ($this->isCsrfTokenValid('delete'.$productCategory->getId(), $request->request->get('_token'))) {
-            $productCategoryRepository->remove($productCategory, true);
-        }
+        $productCategory = $this->productCategoryRepository->find($id);
+        $this->em->remove($productCategory);
+        $this->em->flush();
+        
 
-        return $this->redirectToRoute('app_product_category_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_product_category_index');
     }
 }
+
