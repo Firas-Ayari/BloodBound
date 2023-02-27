@@ -26,7 +26,7 @@
                     
                   <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
                  
-                     <div class="blog-card blog-card--2">
+                     <div class="blog-card blog-card--2" style="border-style: solid; border-color: lightgray;">
                      
                         <div class="blog-card__thumbnail">
                            <a href="#">
@@ -40,6 +40,7 @@
                                  <div class="category">{{ event.endTime|date('H:i') }}</div> #}
                                  <div class="date">{{ event.eventDate ? event.eventDate|date('Y-m-d') : '' }}</div>
                               </div>
+                              
                               <h4 class="blog-card__title">
                                  <a href="#" class="entry-title" rel="bookmark">{{ event.title }}</a>
                               </h4>

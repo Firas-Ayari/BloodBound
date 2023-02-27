@@ -69,6 +69,16 @@ class EventController extends AbstractController
             'tickets' => $tickets
         ]);
     }
+   
+   // #[Route('/{id}/tickets', name: 'app_event_show', methods: ['GET'])]
+   // public function showTickets(Event $event): Response
+   // {
+   //     $tickets = $event->getTickets();
+   //     return $this->render('FrontOffice/event/show.html.twig', [
+   //         'event' => $event,
+   //         'tickets' => $tickets
+   //     ]);
+   // }
 
     #[Route('/admin/{id}/edit', name: 'app_event_editAdmin', methods: ['GET', 'POST'])]
     public function editAdmin(Request $request, Event $event, EventRepository $eventRepository): Response

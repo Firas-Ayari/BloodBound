@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\ManyToOne;
@@ -33,9 +35,17 @@ class Ticket
     #[Assert\Choice(choices: ['available', 'sold out'], message: 'Invalid ticket status.')]
     private ?string $status = null;
 
-    #[ManyToOne(targetEntity: Event::class, inversedBy: 'tickets')]
-    #[JoinColumn(name: 'event_id', referencedColumnName: 'id', onDelete:"CASCADE")]
+    #[OneToOne(targetEntity: Event::class, inversedBy: 'ticket')]
+    #[JoinColumn(name: 'event_id', referencedColumnName: 'id')]
     private Event|null $event = null;
+    
+    #[ORM\OneToMany(mappedBy: 'ticket', targetEntity: Achat::class)]
+    private Collection $achats;
+
+    public function __construct()
+    {
+        $this->achats = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -78,15 +88,34 @@ class Ticket
         return $this;
     }
 
-    public function getEvent(): ?Event
+    /**
+     * @return Collection<int, Achat>
+     */
+    public function getAchats(): Collection
     {
-        return $this->event;
+        return $this->achats;
     }
 
-    public function setEvent(?Event $event): self
+    public function addAchat(Achat $achat): self
     {
-        $this->event = $event;
+        if (!$this->achats->contains($achat)) {
+            $this->achats->add($achat);
+            $achat->setTicket($this);
+        }
 
         return $this;
     }
+
+    public function removeAchat(Achat $achat): self
+    {
+        if ($this->achats->removeElement($achat)) {
+            // set the owning side to null (unless already changed)
+            if ($achat->getTicket() === $this) {
+                $achat->setTicket(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

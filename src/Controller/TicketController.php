@@ -89,6 +89,6 @@ class TicketController extends AbstractController
             $ticketRepository->remove($ticket, true);
         }
 
-        return $this->redirectToRoute('app_ticket_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_ticket_indexAdmin', [], Response::HTTP_SEE_OTHER);
     }
 }

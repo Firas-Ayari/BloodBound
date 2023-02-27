@@ -75,14 +75,12 @@ class Event
     #[JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private User|null $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Ticket::class)]
-    private Collection $tickets;
-
+    #[OneToOne(targetEntity: Ticket::class, mappedBy: 'event')]
+    private ?Ticket $ticket = null;
     
     public function __construct()
     {
         $this->eventDate = new \DateTimeImmutable();
-        $this->tickets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -198,33 +196,16 @@ class Event
         return $this;
     }
 
-    /**
-     * @return Collection<int, Ticket>
-     */
-    public function getTickets(): Collection
+    public function getTicket(): ?Ticket
     {
-        return $this->tickets;
+        return $this->ticket;
     }
 
-    public function addTicket(Ticket $ticket): self
+    public function setTicket(?Ticket $ticket): self
     {
-        if (!$this->tickets->contains($ticket)) {
-            $this->tickets->add($ticket);
-            $ticket->setEvent($this);
-        }
+        $this->ticket = $ticket;
 
         return $this;
     }
-
-    public function removeTicket(Ticket $ticket): self
-    {
-        if ($this->tickets->removeElement($ticket)) {
-            // set the owning side to null (unless already changed)
-            if ($ticket->getEvent() === $this) {
-                $ticket->setEvent(null);
-            }
-        }
-
-        return $this;
-    }
-}
+   
+}   
