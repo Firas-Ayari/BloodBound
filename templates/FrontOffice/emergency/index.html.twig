@@ -86,8 +86,8 @@
             {% for emergency in emergencies %}
                 {% if not app.request.query.get('bloodType') or emergency.bloodType == app.request.query.get('bloodType') %}
                 <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
-                    <div class="card">
-                        <div class="card-body text-center pt-30 px-25 pb-0">
+                    <div class="card" style="border-color: darkred ;border-radius:10%">
+                        <div class="card-body text-center pt-30 px-25 pb-0" >
 
                             <div class="account-profile-cards ">
                                 <div class="ap-img d-flex justify-content-center">
