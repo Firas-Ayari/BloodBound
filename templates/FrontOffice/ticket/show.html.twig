@@ -934,7 +934,13 @@
                         <div class="d-flex justify-content-center">
                            <div class="card-body">
                               <h1 class="banner-feature__heading color-white">Make A Difference, Buy A Ticket!</h1>
-                              <button class="banner-feature__btn btn color-primary btn-md px-20 bg-white radius-xs fs-15 mt-sm-35 mt-15" type="button" style="color:darkred;">Buy Ticket</button>
+                              
+                              <!--<button class="banner-feature__btn btn color-primary btn-md px-20 bg-white radius-xs fs-15 mt-sm-35 mt-15" type="button" style="color:darkred;">Buy Ticket</button>
+                           -->
+                           <div class="action-btn">
+                            <a href="{{ path('app_buyticket', {'id': ticket.id}) }}" class="btn px-15 btn-primary" style="background: darkred;"> <i class="las la-plus fs-16"></i>Buy Ticket</a>
+                        </div>
+                  </div>
                            </div>
                         </div>
                      </div>

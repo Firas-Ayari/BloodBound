@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Entity;
+//use App\Entity\Achat;
+use App\Entity\Event;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;

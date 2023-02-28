@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\Event;
+use App\Entity\Achat;
 use App\Entity\Ticket;
 use App\Form\TicketType;
 use App\Repository\TicketRepository;
@@ -91,4 +93,34 @@ class TicketController extends AbstractController
 
         return $this->redirectToRoute('app_ticket_indexAdmin', [], Response::HTTP_SEE_OTHER);
     }
+
+    /**
+ * @Route("/buyticket/{id}", name="app_buyticket", methods={"GET", "POST"})
+ */
+public function buyticket(Request $request, Ticket $ticket): Response
+{
+    $stock = $ticket->getStock();
+    
+    if ($stock > 0) {
+        $ticket->setStock($stock - 1);
+        
+        if ($stock - 1 === 0) {
+            $ticket->setStatus('sold out');
+        }
+        
+        $achat = new Achat();
+        $achat->setTicket($ticket);
+        $achat->setUser($this->getUser());
+        
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($achat);
+        $entityManager->flush();
+        
+        $this->addFlash('success', 'You have successfully purchased a ticket.');
+    } else {
+        $this->addFlash('error', 'The tickets are sold out.');
+    }
+    
+    return $this->redirectToRoute('app_ticket_show', ['id' => $ticket->getId()], Response::HTTP_SEE_OTHER);
 }
+ }

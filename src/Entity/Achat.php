@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Entity;
-
+use Doctrine\DBAL\Types\Types;
 use App\Repository\AchatRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -20,9 +20,15 @@ class Achat
     #[ORM\ManyToOne(targetEntity: User::class,inversedBy: 'achats')]
     #[JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?User $user = null;
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private \DateTimeImmutable $createdAt;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $createdAt = null;
+    public function __construct()
+
+    {
+        $this->achatDate = new \DateTimeImmutable();
+        $this->createdAt = new \DateTimeImmutable();
+    }
 
     public function getId(): ?int
     {
