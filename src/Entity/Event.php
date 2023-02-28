@@ -6,7 +6,7 @@ use App\Entity\Ticket;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\EventRepository;
-use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -77,10 +77,12 @@ class Event
 
     #[OneToOne(targetEntity: Ticket::class, mappedBy: 'event')]
     private ?Ticket $ticket = null;
+
     
     public function __construct()
     {
         $this->eventDate = new \DateTimeImmutable();
+        $this->tickets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -195,7 +197,6 @@ class Event
 
         return $this;
     }
-
     public function getTicket(): ?Ticket
     {
         return $this->ticket;
@@ -207,5 +208,5 @@ class Event
 
         return $this;
     }
-   
+ 
 }   

@@ -53,7 +53,7 @@ class EventController extends AbstractController
     #[Route('/admin/{id}', name: 'app_event_show_admin', methods: ['GET'])]
     public function showAdmin(Event $event): Response
     {
-        $tickets = $event->getTickets();
+        $tickets = $event->getTicket();
         return $this->render('BackOffice/event/show.html.twig', [
             'event' => $event,
             'tickets' => $tickets
@@ -63,10 +63,10 @@ class EventController extends AbstractController
     #[Route('/{id}', name: 'app_event_show', methods: ['GET'])]
     public function show(Event $event): Response
     {
-        $tickets = $event->getTickets();
+        $ticket = $event->getTicket();
         return $this->render('FrontOffice/event/show.html.twig', [
             'event' => $event,
-            'tickets' => $tickets
+            'tickets' => $ticket
         ]);
     }
    

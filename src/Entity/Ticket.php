@@ -1,13 +1,9 @@
 <?php
 
 namespace App\Entity;
-//use App\Entity\Achat;
-use App\Entity\Event;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\OneToOne;
 use App\Repository\TicketRepository;
 use Doctrine\ORM\Mapping\JoinColumn;
 
@@ -40,14 +36,6 @@ class Ticket
     #[OneToOne(targetEntity: Event::class, inversedBy: 'ticket')]
     #[JoinColumn(name: 'event_id', referencedColumnName: 'id')]
     private Event|null $event = null;
-    
-    #[ORM\OneToMany(mappedBy: 'ticket', targetEntity: Achat::class)]
-    private Collection $achats;
-
-    public function __construct()
-    {
-        $this->achats = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -90,34 +78,15 @@ class Ticket
         return $this;
     }
 
-    /**
-     * @return Collection<int, Achat>
-     */
-    public function getAchats(): Collection
+    public function getEvent(): ?Event
     {
-        return $this->achats;
+        return $this->event;
     }
 
-    public function addAchat(Achat $achat): self
+    public function setEvent(?Event $event): self
     {
-        if (!$this->achats->contains($achat)) {
-            $this->achats->add($achat);
-            $achat->setTicket($this);
-        }
+        $this->event = $event;
 
         return $this;
     }
-
-    public function removeAchat(Achat $achat): self
-    {
-        if ($this->achats->removeElement($achat)) {
-            // set the owning side to null (unless already changed)
-            if ($achat->getTicket() === $this) {
-                $achat->setTicket(null);
-            }
-        }
-
-        return $this;
-    }
-
 }
