@@ -30,7 +30,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/create', name: 'app_create_user')]
+    #[Route('/create', name: 'app_user_create')]
     public function new(Request $request): Response
     {
         $user = new User();
@@ -48,7 +48,7 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_show_user')]
+    #[Route('/{id}', name: 'app_user_show')]
     public function show($id): Response
     {
         return $this->render('user/show.html.twig', [
@@ -70,7 +70,7 @@ class UserController extends AbstractController
         }
 
         return $this->renderForm('user/edit.html.twig', [
-            'product' => $user,
+            'user' => $user,
             'form' => $form,
         ]);
     }
