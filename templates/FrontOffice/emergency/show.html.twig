@@ -3,6 +3,22 @@
 {% block title %}Emergencies List{% endblock %}
 
 {% block body %}
+    <style>
+        .social-media-sharing {
+            display: flex;
+            align-items: center;
+        }
+
+        .social-media-sharing p {
+            margin-right: 10px;
+            color: darkred;
+        }
+
+        .social-media-sharing a {
+            margin-right: 10px;
+        }
+
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -61,6 +77,22 @@
                             <div class="about-projects">
                                 <div class="about-projects__details">
                                     <p class="fs-15 mb-25">{{ emergency.description }}</p>
+                                    <div class="social-media-sharing">
+                                        <p>Partager sur :</p>
+
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_emergency_show', {id: emergency.id}) }}" target="_blank">
+                                            <button class="btn btn-primary" style="background-color: #37474F"><i class="fab fa-facebook-f"></i> Facebook</button>
+                                        </a>
+
+                                        <a href="https://twitter.com/intent/tweet?url={{ url('app_emergency_show', {id: emergency.id}) }}" target="_blank">
+                                            <button class="btn btn-primary" style="background-color: #37474F"><i class="fab fa-twitter"></i> Twitter</button>
+                                        </a>
+
+                                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url('app_emergency_show', {id: emergency.id}) }}" target="_blank">
+                                            <button class="btn btn-primary" style="background-color: #37474F"><i class="fab fa-linkedin-in"></i> LinkedIn</button>
+                                        </a>
+                                    </div>
+
                                 </div>
                                 <ul class="d-flex text-capitalize">
                                     <li>
@@ -75,6 +107,7 @@
                                         <span class="color-light fs-13">Deadline</span>
                                         <p class="color-danger fs-14 mt-1 mb-0 fw-500">{{ emergency.deadline ? emergency.deadline|date('Y-m-d') : '' }}</p>
                                     </li>
+
                                 </ul>
                             </div>
                         </div>
