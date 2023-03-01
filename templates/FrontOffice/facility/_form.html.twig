@@ -1,0 +1,201 @@
+
+{{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+<form method="post">
+    {#{{ form_widget(form) }}#}
+    {{ form_label(form.name, 'Name') }}
+    {{form_widget(form.name)}}
+
+    {{ form_label(form.address, 'address') }}
+    {{form_widget(form.address)}}
+
+    {{ form_label(form.rank, 'rank') }}
+    {{form_widget(form.rank)}}
+
+    {{ form_label(form.users, 'users') }}
+    {{form_widget(form.users)}}
+
+    <button class="btn">{{ button_label|default('Save') }}</button>
+    {{ form_end(form) }}
+</form>
+
+
+
+
+
+
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="user-info-tab w-100 bg-white global-shadow radius-xl mb-50">
+                <div class="ap-tab-wrapper border-bottom ">
+                    <ul class="nav px-30 ap-tab-main text-capitalize" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <li class="nav-item">
+                        </li>
+                        <li class="nav-item">
+                        </li>
+                        <li class="nav-item">
+                        </li>
+                    </ul>
+                </div>
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade  show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                        <div class="row justify-content-center">
+                            <div class="col-xxl-4 col-10">
+                                <div class="mt-sm-40 mb-sm-50 mt-20 mb-20">
+                                    <div class="user-tab-info-title mb-sm-40 mb-20 text-capitalize">
+                                        <h6 class="fw-600">Donation Information</h6>
+                                    </div>
+                                    <div class="edit-profile__body">
+                                        <form>
+                                            <div class="form-group mb-25">
+                                                <label for="name1"></label>
+                                                {{ form_label(form.name, 'Name') }}
+                                                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.name) }}
+
+                                            </div>
+                                            <div class="form-group mb-25">
+                                                <label for="name1"></label>
+                                                {{ form_label(form.address, 'Enter your Donation Location') }}
+                                                {{ form_widget(form.address, {'attr': {'class': 'form-control'}}) }}
+
+                                                {{ form_errors(form.address) }}
+                                            </div>
+                                            
+                                            <div class="form-group mb-25">
+                                                <label for="name1"></label>
+                                                {{ form_label(form.rank, 'Add the facility rank') }}
+                                                {{ form_widget(form.rank, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.rank) }}
+                                            </div>
+                                            <div class="A">
+                                                <label for="name1"></label>
+                                                {{ form_label(form.users) }}
+                                                {{ form_widget(form.users, {'attr': {'class': 'form-control'}}) }}
+                                                {{ form_errors(form.users) }}
+                                            </div>
+
+                                            <div class="button-group d-flex pt-sm-25 justify-content-md-end justify-content-start ">
+                                                <button class="btn btn-primary btn-default btn-squared text-capitalize radius-md shadow2 btn-sm">{{ button_label|default('Save') }}</button>
+
+
+
+
+
+
+                                            </div>
+                                            {{ form_end(form) }}
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#
+
+<div class="action-btn">
+    <a href="{{ path('app_facility_new') }}" class="btn px-15 btn-primary" data-bs-toggle="modal"
+        data-bs-target="#add-contact">
+        <i class="las la-plus fs-16"></i>Add New
+    </a>
+
+    <div class="modal fade add-contact" id="add-contact" tabindex="-1" aria-labelledby="staticBackdropLabel"
+        style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content radius-xl">
+                <div class="modal-header">
+                    <h6 class="modal-title fw-500" id="staticBackdropLabel">Contact Information</h6>
+                    <button type="button" class="close shadow-none border-0 bg-transparent" data-bs-dismiss="modal"
+                        aria-label="Close">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                            class="svg replaced-svg">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="add-new-contact">
+
+                        {#new form
+                        <form action="/" method="post">
+                            <div class="form-group mb-20">
+                                <label>Name:</label>
+                                <input type="text" class="form-control form-control-lg" placeholder="Your Name">
+                            </div>
+                            <div class="form-group mb-20">
+                                <label>Address</label>
+                                <input type="text" class="form-control form-control-lg" placeholder="Email Address">
+                            </div>
+
+                            <div class="form-group mb-20">
+                                <label>Rank</label>
+                                <input type="text" class="form-control form-control-lg" placeholder="Phone Number">
+                            </div>
+
+                            <button class="btn">{{ button_label|default('Save') }}</button>
+                            
+                            {{ form_end(form) }}
+                        </form>
+
+                        {#og form
+                        <form method="post">
+                            {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+                            {#{{ form_widget(form) }}
+                            {{ form_label(form.name, 'Name:') }}
+                            {{form_widget(form.name)}}
+
+                            {{ form_label(form.address, 'addressss') }}
+                            {{form_widget(form.address)}}
+
+                            {{ form_label(form.rank, 'raaank') }}
+                            {{form_widget(form.rank)}}
+
+                            {{ form_label(form.users, 'usersss') }}
+                            {{form_widget(form.users)}}
+
+                            <button class="btn">{{ button_label|default('Save') }}</button>
+                            {{ form_end(form) }}
+
+                        </form>
+                        
+
+
+
+
+
+
+
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+#}

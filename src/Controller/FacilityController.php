@@ -85,6 +85,6 @@ class FacilityController extends AbstractController
             $facilityRepository->remove($facility, true);
         }
 
-        return $this->redirectToRoute('app_facility_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_facility_indexAdmin', [], Response::HTTP_SEE_OTHER);
     }
 }
