@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\TicketRepository;
 use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\Common\Collections\ArrayCollection;
 
 #[ORM\Entity(repositoryClass: TicketRepository::class)]
 class Ticket
