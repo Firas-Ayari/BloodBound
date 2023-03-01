@@ -66,7 +66,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ArticleCategory::class)]
     private Collection $articleCategories;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Achat::class)]
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Achat::class, cascade:["remove"])]
     private Collection $achats;
 
     public function __construct()

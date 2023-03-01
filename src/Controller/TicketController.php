@@ -106,6 +106,10 @@ public function buyticket(Request $request, Ticket $ticket): Response
         
         if ($stock - 1 === 0) {
             $ticket->setStatus('sold out');
+            $event = $ticket->getEvent();
+        if ($event) {
+            $event->setStatus('complet');
+        }
         }
         
         $achat = new Achat();

@@ -3,12 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\Event;
+use App\Entity\Ticket;
+use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Symfony\Component\Notifier\NotifierInterface;
+//use Symfony\UX\Notify\NotifierInterface;
+use Symfony\UX\Notify\Notification; //Maybe ghalta  use Symfony\Component\Notifier\Notification\Notification;
+
 
 #[Route('/event')]
 class EventController extends AbstractController
@@ -107,4 +117,29 @@ class EventController extends AbstractController
 
         return $this->redirectToRoute('app_event_index_admin', [], Response::HTTP_SEE_OTHER);
     }
+
+    private $notifier;
+
+    public function __construct(NotifierInterface $notifier) //NotifierInterface Class is not defined
+    {
+        $this->notifier = $notifier;
+    }
+
+    public function notify(Notification $notification)
+    {
+        /*$notification = new Notification($message, [
+            'type' => $type,
+            'icon' => $icon,
+            'timeout' => $timeout,
+        ]);*/
+
+        $this->notifier->send($notification);
+    }
 }
+
+//class SendRemindersCommand extends Command
+//{
+  //  protected static $defaultName = 'app:send-reminders';
+
+//}
+

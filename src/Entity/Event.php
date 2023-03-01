@@ -71,11 +71,13 @@ class Event
     #[Assert\NotBlank(message: 'Please enter end time.')]
     private ?\DateTimeInterface $endTime = null;
 
+    
+    
     #[ManyToOne(targetEntity: User::class, inversedBy: 'events')]
-    #[JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete:"CASCADE")]
     private User|null $user = null;
 
-    #[OneToOne(targetEntity: Ticket::class, mappedBy: 'event')]
+    #[OneToOne(targetEntity: Ticket::class, mappedBy: 'event', cascade:["persist","remove"])]
     private ?Ticket $ticket = null;
 
     

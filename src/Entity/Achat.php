@@ -14,7 +14,7 @@ class Achat
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: Ticket::class, inversedBy: 'achats')]
-    #[JoinColumn(name: 'ticket_id', referencedColumnName: 'id')]
+    #[JoinColumn(name: 'ticket_id', referencedColumnName: 'id', onDelete:"CASCADE")]
     private ?Ticket $ticket = null;
 
     #[ORM\ManyToOne(targetEntity: User::class,inversedBy: 'achats')]
