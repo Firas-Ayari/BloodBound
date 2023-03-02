@@ -51,6 +51,9 @@ class EmergencyController extends AbstractController
     #[Route('/{id}', name: 'app_emergency_show', methods: ['GET'])]
     public function show(Emergency $emergency): Response
     {
+        $emergency->incrementViewCount();
+        $this->getDoctrine()->getManager()->flush();
+
         return $this->render('FrontOffice/emergency/show.html.twig', [
             'emergency' => $emergency,
         ]);

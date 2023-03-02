@@ -74,6 +74,9 @@ class Emergency
     #[ORM\OneToMany(mappedBy: 'emergency', targetEntity: Donation::class)]
     private Collection $donations;
 
+    #[ORM\Column(type: Types::BIGINT, nullable: true)]
+    private ?string $view = null;
+
     //creer temps reel
     public function __construct() {
         $this->createdAt = new \DateTimeImmutable();
@@ -209,6 +212,24 @@ class Emergency
                 $donation->setEmergency(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getView(): ?string
+    {
+        return $this->view;
+    }
+
+    public function setView(?string $view): self
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+    public function incrementViewCount(): self
+    {
+        $this->view++;
 
         return $this;
     }
