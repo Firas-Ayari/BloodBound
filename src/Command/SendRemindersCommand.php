@@ -12,8 +12,10 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\UX\Notify\Notification;
-use Symfony\UX\Notify\NotifierInterface;
+//use Symfony\UX\Notify\Notification;
+//use Symfony\UX\Notify\NotifierInterface;
+use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\UX\Notify\Notification; //Maybe ghalta  use Symfony\Component\Notifier\Notification\Notification;
 
 #[AsCommand(
     name: 'send-reminders',
@@ -29,7 +31,7 @@ class SendRemindersCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Fetch all the events whose date is equal to the current date and time
+        // Fetch all the events with date is equal to the current date and time of the event 
         $events = $this->getDoctrine()->getRepository(Event::class)->createQueryBuilder('e')
             ->where('e.eventDate = :eventDate')
             ->setParameter('eventDate', new \DateTime())
@@ -42,7 +44,7 @@ class SendRemindersCommand extends Command
             foreach ($tickets as $ticket) {
                 $user = $this->getDoctrine()->getRepository(User::class)->find($ticket->getUser_id());
 
-                // Send a notification to the user using Symfony UX Notify
+                // Send a notification to the user using Symfony UX-Notify
                 $notification = new Notification('Reminder', [
                     'type' => 'success',
                     //'icon' => 'fas fa-bell',

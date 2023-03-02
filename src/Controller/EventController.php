@@ -15,7 +15,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Notifier\NotifierInterface;
+use Symfony\Component\Notifier\NotifierInterface; // hedhy zedtha
 //use Symfony\UX\Notify\NotifierInterface;
 use Symfony\UX\Notify\Notification; //Maybe ghalta  use Symfony\Component\Notifier\Notification\Notification;
 
@@ -118,23 +118,23 @@ class EventController extends AbstractController
         return $this->redirectToRoute('app_event_index_admin', [], Response::HTTP_SEE_OTHER);
     }
 
-    private $notifier;
+   // private $notifier;
 
-    public function __construct(NotifierInterface $notifier) //NotifierInterface Class is not defined
-    {
-        $this->notifier = $notifier;
-    }
+  //  public function __construct(NotifierInterface $notifier) //NotifierInterface Class is not defined
+  //  {
+ //       $this->notifier = $notifier;
+  //  }
 
-    public function notify(Notification $notification)
-    {
+   // public function notify(Notification $notification)
+   // {
         /*$notification = new Notification($message, [
             'type' => $type,
             'icon' => $icon,
             'timeout' => $timeout,
         ]);*/
 
-        $this->notifier->send($notification);
-    }
+       // $this->notifier->send($notification);
+  //  }
 }
 
 //class SendRemindersCommand extends Command

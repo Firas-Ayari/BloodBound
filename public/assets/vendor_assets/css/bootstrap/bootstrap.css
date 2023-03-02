@@ -1367,6 +1367,7 @@ textarea.form-control-lg {
 	-moz-appearance: none;
 	appearance: none;
 	color-adjust: exact;
+	
 }
 
 .form-check-input[type=checkbox] {
