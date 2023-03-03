@@ -19,10 +19,10 @@ class DonationType extends AbstractType
             ->add('email')
             ->add('phoneNumber')
             ->add('donationDate')
-            ->add('emergency', EntityType::class, [
+            /*->add('emergency', EntityType::class, [
                 'class'=>Emergency::class,
                 'choice_label'=>'title'
-            ]);
+            ])*/;
     }
 
     public function configureOptions(OptionsResolver $resolver): void

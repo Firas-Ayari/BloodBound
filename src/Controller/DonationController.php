@@ -21,16 +21,18 @@ class DonationController extends AbstractController
             'donations' => $donationRepository->findAll(),
         ]);
     }
-    #[Route('/new', name: 'app_donation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, DonationRepository $donationRepository, EmergencyRepository $emergencyRepository): Response
+    #[Route('/new/{id}', name: 'app_donation_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, int $id, DonationRepository $donationRepository, EmergencyRepository $emergencyRepository): Response
     {
+        $emergency = $emergencyRepository->find($id);
         $donation = new Donation();
+        $donation->setEmergency($emergency);
         $form = $this->createForm(DonationType::class, $donation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $emergencyId = $donation->getEmergency()->getId();
-            $emergency = $emergencyRepository->find($emergencyId);
+            //$emergencyId = $donation->getEmergency()->getId();
+            //$emergency = $emergencyRepository->find($emergencyId);
             $emergency->setStatus('completed');
             $donationRepository->save($donation, true);
 

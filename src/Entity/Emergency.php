@@ -75,7 +75,7 @@ class Emergency
     private Collection $donations;
 
     #[ORM\Column(type: Types::BIGINT, nullable: true)]
-    private ?string $view = null;
+    private ?string $view = '0' ;
 
     //creer temps reel
     public function __construct() {
