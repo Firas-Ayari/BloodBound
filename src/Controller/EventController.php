@@ -7,6 +7,7 @@ use App\Entity\Ticket;
 use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
+use App\Repository\AchatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,10 +74,18 @@ class EventController extends AbstractController
     #[Route('/{id}', name: 'app_event_show', methods: ['GET'])]
     public function show(Event $event): Response
     {
-        $ticket = $event->getTicket();
         return $this->render('FrontOffice/event/show.html.twig', [
             'event' => $event,
-            'tickets' => $ticket
+        ]);
+    }
+    #[Route('/{id}/ticket', name: 'app_event_show_ticket', methods: ['GET'])]
+    public function showTicketById(Event $event, AchatRepository $achatRepository): Response
+    {
+        $ticket = $event->getTicket();
+        $count = $achatRepository->countTicketsPurchasedForTicketId($ticket);
+        return $this->render('FrontOffice/ticket/show.html.twig', [
+            'ticket' => $ticket,
+            'count' => $count
         ]);
     }
    
@@ -118,7 +127,40 @@ class EventController extends AbstractController
         return $this->redirectToRoute('app_event_index_admin', [], Response::HTTP_SEE_OTHER);
     }
 
-   // private $notifier;
+   /* public function vote(Article $article, int $value): Response
+    {
+        // Check if the user has already voted on this article
+        $vote = $this->getDoctrine()
+            ->getRepository(Vote::class)
+            ->findOneBy([
+                'article' => $article,
+                'user' => $this->getUser(),
+            ]);
+
+        if ($vote) {
+            // User has already voted, update the value of their vote
+            $vote->setValue($value);
+        } else {
+            // User hasn't voted yet, create a new vote
+            $vote = new Vote();
+            $vote->setArticle($article)
+                ->setUser($this->getUser())
+                ->setValue($value);
+        }
+
+        // Save the vote to the database
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($vote);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_article_showfront', ['id' => $article->getId()]);
+    } */
+
+   
+   
+   
+   
+    // private $notifier;
 
   //  public function __construct(NotifierInterface $notifier) //NotifierInterface Class is not defined
   //  {

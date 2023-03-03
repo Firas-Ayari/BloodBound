@@ -68,6 +68,7 @@ class TicketController extends AbstractController
         return $this->render('FrontOffice/ticket/show.html.twig', [
             'ticket' => $ticket,
             'count' => $count,
+            //'status' => $ticket->getStatus()
         ]);
     }
 
