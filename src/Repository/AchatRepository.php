@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Achat;
+use App\Entity\Ticket;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -38,6 +39,25 @@ class AchatRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function countTicketsPurchasedForTicketId(Ticket $ticket) // ticket
+    {
+        $qb = $this->createQueryBuilder('p');
+        
+       // $qb->select('COUNT(p.ticket.stock)') // select from Achat , Count , selon Id ticket
+       //    ->join('p.ticket', 't') // join() taati ticket , jointure entre ticket achat
+       //    ->where('p.user = :user') 
+       //    ->setParameter('user', $user);
+
+        //return $qb->getQuery()->getSingleScalarResult();
+
+        return $qb->select('COUNT(p.id)')
+            ->where('p.ticket = :ticketId')
+            ->setParameter('ticketId', $ticket)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
 
 //    /**
 //     * @return Achat[] Returns an array of Achat objects

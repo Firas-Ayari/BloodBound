@@ -5,8 +5,10 @@ namespace App\Controller;
 use App\Entity\Event;
 use App\Entity\Achat;
 use App\Entity\Ticket;
+use App\Entity\User;
 use App\Form\TicketType;
 use App\Repository\TicketRepository;
+use App\Repository\AchatRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -59,10 +61,13 @@ class TicketController extends AbstractController
    }
     
     #[Route('/{id}', name: 'app_ticket_show', methods: ['GET'])]
-    public function show(Ticket $ticket): Response
+    public function show(Ticket $ticket, AchatRepository $achatRepository): Response
     {
+        //$sumOfTickets = $achatRepository->getSumOfTicketsPurchasedByUser($ticket);
+        $count = $achatRepository->countTicketsPurchasedForTicketId($ticket);
         return $this->render('FrontOffice/ticket/show.html.twig', [
             'ticket' => $ticket,
+            'count' => $count,
         ]);
     }
 
@@ -127,4 +132,17 @@ public function buyticket(Request $request, Ticket $ticket): Response
     
     return $this->redirectToRoute('app_ticket_show', ['id' => $ticket->getId()], Response::HTTP_SEE_OTHER);
 }
+
+//#[Route('/{id}', name: 'app_ticket_delete', methods: ['POST'])]
+    
+    #[Route("/{id}/purchases", name:"sum_of_tickets_purchased_by_user")]
+     
+    public function sumOfTicketsPurchasedByUser(User $user, AchatRepository $achatRepository): Response
+    {
+        
+
+        return $this->render('FrontOffice/ticket/show.html.twig', [
+            'sumOfTickets' => $sumOfTickets,
+        ]);
+    }
  }
