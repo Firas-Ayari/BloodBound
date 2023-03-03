@@ -2,24 +2,31 @@
 
 namespace App\Controller;
 
+use COM;
+use App\Entity\Basket;
+use App\Entity\CartProduct;
 use App\Entity\Product;
-use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Services\CartCalculator;
+use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/product')]
 class ProductController extends AbstractController
 {
     private $em;
     private $productRepository;
-    public function __construct(EntityManagerInterface $em, ProductRepository $productRepository) 
+    private $priceCalculator;
+    public function __construct(EntityManagerInterface $em, ProductRepository $productRepository, CartCalculator $cartCalculator) 
     {
         $this->em = $em;
         $this->productRepository = $productRepository;
+        $this->priceCalculator = $cartCalculator;
     }
 
     #[Route('/admin', name: 'app_product_index_admin', methods: ['GET'])]
@@ -77,6 +84,52 @@ class ProductController extends AbstractController
         return $this->render('FrontOffice/product/show.html.twig', [
             'product' => $product,
         ]);
+    }
+
+    #[Route('/{id}/addtocart', name: 'app_product_cart')]
+    public function addToCart($id): Response
+    {
+        $cart = new Basket();
+        $cart->setCreatedAt(new DateTimeImmutable());
+        $cart->setCheckout("onHold");
+        $product = $this->productRepository->find($id);
+        if($product->getStock() > 0)
+        {
+            $cartProduct = new CartProduct();
+            $cartProduct->setProduct($product);
+            $cartProduct->setCart($cart);
+            $cartProduct->setQuantity(1);
+            $cart->setTotal($cart->getTotal()+$product->getPrice());
+            //$cart->setTotal($this->priceCalculator->TotalPriceCalcul($cart));
+            $product->setStock($product->getStock()-1);
+            $this->em->persist($cart);
+            $this->em->persist($cartProduct);
+            $this->em->flush();
+        }
+        return $this->redirectToRoute('app_product_index');
+    }
+
+    #[Route('/{id}/addtocart/{quantity}', name: 'app_product_cart_quantity')]
+    public function addToCartByQuantity($id,$quantity): Response
+    {
+        $cart = new Basket();
+        $cart->setCreatedAt(new DateTimeImmutable());
+        $cart->setCheckout("onHold");
+        $product = $this->productRepository->find($id);
+        if($product->getStock() >= $quantity)
+        {
+            $cartProduct = new CartProduct();
+            $cartProduct->setProduct($product);
+            $cartProduct->setCart($cart);
+            $cartProduct->setQuantity($quantity);
+            $product->setStock($product->getStock()-$quantity);
+            $cart->setTotal($cart->getTotal()+($product->getPrice()*$quantity));
+            //$cart->setTotal($this->priceCalculator->TotalPriceCalcul($cart));
+            $this->em->persist($cart);
+            $this->em->persist($cartProduct);
+            $this->em->flush();
+        }
+        return $this->redirectToRoute('app_product_index');
     }
 
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]
