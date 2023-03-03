@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use App\Repository\EmergencyRepository;
 
 #[Route('/donation')]
 class DonationController extends AbstractController
@@ -20,15 +21,17 @@ class DonationController extends AbstractController
             'donations' => $donationRepository->findAll(),
         ]);
     }
-
     #[Route('/new', name: 'app_donation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, DonationRepository $donationRepository): Response
+    public function new(Request $request, DonationRepository $donationRepository, EmergencyRepository $emergencyRepository): Response
     {
         $donation = new Donation();
         $form = $this->createForm(DonationType::class, $donation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $emergencyId = $donation->getEmergency()->getId();
+            $emergency = $emergencyRepository->find($emergencyId);
+            $emergency->setStatus('completed');
             $donationRepository->save($donation, true);
 
             return $this->redirectToRoute('app_emergency_index', [], Response::HTTP_SEE_OTHER);

@@ -37,8 +37,6 @@ class EmergencyType extends AbstractType
             ->add('status'
                 ,ChoiceType::class, [
                     'choices'  => [
-                        '' => '',
-                        'Not started' => 'not started',
                         'In progress' => 'in progress',
                         'Completed' => 'completed',
                     ],
