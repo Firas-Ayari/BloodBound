@@ -141,7 +141,7 @@ public function buyticket(Request $request, Ticket $ticket): Response
             $to,
             array(
                 'from' => $from,
-                'body' => 'You have successfully purchased a ticket for '.$event->getTitle().'.',
+                'body' => 'You have successfully purchased a ticket for '.$event->getTitle().' at '.$ticket->getPrice().' dinars.',
             )
         );
 
