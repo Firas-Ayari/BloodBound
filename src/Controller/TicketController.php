@@ -13,6 +13,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+//use App\Service\TwilioService;
+use Twilio\Rest\Client;
+
 
 #[Route('/ticket')]
 class TicketController extends AbstractController
@@ -121,11 +124,27 @@ public function buyticket(Request $request, Ticket $ticket): Response
         $achat = new Achat();
         $achat->setTicket($ticket);
         $achat->setUser($this->getUser());
-        
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($achat);
         $entityManager->flush();
         
+        // Send Twilio SMS notification
+        $sid = 'ACf3ac88e99006e1ff62f7304d2fe83629';
+        $token = '80c55189e8afa8363abc1d6a58a1447e';
+        $from = '+12706790707';
+        $to = '+21650205982';
+        
+        $client = new Client($sid, $token);
+        $event = $ticket->getEvent();
+        $message = $client->messages->create(
+            $to,
+            array(
+                'from' => $from,
+                'body' => 'You have successfully purchased a ticket for '.$event->getTitle().'.',
+            )
+        );
+
         $this->addFlash('success', 'You have successfully purchased a ticket.');
     } else {
         $this->addFlash('error', 'The tickets are sold out.');
