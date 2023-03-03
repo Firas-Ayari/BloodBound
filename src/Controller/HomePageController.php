@@ -15,4 +15,11 @@ class HomePageController extends AbstractController
             'controller_name' => 'HomePageController',
         ]);
     }
+    #[Route('/admin', name: 'app_home_page')]
+    public function indexAdmin(): Response
+    {
+        return $this->render('BackOffice/index.html.twig', [
+            'controller_name' => 'HomePageController',
+        ]);
+    }
 }
