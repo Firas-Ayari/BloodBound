@@ -161,6 +161,7 @@ public function buyticket(Request $request, Ticket $ticket): Response
         $html = $this->renderView('FrontOffice/ticket/ticketpdf.html.twig', [
             'event' => $event,
             'ticket' => $ticket,
+            'achat' => $achat,
         ]);
         $pdfOptions->loadHtml($html);
         $pdfOptions->setPaper('A4', 'portrait');
