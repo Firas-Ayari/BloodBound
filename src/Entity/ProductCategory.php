@@ -8,6 +8,8 @@ use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\Common\Collections\Collection;
 use App\Repository\ProductCategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use App\Entity\Product;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ProductCategoryRepository::class)]
 class ProductCategory
@@ -18,6 +20,10 @@ class ProductCategory
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:'Please enter the category name')]
+    #[Assert\Length(
+        max: 60, 
+        maxMessage: "The name is way too long")]
     private ?string $name = null;
 
     #[ManyToOne(targetEntity: User::class, inversedBy: 'productCategories')]
@@ -28,6 +34,12 @@ class ProductCategory
     private Collection $products;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:'Please enter a description for the product category')]
+    #[Assert\Length(
+        min: 10, 
+        max: 255, 
+        minMessage: "The descriptionn is way too short",
+        maxMessage: "The description is way too long")]
     private ?string $description = null;
 
     public function __construct()

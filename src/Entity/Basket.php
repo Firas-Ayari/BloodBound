@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BasketRepository;
+use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -15,11 +16,6 @@ class Basket
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-    
-
-    #[ORM\OneToOne(inversedBy: 'basket', cascade: ['persist', 'remove'])]
-    #[ORM\JoinColumn(nullable: false)]
-    private Order|null $order = null;
 
     #[ORM\Column]
     private ?float $total = null;
@@ -33,6 +29,13 @@ class Basket
     #[ORM\OneToMany(mappedBy: 'basket', targetEntity: CartProduct::class)]
     private Collection $cartProducts;
 
+    #[ORM\OneToOne(targetEntity: User::class,inversedBy: 'basket')]
+    #[JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete:"CASCADE")]
+    private ?User $user = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $checkout = null;
+
     public function __construct()
     {
         $this->cartProducts = new ArrayCollection();
@@ -42,18 +45,6 @@ class Basket
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getOrder(): ?Order
-    {
-        return $this->order;
-    }
-
-    public function setOrder(Order $order): self
-    {
-        $this->order = $order;
-
-        return $this;
     }
 
     public function getTotal(): ?float
@@ -118,6 +109,30 @@ class Basket
                 $cartProduct->setCart(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function getCheckout(): ?string
+    {
+        return $this->checkout;
+    }
+
+    public function setCheckout(string $checkout): self
+    {
+        $this->checkout = $checkout;
 
         return $this;
     }

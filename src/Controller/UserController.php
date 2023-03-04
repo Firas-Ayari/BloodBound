@@ -22,15 +22,16 @@ class UserController extends AbstractController
         $this->em = $em;
         $this->userRepository = $userRepository;
     }
-    #[Route('/', name: 'app_user_list')]
+    #[Route('/admin', name: 'app_user_list')]
     public function index(): Response
     {
-        return $this->render('user/index.html.twig', [
+        return $this->render('BackOffice/user/index.html.twig', [
             'users' => $this->userRepository->findAll(),
         ]);
     }
 
-    #[Route('/create', name: 'app_create_user')]
+
+    #[Route('/create', name: 'app_user_create')]
     public function new(Request $request): Response
     {
         $user = new User();
@@ -43,20 +44,28 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user_list');
         }
 
-        return $this->render('user/new.html.twig', [
+        return $this->render('BackOffice/user/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/{id}', name: 'app_show_user')]
+    #[Route('/{id}', name: 'app_user_show')]
     public function show($id): Response
     {
-        return $this->render('user/show.html.twig', [
+        return $this->render('BackOffice/user/show.html.twig', [
             'user' => $this->userRepository->find($id),
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_user_edit')]
+    #[Route('/{id}/profile', name: 'app_user_show_na')]
+    public function show_user($id): Response
+    {
+        return $this->render('FrontOffice/user/show.html.twig', [
+            'user' => $this->userRepository->find($id),
+        ]);
+    }
+
+    #[Route('/{id}/edit/admin', name: 'app_user_edit')]
     public function edit(Request $request, $id): Response
     {
         $user = $this->userRepository->find($id);
@@ -69,8 +78,27 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user_list');
         }
 
-        return $this->renderForm('user/edit.html.twig', [
-            'product' => $user,
+        return $this->renderForm('BackOffice/user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}/edit', name: 'app_user_edit_na')]
+    public function edit_user(Request $request, $id): Response
+    {
+        $user = $this->userRepository->find($id);
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->em->flush();
+
+            return $this->redirectToRoute('app_user_list');
+        }
+
+        return $this->renderForm('FrontOffice/user/edit.html.twig', [
+            'user' => $user,
             'form' => $form,
         ]);
     }
