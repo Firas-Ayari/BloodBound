@@ -183,6 +183,9 @@ public function buyticket(Request $request, Ticket $ticket): Response
     return $this->redirectToRoute('app_ticket_show', ['id' => $ticket->getId()], Response::HTTP_SEE_OTHER);
 }
 
+
+
+
 //#[Route('/{id}', name: 'app_ticket_delete', methods: ['POST'])]
     
     #[Route("/{id}/purchases", name:"sum_of_tickets_purchased_by_user")]
