@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 //use App\Service\TwilioService;
 use Twilio\Rest\Client;
+use libphonenumber\PhoneNumberUtil;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 
 
 #[Route('/ticket')]
@@ -144,6 +147,33 @@ public function buyticket(Request $request, Ticket $ticket): Response
                 'body' => 'You have successfully purchased a ticket for '.$event->getTitle().' at '.$ticket->getPrice().' dinars.',
             )
         );
+
+        // Pdf Download
+        $ticket = $this->getDoctrine()->getRepository(Ticket::class)->find($ticket);
+
+        if (!$ticket) {
+            throw $this->createNotFoundException('Ticket not found');
+        }
+
+        $event = $ticket->getEvent();
+
+        $pdfOptions = new Dompdf();
+        $html = $this->renderView('FrontOffice/ticket/ticketpdf.html.twig', [
+            'event' => $event,
+            'ticket' => $ticket,
+        ]);
+        $pdfOptions->loadHtml($html);
+        $pdfOptions->setPaper('A4', 'portrait');
+        $pdfOptions->render();
+
+        $pdfContent = $pdfOptions->output();
+        $response = new Response($pdfContent);
+
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment;filename=ticket.pdf');
+
+        return $response; 
+
 
         $this->addFlash('success', 'You have successfully purchased a ticket.');
     } else {
