@@ -51,7 +51,8 @@
                                  You will find down bellow the current product image
                                  </p>
                                  <div class="div">
-                                    <img class="svg w-100" src="{{ asset('BackOffice/img/products/Donate Blood Tshirt.jpg') }}" alt="img">
+                                    <img class="svg w-100" src="{{ asset('uploads/productsImg/' ~ product.image) }}" alt="Image">
+                                  
                                     <a href="{{ path('app_product_index_admin')}}">
                                        <div class="product-item__button d-flex mt-20 flex-wrap">
                                                 <button class="btn btn-primary btn-default btn-squared border-0 px-25" style="background:#A40E1C;"><i class="fa-solid fa-angle-left"></i><strong>Back to products</strong>

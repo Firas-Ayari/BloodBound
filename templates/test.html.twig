@@ -1,50 +1,39 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Product{% endblock %}
+{% block title %}Basket index{% endblock %}
 
 {% block body %}
-    <h1>Edit Product</h1>
-
-    {{ include('BackOffice/product/_form.html.twig', {'button_label': 'Update'}) }}
-
-    <a href="{{ path('app_product_index') }}">back to list</a>
-
-    {{ include('BackOffice/product/_delete_form.html.twig') }}
-{% endblock %}
-{% extends 'base.html.twig' %}
-
-{% block title %}ProductCategory index{% endblock %}
-
-{% block body %}
-    <h1>ProductCategory index</h1>
+    <h1>Basket index</h1>
 
     <table class="table">
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
+                <th>Total</th>
+                <th>CreatedAt</th>
+                <th>UpdatedAt</th>
                 <th>actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for product_category in product_categories %}
+        {% for basket in baskets %}
             <tr>
-                <td>{{ product_category.id }}</td>
-                <td>{{ product_category.name }}</td>
-                <td>{{ product_category.description }}</td>
+                <td>{{ basket.id }}</td>
+                <td>{{ basket.total }}</td>
+                <td>{{ basket.createdAt ? basket.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ basket.updatedAt ? basket.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_product_category_show', {'id': product_category.id}) }}">show</a>
-                    <a href="{{ path('app_product_category_edit', {'id': product_category.id}) }}">edit</a>
+                    <a href="{{ path('app_basket_show', {'id': basket.id}) }}">show</a>
+                    <a href="{{ path('app_basket_edit', {'id': basket.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_product_category_new') }}">Create new</a>
+    <a href="{{ path('app_basket_new') }}">Create new</a>
 {% endblock %}

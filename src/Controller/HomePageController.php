@@ -15,4 +15,20 @@ class HomePageController extends AbstractController
             'home_page' => 'HomePageController',
         ]);
     }
+
+    #[Route('/invoice', name: 'app_invoice')]
+    public function indexinvoice(): Response
+    {
+        return $this->render('invoice.html.twig', [
+            'home_page' => 'HomePageController',
+        ]);
+    }
+
+    #[Route('/ticket', name: 'app_ticket')]
+    public function indextickey(): Response
+    {
+        return $this->render('ticket.html.twig', [
+            'home_page' => 'HomePageController',
+        ]);
+    }
 }

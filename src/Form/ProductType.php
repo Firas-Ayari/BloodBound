@@ -8,7 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class ProductType extends AbstractType
 {
@@ -17,13 +17,18 @@ class ProductType extends AbstractType
         $builder
             ->add('name')
             ->add('description')
-            ->add('image')
             ->add('price')
             ->add('stock')
             ->add('rating')
             ->add('productCategory', EntityType::class, [
                 'class' => ProductCategory::class,
                 'choice_label' => 'name'
+            ])
+            ->add('image', FileType::class, [
+                'label' => 'Image',
+                'mapped' => false,
+                'required' => false,
+            
             ]);
     }
 

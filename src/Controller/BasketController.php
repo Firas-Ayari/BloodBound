@@ -16,7 +16,7 @@ class BasketController extends AbstractController
     #[Route('/', name: 'app_basket_index', methods: ['GET'])]
     public function index(BasketRepository $basketRepository): Response
     {
-        return $this->render('basket/index.html.twig', [
+        return $this->render('FrontOffice/basket/index.html.twig', [
             'baskets' => $basketRepository->findAll(),
         ]);
     }
