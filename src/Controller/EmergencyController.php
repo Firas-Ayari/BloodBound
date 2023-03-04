@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Emergency;
 use App\Form\EmergencyType;
 use App\Repository\EmergencyRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,11 +21,23 @@ class EmergencyController extends AbstractController
             'emergencies' => $emergencyRepository->findAll(),
         ]);
     }
+
+
     #[Route('/', name: 'app_emergency_index', methods: ['GET'])]
-    public function index(EmergencyRepository $emergencyRepository): Response
+    public function index(EmergencyRepository $emergencyRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $emergencies = $emergencyRepository->findAll();
+
+        $pagination = $paginator->paginate(
+            $emergencies,
+            $request->query->getInt('page', 1),
+            6
+        );
+
         return $this->render('FrontOffice/emergency/index.html.twig', [
-            'emergencies' => $emergencyRepository->findAll(),
+            'pagination' => $pagination,
+            'emergencies' => $pagination,
+
         ]);
     }
 
