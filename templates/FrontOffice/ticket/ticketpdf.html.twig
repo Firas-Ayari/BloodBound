@@ -9,7 +9,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f7e8e8;
+            background-color: #FFFFFF;
         }
         .ticket-container {
             width: 100%;
@@ -17,37 +17,23 @@
             margin: 0 auto;
             background-color: #fff;
             padding: 30px;
-            border: 1px solid #c65353;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.2);
+            border: 2px solid #D5D1D1;
+            border-radius: 30px;
+            box-shadow: 50px 10px 50px 10px rgba(0,0,0,1);
         }
         .header-container {
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-direction: column;
             margin-bottom: 30px;
         }
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            background-color: #c65353;
-        }
-        .logo-container img {
-            width: 80%;
-            height: 80%;
-            object-fit: contain;
-        }
-        .title-container {
-            margin-left: 30px;
-        }
+        
         .ticket-title {
-            font-size: 36px;
+            font-size: 56px;
             margin-bottom: 10px;
-            color: #c65353;
+            color: #D51F32;
+            text-align: center;
         }
         .details-container {
             display: grid;
@@ -56,13 +42,14 @@
             margin-bottom: 20px;
         }
         .details-label {
-            font-size: 24px;
-            font-weight: bold;
-            color: #c65353;
+            font-size: 20px;
+            font-weight: normal;
+            color: #BBB2B3;
         }
         .details-value {
-            font-size: 24px;
-            color: #ad1f1f;
+            font-size: 26px;
+            font-weight: normal;
+            color: #373737;
         }
         .price-container {
             display: flex;
@@ -71,7 +58,8 @@
         }
         .ticket-price {
             font-size: 36px;
-            color: #ad1f1f;
+            font-weight: bold;
+            color: #944343;
             margin-left: 10px;
         }
     </style>
@@ -79,29 +67,22 @@
 <body>
     <div class="ticket-container">
         <div class="header-container">
-            <div class="logo-container">
-                
-            </div>
-            <div class="title-container">
-                <h1 class="ticket-title">{{ event.title }}</h1>
-            </div>
+            
+            <h1 class="ticket-title">{{ event.title }}</h1>
         </div>
         <div class="details-container">
-            <div class="details-label">Event Date:</div>
+            <div class="details-label">Date:</div>
             <div class="details-value">{{ event.eventDate ? event.eventDate|date('Y-m-d') : '' }}</div>
-            <div class="details-label">Event Location:</div>
+            <div class="details-label">Location:</div>
             <div class="details-value">{{ event.location }}</div>
-            <div class="details-label">Start Time:</div>
-            <div class="details-value">{{ event.startTime|date('H:i') }}</div>
-            <div class="details-label">End Time:</div>
-            <div class="details-value">{{ event.endTime|date('H:i') }}</div>
+            <div class="details-label">Event Timing:</div>
+            <div class="details-value">{{ event.startTime|date('H:i') }} - {{ event.endTime|date('H:i') }}</div>
+            
         </div>
         <div class="price-container">
             <div class="details-label">Ticket Price:</div>
             <div class="ticket-price">{{ ticket.price }}Dt</div>
+        </div>
     </div>
 </body>
 </html>
-
-
-

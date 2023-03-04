@@ -133,9 +133,9 @@ public function buyticket(Request $request, Ticket $ticket): Response
         $entityManager->flush();
         
         // Send Twilio SMS notification
-        $sid = 'ACf3ac88e99006e1ff62f7304d2fe83629';
-        $token = '80c55189e8afa8363abc1d6a58a1447e';
-        $from = '+12706790707';
+        $sid = 'AC3fcc859c3c9d7ca0f904d5969b8f077b';
+        $token = '4408d07f6b27129cf416cb48fcca0d07';
+        $from = '+15673714926';
         $to = '+21650205982';
         
         $client = new Client($sid, $token);
@@ -164,6 +164,10 @@ public function buyticket(Request $request, Ticket $ticket): Response
         ]);
         $pdfOptions->loadHtml($html);
         $pdfOptions->setPaper('A4', 'portrait');
+
+
+
+
         $pdfOptions->render();
 
         $pdfContent = $pdfOptions->output();
