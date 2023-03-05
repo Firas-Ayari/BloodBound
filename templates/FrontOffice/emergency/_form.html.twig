@@ -57,7 +57,7 @@
 
                                                 {{ form_errors(form.deadline) }}
                                             </div>
-                                            <div class="form-group mb-25">
+                                            <div class="A">
                                                 <label for="name1"></label>
                                                 {{ form_label(form.status, 'Choose your Status') }}
                                                 {{ form_widget(form.status, {'attr': {'class': 'form-control'}}) }}
@@ -69,8 +69,10 @@
                                                 {{ form_widget(form.createdAt, {'attr': {'class': 'form-control'}}) }}
                                                 {{ form_errors(form.createdAt) }}
                                             </div>
+
+                                            {{ form_end(form) }}
                                             <div class="button-group d-flex pt-sm-25 justify-content-md-end justify-content-start ">
-                                                <button class="btn btn-primary btn-default btn-squared text-capitalize radius-md shadow2 btn-sm">{{ button_label|default('Save') }}</button>
+                                                <button class=" btn-default btn-squared text-capitalize radius-md shadow2 btn-sm" style="background-color: darkred; color: white;">{{ button_label|default('Save') }}</button>
 
 
 
@@ -78,7 +80,6 @@
 
 
                                             </div>
-                                            {{ form_end(form) }}
                                         </form>
 
                                     </div>

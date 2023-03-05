@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Emergencies List{% endblock %}
+{% block title %}Donations List{% endblock %}
 
 {% block body %}
     <div class="container-fluid">
@@ -10,7 +10,7 @@
                 <div class="breadcrumb-main user-member justify-content-sm-between ">
                     <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                         <div class="d-flex align-items-center user-member__title justify-content-center me-sm-25">
-                            <h4 class="text-capitalize fw-500 breadcrumb-title">Emergencies list </h4>
+                            <h4 class="text-capitalize fw-500 breadcrumb-title">Donations list </h4>
                         </div>
 
                         <form action="/" class="d-flex align-items-center user-member__form my-sm-0 my-2">
@@ -34,28 +34,19 @@
                                     <span class="userDatatable-title">ID</span>
                                 </th>
                                 <th>
-                                    <span class="userDatatable-title">Title</span>
-                                </th>
-                                <th>
                                     <span class="userDatatable-title">Description</span>
                                 </th>
                                 <th>
-                                    <span class="userDatatable-title">BloodType</span>
+                                    <span class="userDatatable-title">DonLocation</span>
                                 </th>
                                 <th>
-                                    <span class="userDatatable-title">Location</span>
+                                    <span class="userDatatable-title">Email</span>
                                 </th>
                                 <th>
-                                    <span class="userDatatable-title">Deadline</span>
+                                    <span class="userDatatable-title">PhoneNumber</span>
                                 </th>
                                 <th>
-                                    <span class="userDatatable-title">Status</span>
-                                </th>
-                                <th>
-                                    <span class="userDatatable-title">CreatedAt</span>
-                                </th>
-                                <th>
-                                    <span class="userDatatable-title">Nombre Views</span>
+                                    <span class="userDatatable-title">DonationDate</span>
                                 </th>
                                 <th>
                                     <span class="userDatatable-title float-end">action</span>
@@ -63,69 +54,54 @@
                             </tr>
                             </thead>
                             <tbody>
-                            {% for emergency in emergencies %}
+                            {% for donation in donations %}
                                 <tr>
                                     <td>
                                         <div class="userDatatable-content">
-                                            {{ emergency.id }}
+                                            {{ donation.id }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="userDatatable-content">
-                                            {{ emergency.title }}
+                                            {{ donation.description }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="userDatatable-content">
-                                            {{ emergency.description }}
+                                            {{ donation.donLocation }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="userDatatable-content">
-                                            {{ emergency.bloodType }}
+                                            {{ donation.email }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="userDatatable-content">
-                                            {{ emergency.location }}
+                                            {{ donation.phoneNumber }}
                                         </div>
                                     </td>
                                     <td>
                                         <div class="userDatatable-content">
-                                            {{ emergency.deadline ? emergency.deadline|date('Y-m-d') : '' }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            {{ emergency.status }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            {{ emergency.createdAt ? emergency.createdAt|date('Y-m-d H:i:s') : '' }}
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="userDatatable-content">
-                                            {{ emergency.view }}
+                                            {{ donation.donationDate ? donation.donationDate|date('Y-m-d') : ''}}
                                         </div>
                                     </td>
                                     <td>
                                         <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
                                             <li>
-                                                <a href="{{ emergency.id }}" class="view">
+                                                <a href="{{ path('app_donation_show', {'id': donation.id}) }}" class="view">
                                                     <span class="iconify" data-icon="uil:eye"></span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{{ path('app_emergency_editAdmin', {'id': emergency.id}) }}" class="edit">
+                                                <a href="{{ path('app_donation_edit', {'id': donation.id}) }}" class="edit">
                                                     <span class="iconify" data-icon="uil:edit"></span>
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="remove" href="{{ path('app_emergency_delete', {'id': emergency.id}) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this item?')) document.getElementById('delete-form-{{ emergency.id }}').submit();">
-                                                    <form id="delete-form-{{ emergency.id }}" method="post" action="{{ path('app_emergency_delete', {'id': emergency.id}) }}">
-                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ emergency.id) }}">
+                                                <a class="remove" href="{{ path('app_donation_delete', {'id': donation.id}) }}" onclick="event.preventDefault(); if(confirm('Are you sure you want to delete this donation?')) document.getElementById('delete-form-{{ donation.id }}').submit();">
+                                                    <form id="delete-form-{{ donation.id }}" method="post" action="{{ path('app_donation_delete', {'id': donation.id}) }}">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ donation.id) }}">
                                                         <span class="iconify" data-icon="uil:trash-alt"></span>
                                                     </form>
                                                 </a>

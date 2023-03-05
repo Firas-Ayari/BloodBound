@@ -74,6 +74,9 @@ class Emergency
     #[ORM\OneToMany(mappedBy: 'emergency', targetEntity: Donation::class)]
     private Collection $donations;
 
+    #[ORM\Column(type: Types::BIGINT, nullable: true)]
+    private ?string $view = '0' ;
+
     //creer temps reel
     public function __construct() {
         $this->createdAt = new \DateTimeImmutable();
@@ -183,9 +186,7 @@ class Emergency
         return $this;
     }
 
-    /**
-     * @return Collection<int, Donation>
-     */
+
     public function getDonations(): Collection
     {
         return $this->donations;
@@ -204,11 +205,28 @@ class Emergency
     public function removeDonation(Donation $donation): self
     {
         if ($this->donations->removeElement($donation)) {
-            // set the owning side to null (unless already changed)
             if ($donation->getEmergency() === $this) {
                 $donation->setEmergency(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getView(): ?string
+    {
+        return $this->view;
+    }
+
+    public function setView(?string $view): self
+    {
+        $this->view = $view;
+
+        return $this;
+    }
+    public function incrementViewCount(): self
+    {
+        $this->view++;
 
         return $this;
     }

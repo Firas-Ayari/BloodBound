@@ -3,6 +3,22 @@
 {% block title %}Emergencies List{% endblock %}
 
 {% block body %}
+    <style>
+        .social-media-sharing {
+            display: flex;
+            align-items: center;
+        }
+
+        .social-media-sharing p {
+            margin-right: 10px;
+            color: darkred;
+        }
+
+        .social-media-sharing a {
+            margin-right: 10px;
+        }
+
+    </style>
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-12">
@@ -12,20 +28,11 @@
                         <div class="d-flex align-items-center user-member__title me-sm-25 me-0">
                             <h4 class="text-capitalize fw-500 breadcrumb-title">Emergency Details</h4>
                         </div>
-                        <div class="btn-group-toggle" data-bs-toggle="buttons">
-                            <input type="checkbox" class="btn-check" id="btn-check-2-outlined">
-                            <label class="btn btn-outline-secondary" for="btn-check-2-outlined"> <img src="../img/svg/check.svg" alt="check" class="svg"> Mark as Complete</label>
-                        </div>
                     </div>
                     <div class="d-flex text-capitalize">
                         <form method="post" action="{{ path('app_emergency_edit', {'id': emergency.id}) }}">
                             <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ emergency.id) }}">
                             <button class="breadcrumb-edit btn btn-white border-0 color-primary content-center fs-12 fw-500 radius-md"> <img src="../img/svg/edit-3.svg" alt="edit-3" class="svg">edit</button></button>
-                        </form>
-                        <form method="post" action="{{ path('app_emergency_delete', {'id': emergency.id}) }}"
-                              onsubmit="return confirm ('Are you sure you want to delete this item?');">
-                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ emergency.id) }}">
-                            <button class="breadcrumb-remove border-0 color-danger content-center bg-white fs-12 fw-500 ms-10 radius-md">Delete</button>
                         </form>
                     </div>
                 </div>
@@ -63,12 +70,29 @@
                 <div class="col-xxl-6 col-lg-8 mb-25">
                     <div class="card border-0 pb-md-50 pb-15">
                         <div class="card-header py-sm-20 py-3  px-sm-25 px-3 ">
-                            <h6>About Emergency</h6>
+                            <h1 class="text-capitalize fw-500 breadcrumb-title gradient-text"><strong>About Emergency</strong></h1>
+                            <br>
                         </div>
                         <div class="card-body">
                             <div class="about-projects">
                                 <div class="about-projects__details">
                                     <p class="fs-15 mb-25">{{ emergency.description }}</p>
+                                    <div class="social-media-sharing">
+                                        <p>Partager sur :</p>
+
+                                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_emergency_show', {id: emergency.id}) }}" target="_blank">
+                                            <button class="btn btn-primary" style="background-color: #37474F"><i class="fab fa-facebook-f"></i> Facebook</button>
+                                        </a>
+
+                                        <a href="https://twitter.com/intent/tweet?url={{ url('app_emergency_show', {id: emergency.id}) }}" target="_blank">
+                                            <button class="btn btn-primary" style="background-color: #37474F"><i class="fab fa-twitter"></i> Twitter</button>
+                                        </a>
+
+                                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url('app_emergency_show', {id: emergency.id}) }}" target="_blank">
+                                            <button class="btn btn-primary" style="background-color: #37474F"><i class="fab fa-linkedin-in"></i> LinkedIn</button>
+                                        </a>
+                                    </div>
+
                                 </div>
                                 <ul class="d-flex text-capitalize">
                                     <li>
@@ -83,6 +107,8 @@
                                         <span class="color-light fs-13">Deadline</span>
                                         <p class="color-danger fs-14 mt-1 mb-0 fw-500">{{ emergency.deadline ? emergency.deadline|date('Y-m-d') : '' }}</p>
                                     </li>
+                                    <p>Viewed by {{ emergency.view}} people</p>
+
                                 </ul>
                             </div>
                         </div>
