@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <div class="container-fluid">
+    <div class="container-fluid" style="padding: 50px; padding-top: 150px">
         <div class="row">
             <div class="col-lg-12">
 
@@ -86,7 +86,7 @@
             </div>
             {% for emergency in emergencies %}
                 {% if not app.request.query.get('bloodType') or emergency.bloodType == app.request.query.get('bloodType') %}
-                <div class="col-xxl-3 col-lg-4 col-md-6 mb-25">
+                <div class="col-xxxl-3 col-lg-4 col-md-6 mb-25">
                     <div class="card" style="border-color: darkred ;border-radius:10%">
                         <div class="card-body text-center pt-30 px-25 pb-0" >
 
@@ -123,12 +123,12 @@
                                             <span class="po-details__sTitle">Deadline</span>
                                         </div>
                                         <div class="po-details">
-                                            <h6 class="po-details__title"> {{ emergency.bloodType }}</h6>
+                                            <h6 class="po-details__title h5" style="color: darkred"> {{ emergency.bloodType }}</h6>
                                             <span class="po-details__sTitle">BloodType</span>
                                         </div>
                                         <div class="po-details">
-                                            <h6 class="po-details__title"> {{ emergency.view }}</h6>
-                                            <span class="po-details__sTitle">Views</span>
+                                            <h6 class="po-details__title h4"> {{ emergency.view }}</h6>
+                                            <span class="po-details__sTitle ">Views</span>
                                         </div>
                                     </div>
 
