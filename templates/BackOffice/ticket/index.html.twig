@@ -118,6 +118,47 @@
                   </div>
                </div>
             </div>
+            <h1>Ticket Status Statistics</h1>
+            
+            <div class="container">
+               <div class="row justify-content-center">
+                  <div class="col-sm-6">
+                     <canvas id="ticket-chart" width="600" height="600"></canvas>
+                  </div>
+               </div>
+            </div>
+            
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+        // Initialize the chart
+            var ctx = document.getElementById('ticket-chart').getContext('2d');
+            var chart = new Chart(ctx, {
+               type: 'pie',
+               data: {
+                  labels: ['Available Tickets', 'Sold Out Tickets'],
+                  datasets: [{
+                    label: 'Ticket Status',
+                    data: [{{ availableTickets }}, {{ soldOutTickets }}],
+                    backgroundColor: [
+                        '#FF9090',
+                        '#D02525'
+                    ],
+                    borderColor: [
+                        '#FF9090',
+                        '#D02525'
+                    ],
+                    borderWidth: 1
+                  }]
+                },
+                  options: {
+                  responsive: false,
+                  width: 300,
+                  height: 300
+            }
+        });
+    </script>
+
          </div>
+
 
 {% endblock %}

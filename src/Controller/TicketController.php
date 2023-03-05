@@ -25,9 +25,18 @@ class TicketController extends AbstractController
 {
     #[Route('/admin', name: 'app_ticket_indexAdmin', methods: ['GET'])]
     public function indexAdmin(TicketRepository $ticketRepository): Response
-    {
+    {   
+        $availableTickets = $this->getDoctrine()
+        ->getRepository(Ticket::class)
+        ->count(['status' => 'available']);
+        $soldOutTickets = $this->getDoctrine()
+        ->getRepository(Ticket::class)
+        ->count(['status' => 'sold out']);
+
         return $this->render('BackOffice/ticket/index.html.twig', [
             'tickets' => $ticketRepository->findAll(),
+            'availableTickets' => $availableTickets,
+            'soldOutTickets' => $soldOutTickets,
         ]);
     }
     

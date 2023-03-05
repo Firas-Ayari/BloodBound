@@ -1,3 +1,8 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+events_by_month:
+    path: /events/by-month
+    methods: GET
+    controller: App\Controller\EventController::eventsByMonth
