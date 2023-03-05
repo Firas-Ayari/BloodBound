@@ -59,7 +59,7 @@
                                         <input type="text" class="form-control form-control-lg" placeholder="Your Name">
                                     </div>
                                     <div class="form-group mb-20">
-                                        <label>Address</label>
+                                        <label>Location</label>
                                         <input type="text" class="form-control form-control-lg"
                                             placeholder="Email Address">
                                     </div>
@@ -95,6 +95,8 @@
             <div class="userDatatable global-shadow border-light-0 p-30 bg-white radius-xl w-100 mb-30">
                 <div class="table-responsive">
                     <table class="table mb-0 table-borderless">
+
+
                         <thead>
                             <tr class="userDatatable-header">
                                 <th>
@@ -127,11 +129,10 @@
                                 </th>
                             </tr>
                         </thead>
+                        
+                        
                         <tbody>
-
                             {% for facility in facilities %}
-
-
                             <tr>
                                 <td>
                                     <div class="d-flex">
@@ -194,7 +195,7 @@
                                 <td>
                                     <ul class="orderDatatable_actions mb-0 d-flex flex-wrap">
                                         <li>
-                                            <a href="{{ path('app_facility_show', {'id': facility.id}) }}" class="view">
+                                            <a href="{{ path('app_facility_showAdmin', {'id': facility.id}) }}" class="view">
                                                 <i class="uil uil-eye"></i>
                                             </a>
                                         </li>
@@ -229,17 +230,14 @@
                                     </ul>
                                 </td>
                             </tr>
-
-
-
-
-
                             {% else %}
                             <tr>
                                 <td colspan="5">no records found</td>
                             </tr>
                             {% endfor %}
                         </tbody>
+
+
                     </table>
                 </div>
                 <div class="d-flex justify-content-end pt-30">

@@ -13,9 +13,16 @@ class FacilityType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('address')
+            ->add('location')
+            ->add('phone')
+            ->add('fax')
             ->add('rank')
-            ->add('users')
+            ->add('status')
+            ->add('description')
+            ->add('startTime')
+            ->add('endTime')
+            ->add('plannings')
+            ->add('appointments')
         ;
     }
 

@@ -14,18 +14,18 @@ use Symfony\Component\Routing\Annotation\Route;
 class FacilityController extends AbstractController
 {
     #[Route('/admin', name: 'app_facility_indexAdmin', methods: ['GET'])]
-    public function index(FacilityRepository $facilityRepository): Response
+    public function indexAdmin(FacilityRepository $facilityRepository): Response
     {
         return $this->render('BackOffice/facility/index.html.twig', [
             'facilities' => $facilityRepository->findAll(),
         ]);
     }
 
-    #[Route('/', name: 'app_emergency_index', methods: ['GET'])]
-    public function indexAdmin(FacilityRepository $facilityRepository): Response
+    #[Route('/', name: 'app_facility_index', methods: ['GET'])]
+    public function index(FacilityRepository $facilityRepository): Response
     {
         return $this->render('FrontOffice/facility/index.html.twig', [
-            'emergencies' => $facilityRepository->findAll(),
+            'facilities' => $facilityRepository->findAll(),
         ]);
     }
 
@@ -50,10 +50,19 @@ class FacilityController extends AbstractController
 
 
 
+    #[Route('admin/{id}', name: 'app_facility_showAdmin', methods: ['GET'])]
+    public function showAdmin(Facility $facility): Response
+    {
+        return $this->render('BackOffice/facility/show.html.twig', [
+            'facility' => $facility,
+        ]);
+    }
+
+
     #[Route('/{id}', name: 'app_facility_show', methods: ['GET'])]
     public function show(Facility $facility): Response
     {
-        return $this->render('BackOffice/facility/show.html.twig', [
+        return $this->render('FrontOffice/facility/show.html.twig', [
             'facility' => $facility,
         ]);
     }
