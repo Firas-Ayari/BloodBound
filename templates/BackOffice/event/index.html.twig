@@ -165,5 +165,35 @@
                </div>
             </div>
          </div>
+         <h1>Event Status Statistics</h1>
+
+            <div class="container">
+               <div class="row justify-content-center">
+                  <div class="col-sm-6">
+                     <canvas id="event-status-chart" width="600" height="600"></canvas>
+                  </div>
+               </div>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <script>
+               var ctx = document.getElementById('event-status-chart').getContext('2d');
+               var eventStatusChart = new Chart(ctx, {
+    type: 'pie',
+    data: {
+        labels: ['Complet', 'Non Complet'],
+        datasets: [{
+            data: [{{ completeEvents }}, {{ incompleteEvents }}],
+            backgroundColor: ['#FF9090', '#D02525']
+        }]
+    },
+    options: {
+        responsive: false,
+        width: 300,
+        height: 300
+    }
+});
+
+    </script>
 
 {% endblock %}

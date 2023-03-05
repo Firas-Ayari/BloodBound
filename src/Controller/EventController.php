@@ -16,7 +16,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
-use Symfony\Component\Notifier\NotifierInterface; // hedhy zedtha
+use Symfony\Component\Notifier\NotifierInterface; // hedhy zedtha ena
 //use Symfony\UX\Notify\NotifierInterface;
 use Symfony\UX\Notify\Notification; //Maybe ghalta  use Symfony\Component\Notifier\Notification\Notification;
 
@@ -27,8 +27,15 @@ class EventController extends AbstractController
     #[Route('/admin', name: 'app_event_index_admin', methods: ['GET'])]
     public function indexAdmin(EventRepository $eventRepository): Response
     {
+        // Statistics Event Status
+        $completeEvents = $this->getDoctrine()->getRepository(Event::class)->count(['status' => 'complet']);
+        $incompleteEvents = $this->getDoctrine()->getRepository(Event::class)->count(['status' => 'non complet']);
+        
+        
         return $this->render('BackOffice/event/index.html.twig', [
             'events' => $eventRepository->findAll(),
+            'completeEvents' => $completeEvents,
+            'incompleteEvents' => $incompleteEvents,
         ]);
     }
 
