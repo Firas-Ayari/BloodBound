@@ -1,0 +1,13 @@
+{% extends 'basecopy.html.twig' %}
+
+{% block title %}Edit Article{% endblock %}
+
+{% block body %}
+    <h1>Edit Article</h1>
+
+    {{ include('frontoffice/article/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_article_index_Front') }}">back to list</a>
+
+    {{ include('frontoffice/article/deletefront.html.twig') }}
+{% endblock %}

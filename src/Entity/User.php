@@ -1,0 +1,417 @@
+<?php
+
+namespace App\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: '`user`')]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
+{
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+    private ?int $id = null;
+
+    #[ORM\Column(length: 180, unique: true)]
+    private ?string $email = null;
+
+    #[ORM\Column]
+    private ?string $roles = null;
+
+    /**
+     * @var string The hashed password
+     */
+    #[ORM\Column]
+    private ?string $password = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $name = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $number = null;
+
+    #[ORM\Column]
+    private ?int $age = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $location = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $donationStatus = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $bloodType = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Event::class)]
+    private Collection $events;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ProductCategory::class)]
+    private Collection $productCategories;
+
+    #[ManyToMany(targetEntity: Facility::class, inversedBy: 'users')]
+    #[JoinTable(name: 'users_facilities')]
+    private Collection $facilities;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Emergency::class)]
+    private Collection $emergencies;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ArticleCategory::class)]
+    private Collection $articleCategories;
+
+    #[OneToOne(targetEntity: Vote::class, mappedBy: 'user')]
+    private Vote|null $vote = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class)]
+    private Collection $comments;
+    
+    public function __construct()
+    {
+        $this->events = new ArrayCollection();
+        $this->productCategories = new ArrayCollection();
+        $this->facilities = new ArrayCollection();
+        $this->emergencies = new ArrayCollection();
+        $this->articleCategories = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    public function getEmail(): ?string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(string $email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    /**
+     * A visual identifier that represents this user.
+     *
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @deprecated since Symfony 5.3, use getUserIdentifier instead
+     */
+    public function getUsername(): string
+    {
+        return (string) $this->email;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function getRoles(): ?string
+    {
+        return $this->roles;
+    }
+
+    public function setRoles(string $Roles): self
+    {
+        $this->roles = $Roles;
+
+        return $this;
+    }
+
+    /**
+     * @see PasswordAuthenticatedUserInterface
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    public function setPassword(string $password): self
+    {
+        $this->password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Returning a salt is only needed, if you are not using a modern
+     * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
+     *
+     * @see UserInterface
+     */
+    public function getSalt(): ?string
+    {
+        return null;
+    }
+
+    /**
+     * @see UserInterface
+     */
+    public function eraseCredentials()
+    {
+        // If you store any temporary, sensitive data on the user, clear it here
+        // $this->plainPassword = null;
+    }
+
+    public function getName(): ?string
+    {
+        return $this->name;
+    }
+    public function __toString() {
+        return $this->name;
+    }
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    public function getNumber(): ?string
+    {
+        return $this->number;
+    }
+
+    public function setNumber(string $number): self
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    public function getAge(): ?int
+    {
+        return $this->age;
+    }
+
+    public function setAge(int $age): self
+    {
+        $this->age = $age;
+
+        return $this;
+    }
+
+    public function getLocation(): ?string
+    {
+        return $this->location;
+    }
+
+    public function setLocation(string $location): self
+    {
+        $this->location = $location;
+
+        return $this;
+    }
+
+    public function getDonationStatus(): ?string
+    {
+        return $this->donationStatus;
+    }
+
+    public function setDonationStatus(?string $donationStatus): self
+    {
+        $this->donationStatus = $donationStatus;
+
+        return $this;
+    }
+
+    public function getBloodType(): ?string
+    {
+        return $this->bloodType;
+    }
+
+    public function setBloodType(string $bloodType): self
+    {
+        $this->bloodType = $bloodType;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): self
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): self
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getUser() === $this) {
+                $event->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProductCategory>
+     */
+    public function getProductCategories(): Collection
+    {
+        return $this->productCategories;
+    }
+
+    public function addProductCategory(ProductCategory $productCategory): self
+    {
+        if (!$this->productCategories->contains($productCategory)) {
+            $this->productCategories->add($productCategory);
+            $productCategory->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProductCategory(ProductCategory $productCategory): self
+    {
+        if ($this->productCategories->removeElement($productCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($productCategory->getUser() === $this) {
+                $productCategory->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Facility>
+     */
+    public function getFacilities(): Collection
+    {
+        return $this->facilities;
+    }
+
+    public function addFacility(Facility $facility): self
+    {
+        if (!$this->facilities->contains($facility)) {
+            $this->facilities->add($facility);
+        }
+
+        return $this;
+    }
+
+    public function removeFacility(Facility $facility): self
+    {
+        $this->facilities->removeElement($facility);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Emergency>
+     */
+    public function getEmergencies(): Collection
+    {
+        return $this->emergencies;
+    }
+
+    public function addEmergency(Emergency $emergency): self
+    {
+        if (!$this->emergencies->contains($emergency)) {
+            $this->emergencies->add($emergency);
+            $emergency->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEmergency(Emergency $emergency): self
+    {
+        if ($this->emergencies->removeElement($emergency)) {
+            // set the owning side to null (unless already changed)
+            if ($emergency->getUser() === $this) {
+                $emergency->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ArticleCategory>
+     */
+    public function getArticleCategories(): Collection
+    {
+        return $this->articleCategories;
+    }
+
+    public function addArticleCategory(ArticleCategory $articleCategory): self
+    {
+        if (!$this->articleCategories->contains($articleCategory)) {
+            $this->articleCategories->add($articleCategory);
+            $articleCategory->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArticleCategory(ArticleCategory $articleCategory): self
+    {
+        if ($this->articleCategories->removeElement($articleCategory)) {
+            // set the owning side to null (unless already changed)
+            if ($articleCategory->getUser() === $this) {
+                $articleCategory->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUser() === $this) {
+                $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+}

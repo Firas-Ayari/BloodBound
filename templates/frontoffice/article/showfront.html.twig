@@ -1,0 +1,108 @@
+{% extends 'basecopy.html.twig' %}
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <h1>Article</h1>
+
+        <div class="blog-card__thumbnail">
+                           <a href="#">
+                              <img src="{{asset('img/1.png')}}" alt="">
+                           </a>
+        </div>
+        
+      <table class="table">
+     
+     
+        <tbody>
+            
+            <tr>
+                <th>Title</th>
+                <td>{{ article.title }}</td>
+            </tr>
+            <tr>
+                <th>FeaturedText</th>
+                <td>{{ article.featuredText }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ article.slug }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ article.content }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ article.updatedAt ? article.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+        <div  class="stars">
+        <i class="lar la-star" data-value="1"></i>
+        <i class="lar la-star" data-value="2"></i>
+        <i class="lar la-star" data-value="3"></i>
+        <i class="lar la-star" data-value="4"></i>
+        <i class="lar la-star" data-value="5"></i>
+        <input type="Hidden" name="note" id="note" value="0">
+        {#<a href="{{ path( 'app_rating_note', {'id': article.id}) }}"><button class="btn btn-warning" style="background-color:darkred">Rate</button></a>#}
+        
+        </div>
+
+          {#} <p>{{ article.getPositiveVotesCount() }} people liked this article</p>
+           <p>{{ article.getNegativeVotesCount() }} people disliked this article</p>
+            <a href="{{ path('vote', {'id': article.id, 'value': 1}) }}" class="btn btn-success "style="background-color:darkred">Like</a>
+            <a href="{{ path('vote', {'id': article.id, 'value': -1}) }}" class="btn btn-danger "style="background-color:darkred">Dislike</a>#}
+
+        <a href="{{ path('app_article_index_Front') }}"><button class="btn btn-warning" style="background-color:darkred">back to list</button></a>
+
+        <a href="{{ path('app_article_editfront', {'id': article.id}) }}"><button class="btn btn-warning" style="background-color:darkred">edit</button></a>
+        
+        {{ include('frontoffice/article/deletefront.html.twig') }}
+        
+
+   
+      
+        <div class="">
+           <div>
+               <h2>List of comments</h2>
+               {% for comment in article.comments %}
+                  {% if comment.parent == null %}
+                     <h2> comment {{loop.index}} </h2>
+                           <p>{{comment.content}} <br> created At {{comment.createdAt|date("d/m/Y H:i")}}</p>
+                           <p><a href="#add-comment" data-reply data-id="{{comment.id}}" class="btn btn-warning" style="background-color:darkred">reply</a></p>
+                            <p>{{ comment.getPositiveVotesCount() }} people liked this comment</p>
+                            <p>{{comment.getNegativeVotesCount() }} people disliked this comment</p>
+                            <a href="{{ path('vote', {'id': comment.id, 'value': 1}) }}" class="btn btn-success "style="background-color:darkred">Like</a>
+                            <a href="{{ path('vote', {'id': comment.id, 'value': -1}) }}" class="btn btn-danger "style="background-color:darkred">Dislike</a>
+                        {% for reply in comment.replies %}
+                              <p> reply : {{reply.content}} <br> created At {{reply.createdAt|date("d/m/Y H:i")}}</p>
+                        {% endfor %}
+                 {% endif %}
+               {% endfor %}
+           </div>
+           <div id="add-comment">
+               <h2>Add a comment</h2>
+               {{form(commentForm)}}
+
+           </div>
+            
+        </div>
+    <p>Partager sur :</p>
+
+    <a href="https://www.facebook.com/sharer/sharer.php?u={{ url('app_article_showfront', {id: article.id}) }}" target="_blank">
+        <button class="btn btn-primary"style="background-color:darkred"><i class="fab fa-facebook-f"></i> Facebook</button>
+    </a>
+
+    <a href="https://twitter.com/intent/tweet?url={{ url('app_article_showfront', {id: article.id}) }}" target="_blank">
+        <button class="btn btn-primary"style="background-color:darkred"><i class="fab fa-twitter"></i> Twitter</button>
+    </a>
+
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url('app_article_showfront', {id: article.id}) }}" target="_blank">
+        <button class="btn btn-primary"style="background-color:darkred"><i class="fab fa-linkedin-in"></i> LinkedIn</button>
+    </a>
+   
+{% endblock %}
