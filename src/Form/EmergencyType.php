@@ -3,9 +3,12 @@
 namespace App\Form;
 
 use App\Entity\Emergency;
+use App\Entity\User;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class EmergencyType extends AbstractType
 {
@@ -14,12 +17,35 @@ class EmergencyType extends AbstractType
         $builder
             ->add('title')
             ->add('description')
-            ->add('bloodType')
+            ->add('bloodType',ChoiceType::class, [
+                'choices'  => [
+                    '' => '',
+                    'A+' => 'A+',
+                    'B+' => 'B+',
+                    'AB+' => 'AB+',
+                    'O+' => 'O+',
+                    'A-' => 'A-',
+                    'B-' => 'B-',
+                    'AB-' => 'AB-',
+                    'O-' => 'O-',
+
+            ],
+    ])
+
             ->add('location')
             ->add('deadline')
-            ->add('status')
+            ->add('status'
+                ,ChoiceType::class, [
+                    'choices'  => [
+                        'In progress' => 'in progress',
+                        'Completed' => 'completed',
+                    ],
+                ])
             ->add('createdAt')
-            ->add('user')
+            ->add('user', EntityType::class,[
+                "class" => User::class,
+                "choice_label" => "email"
+            ])
         ;
     }
 
