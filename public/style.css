@@ -147,6 +147,16 @@ NB: this file contains the list of components/scss partial along with the style.
 
 ***************************/
 /* Custom bootstrap classes */
+
+.A {
+  display: none;
+}
+.gradient-text {
+  background: linear-gradient(to right, #660000, #330000);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
+}
 h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
   color: var(--color-dark);
 }

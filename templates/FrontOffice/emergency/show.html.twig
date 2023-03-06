@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'baseFront.html.twig' %}
 
 {% block title %}Emergencies List{% endblock %}
 
@@ -19,7 +19,7 @@
         }
 
     </style>
-    <div class="container-fluid">
+    <div class="container-fluid" STYLE="padding: 80px; padding-top: 100px;padding-left: 120px">
         <div class="row">
             <div class="col-lg-12">
 
@@ -32,7 +32,7 @@
                     <div class="d-flex text-capitalize">
                         <form method="post" action="{{ path('app_emergency_edit', {'id': emergency.id}) }}">
                             <input type="hidden" name="_token" value="{{ csrf_token('edit' ~ emergency.id) }}">
-                            <button class="breadcrumb-edit btn btn-white border-0 color-primary content-center fs-12 fw-500 radius-md"> <img src="../img/svg/edit-3.svg" alt="edit-3" class="svg">edit</button></button>
+                            <button class="breadcrumb-edit btn btn-white border-0 color-primary content-center fs-12 fw-500 radius-md"> <img src="/FrontOffice/img/svg/edit-3.svg" alt="edit-3" class="svg">edit</button></button>
                         </form>
                     </div>
                 </div>
@@ -57,7 +57,7 @@
                             <div class="application-task d-flex align-items-center mb-25">
 
                                 <div class="application-task-icon wh-60 bg-opacity-secondary content-center">
-                                    <img class="svg wh-25 text-secondary" src="../img/svg/at.svg" alt="img">
+                                    <img class="svg wh-25 text-secondary" src="/FrontOffice/img/svg/at.svg" alt="img">
                                 </div>
                                 <div class="application-task-content">
                                     <h4>Blood Type</h4>
