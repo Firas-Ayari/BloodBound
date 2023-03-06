@@ -66,6 +66,9 @@
                                   <th>
                                     <span class="userDatatable-title">EndTime</span>
                                  </th>
+                                 <th>
+                                    <span class="userDatatable-title">Actions</span>
+                                 </th>
                               </tr>
                            </thead>
                            <tbody>
@@ -73,7 +76,8 @@
                               <tr>
                                  <td>
                                     <div class="userDatatable-content">
-                                       {{ event.image }}
+                                       <a href=""><img class="rounded-circle wh-34" src="{{ asset('uploads/eventsImg/' ~ event.image) }}" alt="author"></a>
+                                       
                                     </div>
                                  </td>
                                  <td>

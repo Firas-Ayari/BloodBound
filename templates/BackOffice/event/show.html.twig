@@ -15,8 +15,8 @@
                            <nav aria-label="breadcrumb">
                               <ol class="breadcrumb">
                                  <li class="breadcrumb-item"><a href="#"><i class="uil uil-estate"></i>Dashboard</a></li>
-                                 <li class="breadcrumb-item"><a href="#">Pages</a></li>
-                                 <li class="breadcrumb-item active" aria-current="page">Blog Details</li>
+                                 <li class="breadcrumb-item"><a href="#">Events</a></li>
+                                 <li class="breadcrumb-item active" aria-current="page">Event Details</li>
                               </ol>
                            </nav>
                         </div>
@@ -27,7 +27,7 @@
                <div class="row justify-content-center">
                   <div class="col-lg-12 col-12">
                      <div class="blog-details-thumbnail">
-                        <img class="svg" src="/img/eventpic.png" style="" alt="">
+                        <img class="svg w-100"  src="{{ asset('uploads/eventsImg/' ~ event.image) }}" alt="Image">
                      </div>
                      <article class="blog-details">
                         <div class="blog-details-content">
@@ -108,8 +108,8 @@
                         <figure class="feature-cards4">
                            <img class="svg" src="/img/svg/time.svg" alt="">
                            <figcaption>
-                              <h2>{{ event.startTime|date('H:i') }}</h2>
-                              <h2>{{ event.endTime|date('H:i') }}</h2>
+                              <h2>{{ event.startTime|date('H:i') }} - {{ event.endTime|date('H:i') }}</h2>
+                              
                               <p>Event Starting&Ending Time</p>
                               
                            </figcaption>
