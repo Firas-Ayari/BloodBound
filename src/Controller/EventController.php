@@ -143,7 +143,6 @@ class EventController extends AbstractController
                 'article' => $article,
                 'user' => $this->getUser(),
             ]);
-
         if ($vote) {
             // User has already voted, update the value of their vote
             $vote->setValue($value);
@@ -154,12 +153,10 @@ class EventController extends AbstractController
                 ->setUser($this->getUser())
                 ->setValue($value);
         }
-
         // Save the vote to the database
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($vote);
         $entityManager->flush();
-
         return $this->redirectToRoute('app_article_showfront', ['id' => $article->getId()]);
     } */
 
@@ -191,4 +188,3 @@ class EventController extends AbstractController
   //  protected static $defaultName = 'app:send-reminders';
 
 //}
-

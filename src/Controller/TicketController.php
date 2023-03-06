@@ -26,17 +26,23 @@ class TicketController extends AbstractController
     #[Route('/admin', name: 'app_ticket_indexAdmin', methods: ['GET'])]
     public function indexAdmin(TicketRepository $ticketRepository): Response
     {   
+        // Ticket Status Staistics
         $availableTickets = $this->getDoctrine()
-        ->getRepository(Ticket::class)
-        ->count(['status' => 'available']);
+            ->getRepository(Ticket::class)
+            ->count(['status' => 'available']);
         $soldOutTickets = $this->getDoctrine()
         ->getRepository(Ticket::class)
         ->count(['status' => 'sold out']);
+
+ 
+
+
 
         return $this->render('BackOffice/ticket/index.html.twig', [
             'tickets' => $ticketRepository->findAll(),
             'availableTickets' => $availableTickets,
             'soldOutTickets' => $soldOutTickets,
+            
         ]);
     }
     
@@ -202,7 +208,7 @@ public function buyticket(Request $request, Ticket $ticket): Response
 
 //#[Route('/{id}', name: 'app_ticket_delete', methods: ['POST'])]
     
-    #[Route("/{id}/purchases", name:"sum_of_tickets_purchased_by_user")]
+   /* #[Route("/{id}/purchases", name:"sum_of_tickets_purchased_by_user")]
      
     public function sumOfTicketsPurchasedByUser(User $user, AchatRepository $achatRepository): Response
     {
@@ -211,5 +217,5 @@ public function buyticket(Request $request, Ticket $ticket): Response
         return $this->render('FrontOffice/ticket/show.html.twig', [
             'sumOfTickets' => $sumOfTickets,
         ]);
-    }
+    }*/
  }

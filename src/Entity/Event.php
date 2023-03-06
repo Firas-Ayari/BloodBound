@@ -210,5 +210,14 @@ class Event
 
         return $this;
     }
+
+    
+   // /**
+   //  * @return Collection<int, Ticket>
+   //  */
+   // public function getTickets(): Collection
+   // {
+    //    return $this->tickets;
+   // }
  
 }   
