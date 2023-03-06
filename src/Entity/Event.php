@@ -55,7 +55,7 @@ class Event
     private ?string $location = null;
 //contrôle saisie de image
     #[ORM\Column(length: 255)] //NotBlank !!!!
-    #[Assert\NotBlank(message: 'Please enter an image.')]
+    //#[Assert\NotBlank(message: 'Please enter an image.')]
     private ?string $image = null;
 //contrôle saisie de date event 
 #[ORM\Column(type: Types::DATE_MUTABLE)]

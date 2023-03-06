@@ -8,6 +8,7 @@ use App\Entity\User;
 use App\Form\EventType;
 use App\Repository\EventRepository;
 use App\Repository\AchatRepository;
+use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,11 +20,17 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Notifier\NotifierInterface; // hedhy zedtha ena
 //use Symfony\UX\Notify\NotifierInterface;
 use Symfony\UX\Notify\Notification; //Maybe ghalta  use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 
 #[Route('/event')]
 class EventController extends AbstractController
 {
+    private $slugger;
+    public function __construct(SluggerInterface $slugger)
+    {
+        $this->slugger = $slugger;
+    }
     #[Route('/admin', name: 'app_event_index_admin', methods: ['GET'])]
     public function indexAdmin(EventRepository $eventRepository): Response
     {
@@ -56,7 +63,39 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $eventRepository->save($event, true);
+            
+
+            //upload img
+            $image = $form->get('image')->getData();
+
+            // this condition is needed because the 'image' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($image) {
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $this->slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+
+                // Move the file to the directory where images are stored
+                try {
+                    $image->move(
+                        $this->getParameter('img_directory'),
+                        $newFilename
+                    );
+
+                    
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'imageename' property to store img name
+                // instead of its contents
+                $event->setImage($newFilename);
+                $eventRepository->save($event, true);
+               
+                
+            }
+
 
             return $this->redirectToRoute('app_event_index_admin', [], Response::HTTP_SEE_OTHER);
         }
@@ -113,10 +152,37 @@ class EventController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $eventRepository->save($event, true);
+            $image = $form->get('image')->getData();
+
+            // this condition is needed because the 'image' field is not required
+            
+            if ($image) {
+                $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $this->slugger->slug($originalFilename); // slugger gives the unique name to the image 
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$image->guessExtension();
+
+                // Move the file to the directory where images are stored
+                try {
+                    $image->move(
+                        $this->getParameter('img_directory'),
+                        $newFilename
+                    );
+
+                    
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'imageename' property to store img name
+                // instead of its contents
+                $event->setImage($newFilename);
+                $eventRepository->save($event, true);
 
             return $this->redirectToRoute('app_event_index_admin', [], Response::HTTP_SEE_OTHER);
         }
+
+    }
 
         return $this->renderForm('BackOffice/event/edit.html.twig', [
             'event' => $event,

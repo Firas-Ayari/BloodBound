@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 
 class EventType extends AbstractType
 {
@@ -26,7 +27,12 @@ class EventType extends AbstractType
                 ]
             ] )
             ->add('location')
-            ->add('image')
+            ->add('image', FileType::class, [
+                'label' => 'Image',
+                'mapped' => false,
+                'required' => false,
+            
+            ])
             ->add('eventDate')
             ->add('startTime')
             ->add('endTime')
