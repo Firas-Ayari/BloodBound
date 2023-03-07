@@ -40,8 +40,8 @@ class Article implements TimestampedInterface
     private ?string $slug = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message: "Please enter a featured Text")]
-    #[Assert\Length(min:5,max:30,minMessage:"Le nom doit comporter au moins {{ limit }} caractères",    maxMessage:"Le nom ne peut pas dépasser {{ limit }} caractères")]
+    #[Assert\NotBlank(message: "Please enter a Content")]
+    #[Assert\Length(min:5,max:100,minMessage:"Le nom doit comporter au moins {{ limit }} caractères",    maxMessage:"Le nom ne peut pas dépasser {{ limit }} caractères")]
 
 
    

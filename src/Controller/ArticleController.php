@@ -12,6 +12,7 @@ use App\Entity\Comment;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 use Doctrine\DBAL\Types\Types;
+use App\Form\ArticleSearchType;
 use Symfony\Component\Mime\Email;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,6 +26,7 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Loader\Configurator\form;
 
 #[Route('/article')]
 class ArticleController extends AbstractController
@@ -95,7 +97,7 @@ class ArticleController extends AbstractController
         ]);
     }
     #[Route('/{id}/show', name: 'app_article_showfront', methods: ['GET', 'POST'])]
-    public function showfront(Article $article,Request $request,EntityManagerInterface $em , ArticleRepository $articleRepo , MailerInterface $mailer): Response
+    public function showfront(Article $article,Request $request, ArticleRepository $articleRepo , MailerInterface $mailer): Response
     {
         
         //creer commentaire
@@ -108,13 +110,13 @@ class ArticleController extends AbstractController
         if($commentForm->isSubmitted()&& $commentForm->isValid())
         {
 
-            $email = (new TemplatedEmail())
+            /*$email = (new TemplatedEmail())
             ->from('ameni@exemple.com')
             ->to('ameni.drira@esprit.tn')
             ->subject('Test email')
             ->htmlTemplate('comment/testmail.html.twig');
             
-            $mailer->send($email);
+            $mailer->send($email);*/
             $comment->setArticle($article);
             //on recupere le contenu du champ parentid 
             $parent = $commentForm->get("parent")->getData();
@@ -240,6 +242,29 @@ class ArticleController extends AbstractController
         $entityManager->flush();
 
         return $this->redirectToRoute('app_article_showfront', ['id' => $article->getId()]);
+    }*/
+    /*#[Route('/search', name: 'app_article_search', methods:['POST','GET' ])]
+    public function search(Request $request, ArticleRepository $articleRepository): Response
+    {
+
+        $form = $this->createForm(ArticleSearchType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+
+            $title = $data['title'] ?? null;
+            $category = $data['category'] ?? null;
+
+            $results = $articleRepository->advancedSearch($title, $category);
+
+            return $this->redirectToRoute('app_article_index_Front', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('FrontOffice/article/indexFront.html.twig', [
+            'formSearch'=> $formSearch->createView(),
+            'results' => $results,
+        ]);
     }*/
     
     

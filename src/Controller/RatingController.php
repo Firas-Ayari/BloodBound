@@ -80,9 +80,9 @@ class RatingController extends AbstractController
     }
 /*#[Route('/{id}/note', name: 'app_rating_note', methods: ['GET', 'POST'])]
  
-public function ratingUpdateAction(Request $request , EntityManagerInterface $em  , RatingRepository $ratingRepository , Rating $rating)
+public function ratingUpdateAction(Request $request , EntityManagerInterface $em , Rating $rating)
 {
-    $article= $rating->getArticle();
+    
     // Récupération de la note à partir de la variable POST
     $note = $request->request->get('note');
 
@@ -95,6 +95,8 @@ public function ratingUpdateAction(Request $request , EntityManagerInterface $em
 
     // Redirection vers la page de détails du rating modifié
 
-    return $this->redirectToRoute('app_article_showfront', ['id' => $article->getId()]);
+    return $this->render('rating/index.html.twig', [
+        'rating' => $ratingRepository->findAll(),
+    ]);
 }*/
 }

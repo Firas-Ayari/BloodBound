@@ -16,7 +16,7 @@ class ArticleCategoryController extends AbstractController
     #[Route('/', name: 'app_article_category_index', methods: ['GET'])]
     public function index(ArticleCategoryRepository $articleCategoryRepository): Response
     {
-        return $this->render('backoffice/article_category/index.html.twig', [
+        return $this->render('BackOffice/article_category/index.html.twig', [
             'article_categories' => $articleCategoryRepository->findAll(),
         ]);
     }
@@ -34,7 +34,7 @@ class ArticleCategoryController extends AbstractController
             return $this->redirectToRoute('app_article_index_Front', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('frontoffice/article_category/new.html.twig', [
+        return $this->renderForm('FrontOffice/article_categorie/new.html.twig', [
             'article_category' => $articleCategory,
             'form' => $form,
         ]);
