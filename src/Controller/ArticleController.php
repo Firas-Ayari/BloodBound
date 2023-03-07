@@ -39,10 +39,28 @@ class ArticleController extends AbstractController
     }
 
     #[Route('/', name: 'app_article_index', methods: ['GET'])]
-    public function index(ArticleRepository $articleRepository): Response
+    public function index(ArticleRepository $articleRepository , EntityManagerInterface $em): Response
     {
+        $query = $em->createQuery('SELECT c.name AS category, COUNT(a.id) AS count FROM App\Entity\Article a JOIN a.articleCategory c GROUP BY c.id');
+        $data = $query->getResult();
+
+        $labels = [];
+        $values = [];
+
+        foreach ($data as $row) {
+            $labels[] = $row['category'];
+            $values[] = $row['count'];
+        }
+
+        $chartData = [
+            'labels' => $labels,
+            'values' => $values,
+        ];
+
+
         return $this->render('backoffice/article/index.html.twig', [
             'articles' => $articleRepository->findAll(),
+            'chartData' => $chartData,
         ]);
     }
     #[Route('/front', name: 'app_article_index_Front', methods: ['GET'])]
