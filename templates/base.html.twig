@@ -66,6 +66,18 @@
         <link rel="stylesheet" href="{{ asset('../style.css') }}">
 
         <!-- endinject -->
+        <!-- FullCalendar CSS -->
+        <link rel="stylesheet" href="{{ asset('node_modules/@fullcalendar/core/main.css') }}" />
+        <link rel="stylesheet" href="{{ asset('node_modules/@fullcalendar/daygrid/main.css') }}" />
+        <link rel="stylesheet" href="{{ asset('node_modules/@fullcalendar/timegrid/main.css') }}" />
+        <link rel="stylesheet" href="{{ asset('node_modules/@fullcalendar/list/main.css') }}" />
+
+        <!-- FullCalendar JavaScript -->
+        <script src="{{ asset('node_modules/@fullcalendar/core/main.js') }}"></script>
+        <script src="{{ asset('node_modules/@fullcalendar/daygrid/main.js') }}"></script>
+        <script src="{{ asset('node_modules/@fullcalendar/timegrid/main.js') }}"></script>
+        <script src="{{ asset('node_modules/@fullcalendar/list/main.js') }}"></script>
+
            <!-- endinject -->
 
     <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon.png">
@@ -116,7 +128,7 @@
 
     </div>
 </header>
-<div class="contents" style="background-color:white;">
+<div class="contents" style="background-color:white;padding-right:8%;padding-left:8%;">
     {% block body %}
     {% endblock %}
 

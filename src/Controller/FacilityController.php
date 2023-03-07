@@ -104,9 +104,10 @@ class FacilityController extends AbstractController
         $plannings = $facility->getPlannings();
 
         // Render the template with the list of plannings
-        return $this->render('FrontOffice/planning/show.html.twig', [
+        return $this->render('FrontOffice/planning/index.html.twig', [
             'facility' => $facility,
             'plannings' => $plannings,
         ]);
     }
+
 }

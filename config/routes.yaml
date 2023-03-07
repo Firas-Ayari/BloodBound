@@ -8,3 +8,11 @@ home:
 facility_planning:
     path: /facility/{id}/planning
     controller: App\Controller\FacilityController::planning
+
+google_authenticate:
+    path: /authenticate
+    controller: App\Controller\GoogleApiController::authenticate
+
+google_calendar:
+    path: /calendar
+    controller: App\Controller\GoogleApiController::calendar
