@@ -26,6 +26,9 @@ class CartProduct
     #[JoinColumn(name: 'product_id', referencedColumnName: 'id')]
     private ?Product $product = null;
 
+    #[ORM\Column]
+    private ?float $total = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -63,6 +66,18 @@ class CartProduct
     public function setProduct(?Product $product): self
     {
         $this->product = $product;
+
+        return $this;
+    }
+
+    public function getTotal(): ?float
+    {
+        return $this->total;
+    }
+
+    public function setTotal(float $total): self
+    {
+        $this->total = $total;
 
         return $this;
     }

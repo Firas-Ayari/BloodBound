@@ -3,14 +3,12 @@
 namespace App\Entity;
 
 
-use App\Enum\UserRole;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\UserRepository;
-use Doctrine\ORM\Mapping\JoinTable;
-use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -20,6 +18,8 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    const ROLE_ADMIN = 'ROLE_ADMIN';
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -99,6 +99,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Appointment::class)]
     private Collection $appointments;
 
+    #[OneToOne(targetEntity: Basket::class, mappedBy: 'user')]
+    private Basket|null $basket = null;
+
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
@@ -166,6 +169,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles = $roles;
 
         return $this;
+    }
+
+    public function isAdmin(): bool
+    {
+        return in_array(self::ROLE_ADMIN, $this->getRoles());
     }
 
     /**
@@ -469,6 +477,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUserRole(string $userRole): self
     {
         $this->userRole = $userRole;
+
+        return $this;
+    }
+
+    public function getCart(): ?Basket
+    {
+        return $this->basket;
+    }
+
+    public function setCart(?Basket $cart): self
+    {
+        $this->basket = $cart;
 
         return $this;
     }

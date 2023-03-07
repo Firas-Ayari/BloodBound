@@ -1,15 +1,16 @@
 <?php
 
 namespace App\Entity;
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Ticket;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToOne;
 use App\Repository\EventRepository;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
@@ -55,7 +56,7 @@ class Event
     private ?string $location = null;
 //contrôle saisie de image
     #[ORM\Column(length: 255)] //NotBlank !!!!
-    #[Assert\NotBlank(message: 'Please enter an image.')]
+    //#[Assert\NotBlank(message: 'Please enter an image.')]
     private ?string $image = null;
 //contrôle saisie de date event 
 #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -71,18 +72,19 @@ class Event
     #[Assert\NotBlank(message: 'Please enter end time.')]
     private ?\DateTimeInterface $endTime = null;
 
+    
+    
     #[ManyToOne(targetEntity: User::class, inversedBy: 'events')]
-    #[JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete:"CASCADE")]
     private User|null $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Ticket::class)]
-    private Collection $tickets;
+    #[OneToOne(targetEntity: Ticket::class, mappedBy: 'event', cascade:["persist","remove"])]
+    private ?Ticket $ticket = null;
 
     
     public function __construct()
     {
         $this->eventDate = new \DateTimeImmutable();
-        $this->tickets = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -197,34 +199,25 @@ class Event
 
         return $this;
     }
-
-    /**
-     * @return Collection<int, Ticket>
-     */
-    public function getTickets(): Collection
+    public function getTicket(): ?Ticket
     {
-        return $this->tickets;
+        return $this->ticket;
     }
 
-    public function addTicket(Ticket $ticket): self
+    public function setTicket(?Ticket $ticket): self
     {
-        if (!$this->tickets->contains($ticket)) {
-            $this->tickets->add($ticket);
-            $ticket->setEvent($this);
-        }
+        $this->ticket = $ticket;
 
         return $this;
     }
 
-    public function removeTicket(Ticket $ticket): self
-    {
-        if ($this->tickets->removeElement($ticket)) {
-            // set the owning side to null (unless already changed)
-            if ($ticket->getEvent() === $this) {
-                $ticket->setEvent(null);
-            }
-        }
-
-        return $this;
-    }
-}
+    
+   // /**
+   //  * @return Collection<int, Ticket>
+   //  */
+   // public function getTickets(): Collection
+   // {
+    //    return $this->tickets;
+   // }
+ 
+}   

@@ -11,7 +11,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\CartProductRepository;
 use Symfony\Component\HttpFoundation\Request;
 
-class CartCalculator
+class CartService
 {
     public function __construct(
         private ProductRepository $productRepository,

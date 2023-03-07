@@ -131,9 +131,8 @@
                                     <div class="quantity product-quantity flex-wrap">
                                        <div class="me-15 d-flex align-items-center flex-wrap">
                                           <p class="fs-14 fw-500 color-dark">Quantity:</p>
-                                          <input type="button" value="-" class="qty-minus bttn bttn-left wh-36">
-                                          <input type="number" value="1" class="qty qh-36 input">
-                                          <input type="button" value="+" class="qty-plus bttn bttn-right wh-36">
+                                          <form method="post" action="{{ path('app_product_cart_quantity', {'id': product.id}) }}">
+                                          <input type="number" id="quantity" name="quantity"  step="1" required>
                                        </div>
                                        <span class="fs-13 fw-400 color-light my-sm-0 my-10">{{ product.stock }} pieces available</span>
                                     </div>
@@ -143,9 +142,10 @@
                                        <div class=" d-flex flex-wrap product-item__action align-items-center">
                                           <button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2" style="background:#A40E1C;">buy
                                              now</button>
-                                          <button class="btn btn-secondary btn-default btn-squared border-0 px-25 my-sm-0 my-2 me-10" style="background:#000000;">
+                                          <button type="submit" class="btn btn-secondary btn-default btn-squared border-0 px-25 my-sm-0 my-2 me-10" style="background:#000000;">
                                              <i class="fa-solid fa-cart-plus"></i>
                                              Add To Cart</button>
+                                          </form>
                                           <div class="like-icon">
                                              <button type="button">
                                                 <i class="lar la-heart icon"></i>

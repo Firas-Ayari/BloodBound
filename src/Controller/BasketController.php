@@ -4,16 +4,29 @@ namespace App\Controller;
 
 use App\Entity\Basket;
 use App\Form\BasketType;
+use App\Entity\CartProduct;
+use App\Services\CartService;
 use App\Repository\BasketRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\ProductRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/basket')]
 class BasketController extends AbstractController
 {
-    #[Route('/', name: 'app_basket_index', methods: ['GET'])]
+    private $em;
+    private $productRepository;
+    private $cartService;
+    public function __construct(EntityManagerInterface $em, ProductRepository $productRepository, CartService $cartService) 
+    {
+        $this->em = $em;
+        $this->productRepository = $productRepository;
+        $this->cartService = $cartService;
+    }
+    /*#[Route('/', name: 'app_basket_index', methods: ['GET'])]
     public function index(BasketRepository $basketRepository): Response
     {
         return $this->render('FrontOffice/basket/index.html.twig', [
@@ -38,17 +51,35 @@ class BasketController extends AbstractController
             'basket' => $basket,
             'form' => $form,
         ]);
-    }
+    }*/
 
     #[Route('/{id}', name: 'app_basket_show', methods: ['GET'])]
     public function show(Basket $basket): Response
     {
-        return $this->render('basket/show.html.twig', [
+        $cartproducts = $basket->getCartProducts();
+        return $this->render('/FrontOffice/basket/show.html.twig', [
             'basket' => $basket,
+            'cartproducts' => $cartproducts
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_basket_edit', methods: ['GET', 'POST'])]
+    #[Route('/{id}/editquantity', name: 'app_quantity_edit', methods: ['GET'])]
+    public function editQuantity(Request $request,$id): Response
+    {
+
+        $cartproduct = $this->em->getRepository(CartProduct::class)->find($id);
+        if ($request->isMethod("post")) 
+        {
+            $quantity=$request->get('quantity');
+        }
+        $cartproduct->setQuantity($quantity);
+        $cartproduct->setTotal($cartproduct->getProduct()->getPrice()*$quantity);
+        $this->em->flush();
+
+        return $this->redirectToRoute('app_basket_show');
+        
+    }
+    /*#[Route('/{id}/edit', name: 'app_basket_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Basket $basket, BasketRepository $basketRepository): Response
     {
         $form = $this->createForm(BasketType::class, $basket);
@@ -74,5 +105,5 @@ class BasketController extends AbstractController
         }
 
         return $this->redirectToRoute('app_basket_index', [], Response::HTTP_SEE_OTHER);
-    }
+    }*/
 }

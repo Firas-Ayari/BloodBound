@@ -4,20 +4,21 @@ namespace App\Controller;
 
 use COM;
 use App\Entity\Basket;
-use App\Entity\CartProduct;
+use DateTimeImmutable;
 use App\Entity\Product;
 use App\Form\ProductType;
+use App\Entity\CartProduct;
+use App\Services\CartService;
 use App\Repository\ProductRepository;
-use App\Services\CartCalculator;
-use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\String\Slugger\SluggerInterface;
 
 
 
@@ -26,12 +27,12 @@ class ProductController extends AbstractController
 {
     private $em;
     private $productRepository;
-    private $priceCalculator;
-    public function __construct(EntityManagerInterface $em, ProductRepository $productRepository, CartCalculator $cartCalculator) 
+    private $cartService;
+    public function __construct(EntityManagerInterface $em, ProductRepository $productRepository, CartService $cartService) 
     {
         $this->em = $em;
         $this->productRepository = $productRepository;
-        $this->priceCalculator = $cartCalculator;
+        $this->cartService = $cartService;
     }
 
     #[Route('/admin', name: 'app_product_index_admin', methods: ['GET'])]
@@ -126,46 +127,112 @@ class ProductController extends AbstractController
     #[Route('/{id}/addtocart', name: 'app_product_cart')]
     public function addToCart($id): Response
     {
-        $cart = new Basket();
-        $cart->setCreatedAt(new DateTimeImmutable());
-        $cart->setCheckout("onHold");
-        $product = $this->productRepository->find($id);
-        if($product->getStock() > 0)
+        $user = $this->getUser();
+        $cart = $user->getCart();
+
+        if($cart == null)
         {
-            $cartProduct = new CartProduct();
-            $cartProduct->setProduct($product);
-            $cartProduct->setCart($cart);
-            $cartProduct->setQuantity(1);
-            $cart->setTotal($cart->getTotal()+$product->getPrice());
-            //$cart->setTotal($this->priceCalculator->TotalPriceCalcul($cart));
-            $product->setStock($product->getStock()-1);
+            $cart = new Basket();
+            $cart->setUser($user);
+            $cart->setCreatedAt(new DateTimeImmutable());
+            $cart->setCheckout("onHold");
+            $cart->setTotal(0);
             $this->em->persist($cart);
-            $this->em->persist($cartProduct);
-            $this->em->flush();
         }
+
+        $product = $this->productRepository->find($id);
+        $cartProducts = $cart->getCartProducts();
+        $found = false;
+
+        if(!empty($cartProducts))
+        {
+            foreach($cartProducts as $cartProduct)
+            {
+                if($product->getId() == $cartProduct->getProduct()->getId())
+                {
+                    if($product->getStock() > 0)
+                    {
+                        $cartProduct->setQuantity($cartProduct->getQuantity()+1);
+                        $cartProduct->setTotal($cartProduct->getTotal()+$product->getPrice());
+                        $found = true;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if($found == false){
+            if($product->getStock() > 0)
+            {
+                $cartProduct = new CartProduct();
+                $cartProduct->setProduct($product);
+                $cartProduct->setCart($cart);
+                $cartProduct->setQuantity(1);
+                $cartProduct->setTotal($product->getPrice());
+                $this->em->persist($cartProduct);
+            }
+        }
+
+        $this->em->flush();
+
         return $this->redirectToRoute('app_product_index');
     }
 
-    #[Route('/{id}/addtocart/{quantity}', name: 'app_product_cart_quantity')]
-    public function addToCartByQuantity($id,$quantity): Response
+    #[Route('/{id}/addquantity', name: 'app_product_cart_quantity')]
+    public function addToCartByQuantity(Request $request,$id): Response
     {
-        $cart = new Basket();
-        $cart->setCreatedAt(new DateTimeImmutable());
-        $cart->setCheckout("onHold");
-        $product = $this->productRepository->find($id);
-        if($product->getStock() >= $quantity)
+        $user = $this->getUser();
+        $cart = $user->getCart();
+
+        if($cart == null)
         {
-            $cartProduct = new CartProduct();
-            $cartProduct->setProduct($product);
-            $cartProduct->setCart($cart);
-            $cartProduct->setQuantity($quantity);
-            $product->setStock($product->getStock()-$quantity);
-            $cart->setTotal($cart->getTotal()+($product->getPrice()*$quantity));
-            //$cart->setTotal($this->priceCalculator->TotalPriceCalcul($cart));
+            $cart = new Basket();
+            $cart->setUser($user);
+            $cart->setCreatedAt(new DateTimeImmutable());
+            $cart->setCheckout("onHold");
             $this->em->persist($cart);
-            $this->em->persist($cartProduct);
-            $this->em->flush();
         }
+
+        if ($request->isMethod("post")) {
+            $quantity=$request->get('quantity');
+        }
+
+        $product = $this->productRepository->find($id);
+        $cartProducts = $cart->getCartProducts();
+        $found = false;
+
+        if(!empty($cartProducts))
+        {
+            foreach($cartProducts as $cartProduct)
+            {
+                if($product->getId() == $cartProduct->getProduct()->getId())
+                {
+                    if($product->getStock() >= $quantity)
+                    {
+                        $cartProduct->setQuantity($cartProduct->getQuantity()+$quantity);
+                        $cartProduct->setTotal($cartProduct->getTotal()+($product->getPrice()*$quantity));
+                    }
+                    break;
+                }
+            }
+        }
+
+        if($found == false)
+        {
+            if($product->getStock() >= $quantity)
+            {
+                $cartProduct = new CartProduct();
+                $cartProduct->setProduct($product);
+                $cartProduct->setCart($cart);
+                $cartProduct->setQuantity($quantity);
+                $product->setStock($product->getStock()-$quantity);
+                $cartProduct->setTotal($product->getPrice()*$quantity);
+                $this->em->persist($cartProduct);
+            }
+        }
+
+        $this->em->flush();
+
         return $this->redirectToRoute('app_product_index');
     }
 
