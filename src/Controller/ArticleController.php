@@ -9,6 +9,7 @@ use App\Entity\Rating;
 use App\Form\VoteType;
 use App\Entity\Article;
 use App\Entity\Comment;
+use App\Form\RatingType;
 use App\Form\ArticleType;
 use App\Form\CommentType;
 use Doctrine\DBAL\Types\Types;
@@ -17,10 +18,10 @@ use Symfony\Component\Mime\Email;
 use App\Repository\ArticleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use function Symfony\Component\String\u;
+
 use Doctrine\Persistence\ManagerRegistry;
 
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
@@ -100,6 +101,7 @@ class ArticleController extends AbstractController
     public function showfront(Article $article,Request $request, ArticleRepository $articleRepo , MailerInterface $mailer): Response
     {
         
+    
         //creer commentaire
         $comment = new Comment();
         //generer formulaire 
@@ -154,6 +156,8 @@ class ArticleController extends AbstractController
         return $this->render('frontoffice/article/showfront.html.twig', [
             'article' => $article,
             'commentForm'=>$commentForm->createView(),
+            
+            
         ]);
     }
 
@@ -266,6 +270,22 @@ class ArticleController extends AbstractController
             'results' => $results,
         ]);
     }*/
-    
+    #[Route('/{id}/rate', name:'Rate')]
+    public function addRating(Request $request)
+{
+    $rating = new Rating();
+    $form = $this->createForm(RatingType::class, $rating);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $note = $form->get('note')->getData();
+        // Faire quelque chose avec la note saisie
+    }
+
+    // Afficher le formulaire
+    return $this->render('frontoffice/article/showfront.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
     
 }
