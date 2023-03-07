@@ -5,10 +5,694 @@
 {% block body %}
 
 
+<div class="contents"
+    style="background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQik_arBVb-Fb3gk9GhMA_g4EJ796fAQQ1qvFA-ctsALPSVDVl7SaXcsgcucSujG5942ww&usqp=CAU);background-repeat:no-repeat;background-size:cover;background-attachement:fixed;margin-left:-30%;">
+    <div class="container"
+        style="box-shadow: 0 3px 6px -4px rgba(var(--color-light-rgba), 0.12), 0 6px 16px 0 rgba(var(--color-light-rgba), 0.08), 0 9px 28px 8px rgba(var(--color-light-rgba), 0.05);border:0px solid white;background: rgba(240, 240, 240, 0.2);border-radius:10px;margin-left:-15%;padding:4%;">
+        {#<div class="row">
+            <div class="col-12" style="length:100%;border-radius:10px;">
+
+                <div class="breadcrumb-main application-ui mb-30" >
+                    <div class="breadcrumb-action d-flex">
+                        <div class="d-flex align-items-center user-member__title me-sm-25 me-0">
+                            <h4 class="text-capitalize fw-500 breadcrumb-title" style="color: rgba(240, 240, 240, 1);font-size:30px;">{{ facility.name }}</h4>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>#}
+        <!-- Tab Menu End -->
+        <div class="projects-tab-content mb-30">
+            <div class="row" style="padding-right:0%;">
+                <div class="col-4 ">
+                    <!--
+                    <div class="card card-default card-md mb-4">
+                        <div class="card-header py-20">
+                            <h6>Rank</h6>
+                        </div>
+
+                        <div class="card-body" style="background-color:transparent;">
+                            <div class="dm-rating-wrap d-flex align-items-center">
+                                <span class="rater">
+                                    <div class="jq-star" style="width:12px;height:12px;"><svg version="1.0"
+                                            class="jq-star-svg" shape-rendering="geometricPrecision"
+                                            xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px"
+                                            viewBox="60 -62 309 309"
+                                            style="enable-background:new 64 -59 305 305; stroke-width:6px;"
+                                            xml:space="preserve">
+                                            <style type="text/css">
+                                                .svg-empty-622 {
+                                                    fill: url(#622_SVGID_1_);
+                                                }
+
+                                                .svg-hovered-622 {
+                                                    fill: url(#622_SVGID_2_);
+                                                }
+
+                                                .svg-active-622 {
+                                                    fill: url(#622_SVGID_3_);
+                                                }
+
+                                                .svg-rated-622 {
+                                                    fill: #FA8B0C;
+                                                }
+                                            </style>
+                                            <linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#C6D0DC"></stop>
+                                                <stop offset="1" style="stop-color:#C6D0DC"></stop>
+                                            </linearGradient>
+                                            <linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                                <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                            </linearGradient>
+                                            <linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                                <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                            </linearGradient>
+                                            <polygon data-side="center" class="svg-empty-622"
+                                                points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 "
+                                                style="fill: transparent; stroke: black;"></polygon>
+                                            <polygon data-side="left" class="svg-active-622"
+                                                points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 "
+                                                style="stroke-opacity: 0;"></polygon>
+                                            <polygon data-side="right" class="svg-active-622"
+                                                points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 "
+                                                style="stroke-opacity: 0;"></polygon>
+                                        </svg></div>
+                                    <div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0"
+                                            class="jq-star-svg" shape-rendering="geometricPrecision"
+                                            xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px"
+                                            viewBox="60 -62 309 309"
+                                            style="enable-background:new 64 -59 305 305; stroke-width:6px;"
+                                            xml:space="preserve">
+                                            <style type="text/css">
+                                                .svg-empty-622 {
+                                                    fill: url(#622_SVGID_1_);
+                                                }
+
+                                                .svg-hovered-622 {
+                                                    fill: url(#622_SVGID_2_);
+                                                }
+
+                                                .svg-active-622 {
+                                                    fill: url(#622_SVGID_3_);
+                                                }
+
+                                                .svg-rated-622 {
+                                                    fill: #FA8B0C;
+                                                }
+                                            </style>
+                                            <linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#C6D0DC"></stop>
+                                                <stop offset="1" style="stop-color:#C6D0DC"></stop>
+                                            </linearGradient>
+                                            <linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                                <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                            </linearGradient>
+                                            <linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                                <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                            </linearGradient>
+                                            <polygon data-side="center" class="svg-empty-622"
+                                                points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 "
+                                                style="fill: transparent; stroke: black;"></polygon>
+                                            <polygon data-side="left" class="svg-active-622"
+                                                points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 "
+                                                style="stroke-opacity: 0;"></polygon>
+                                            <polygon data-side="right" class="svg-active-622"
+                                                points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 "
+                                                style="stroke-opacity: 0;"></polygon>
+                                        </svg></div>
+                                    <div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0"
+                                            class="jq-star-svg" shape-rendering="geometricPrecision"
+                                            xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px"
+                                            viewBox="60 -62 309 309"
+                                            style="enable-background:new 64 -59 305 305; stroke-width:6px;"
+                                            xml:space="preserve">
+                                            <style type="text/css">
+                                                .svg-empty-622 {
+                                                    fill: url(#622_SVGID_1_);
+                                                }
+
+                                                .svg-hovered-622 {
+                                                    fill: url(#622_SVGID_2_);
+                                                }
+
+                                                .svg-active-622 {
+                                                    fill: url(#622_SVGID_3_);
+                                                }
+
+                                                .svg-rated-622 {
+                                                    fill: #FA8B0C;
+                                                }
+                                            </style>
+                                            <linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#C6D0DC"></stop>
+                                                <stop offset="1" style="stop-color:#C6D0DC"></stop>
+                                            </linearGradient>
+                                            <linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                                <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                            </linearGradient>
+                                            <linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                                <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                            </linearGradient>
+                                            <polygon data-side="center" class="svg-empty-622"
+                                                points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 "
+                                                style="fill: transparent; stroke: black;"></polygon>
+                                            <polygon data-side="left" class="svg-empty-622"
+                                                points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 "
+                                                style="stroke-opacity: 0;"></polygon>
+                                            <polygon data-side="right" class="svg-empty-622"
+                                                points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 "
+                                                style="stroke-opacity: 0;"></polygon>
+                                        </svg></div>
+                                    <div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0"
+                                            class="jq-star-svg" shape-rendering="geometricPrecision"
+                                            xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px"
+                                            viewBox="60 -62 309 309"
+                                            style="enable-background:new 64 -59 305 305; stroke-width:6px;"
+                                            xml:space="preserve">
+                                            <style type="text/css">
+                                                .svg-empty-622 {
+                                                    fill: url(#622_SVGID_1_);
+                                                }
+
+                                                .svg-hovered-622 {
+                                                    fill: url(#622_SVGID_2_);
+                                                }
+
+                                                .svg-active-622 {
+                                                    fill: url(#622_SVGID_3_);
+                                                }
+
+                                                .svg-rated-622 {
+                                                    fill: #FA8B0C;
+                                                }
+                                            </style>
+                                            <linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#C6D0DC"></stop>
+                                                <stop offset="1" style="stop-color:#C6D0DC"></stop>
+                                            </linearGradient>
+                                            <linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                                <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                            </linearGradient>
+                                            <linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                                <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                            </linearGradient>
+                                            <polygon data-side="center" class="svg-empty-622"
+                                                points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 "
+                                                style="fill: transparent; stroke: black;"></polygon>
+                                            <polygon data-side="left" class="svg-empty-622"
+                                                points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 "
+                                                style="stroke-opacity: 0;"></polygon>
+                                            <polygon data-side="right" class="svg-empty-622"
+                                                points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 "
+                                                style="stroke-opacity: 0;"></polygon>
+                                        </svg></div>
+                                    <div class="jq-star" style="width:12px;  height:12px;"><svg version="1.0"
+                                            class="jq-star-svg" shape-rendering="geometricPrecision"
+                                            xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="305px" height="305px"
+                                            viewBox="60 -62 309 309"
+                                            style="enable-background:new 64 -59 305 305; stroke-width:6px;"
+                                            xml:space="preserve">
+                                            <style type="text/css">
+                                                .svg-empty-622 {
+                                                    fill: url(#622_SVGID_1_);
+                                                }
+
+                                                .svg-hovered-622 {
+                                                    fill: url(#622_SVGID_2_);
+                                                }
+
+                                                .svg-active-622 {
+                                                    fill: url(#622_SVGID_3_);
+                                                }
+
+                                                .svg-rated-622 {
+                                                    fill: #FA8B0C;
+                                                }
+                                            </style>
+                                            <linearGradient id="622_SVGID_1_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#C6D0DC"></stop>
+                                                <stop offset="1" style="stop-color:#C6D0DC"></stop>
+                                            </linearGradient>
+                                            <linearGradient id="622_SVGID_2_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                                <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                            </linearGradient>
+                                            <linearGradient id="622_SVGID_3_" gradientUnits="userSpaceOnUse" x1="0" y1="-50"
+                                                x2="0" y2="250">
+                                                <stop offset="0" style="stop-color:#FA8B0C"></stop>
+                                                <stop offset="1" style="stop-color:#FA8B0C"></stop>
+                                            </linearGradient>
+                                            <polygon data-side="center" class="svg-empty-622"
+                                                points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 212.9,181.1 213.9,181 306.5,241 "
+                                                style="fill: transparent; stroke: black;"></polygon>
+                                            <polygon data-side="left" class="svg-empty-622"
+                                                points="281.1,129.8 364,55.7 255.5,46.8 214,-59 172.5,46.8 64,55.4 146.8,129.7 121.1,241 213.9,181.1 213.9,181 306.5,241 "
+                                                style="stroke-opacity: 0;"></polygon>
+                                            <polygon data-side="right" class="svg-empty-622"
+                                                points="364,55.7 255.5,46.8 214,-59 213.9,181 306.5,241 281.1,129.8 "
+                                                style="stroke-opacity: 0;"></polygon>
+                                        </svg></div>
+                                </span>
+                                <span class="rater-text">
+                                    <span class="rate-count">{{facility.rank}}</span>Stars</span>
+                            </div>
+                        </div>
+
+                    </div>-->
 
 
 
 
+
+                    <div class="card mt-25" style="background: transparent;">
+                        <div class="card-body">
+                            <div class="application-task d-flex align-items-center mb-25">
+
+                                <div class="application-task-icon wh-60 bg-opacity-secondary content-center">
+                                    <i class="uil uil-print"></i>
+                                </div>
+                                <div class="application-task-content">
+                                    <h4>Fax</h4>
+                                    <span class="text-light fs-14 mt-1 text-capitalize">{{facility.fax}}</span>
+                                </div>
+
+                            </div>
+                            <div class="application-task d-flex align-items-center mb-25">
+
+                                <div class="application-task-icon wh-60 bg-opacity-primary content-center">
+                                    <i class="uil uil-phone"></i>
+                                </div>
+                                <div class="application-task-content">
+                                    <h4>Phone</h4>
+                                    <span class="text-light fs-14 mt-1 text-capitalize">{{facility.phone}}</span>
+                                </div>
+
+                            </div>
+                            <div class="application-task d-flex align-items-center mb-25">
+
+                                <div class="application-task-icon wh-60 bg-opacity-success content-center">
+                                    <i class="uil uil-map"></i>
+                                </div>
+                                <div class="application-task-content">
+                                    <h4>Location</h4>
+                                    <span class="text-light fs-14 mt-1 text-capitalize">{{facility.location}}</span>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- ends: .card -->
+                </div>
+                <div class="col-8">
+                    <div class="card border-0 pb-md-50 pb-15" style="background: transparent;border-style: groove;">
+                        <div class="card-header py-sm-20 py-3  px-sm-25 px-3 " style="background:transparent;">
+                            <h6>About {{facility.name}}</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="about-projects" style="padding-bottom:0%;">
+                                <div class="about-projects__details" style="background-color:transparant;">
+                                    <p>{{facility.description}}</p>
+                                </div>
+                                <ul class="d-flex text-capitalize"
+                                    style="background-color:transparent;margin-bottom:0%;">
+                                    <li>
+                                        <span class="color-light fs-13" style="background-color:transparant;">Open
+                                            from</span>
+                                        <p class="color-dark fs-14 mt-1 mb-0 fw-500">08:00 am</p>
+                                    </li>
+                                    <li>
+                                        <span class="color-light fs-13">Closed by</span>
+                                        <p class="color-danger fs-14 mt-1 mb-0 fw-500">17:00 am</p>
+                                    </li>
+                                    <li>
+                                        <span class="color-light fs-13">Now</span>
+                                        <p class="color-primary fs-14 mt-1 mb-0 fw-500">Open</p>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- ends: col -->
+
+                </div>
+
+                <div class="row">
+
+                    <a href="{{ path('facility_showP', {'id': facility.id}) }}">show</a>
+
+
+                </div>
+
+                <!-- ends: col calendar next-->
+                {#<div class="col-xxl-4 col-lg-6 order-xxl-0 order-lg-1">
+
+
+                    <div class="row calendar-grid">
+                        <div class="col-8-offset-5">
+                            <div class="dm-calendar">
+
+
+                                <div class="card card-md mb-4">
+                                    <div class="card-body px-10">
+                                        <div class="date-picker">
+                                            <div class="date-picker__calendar hasDatepicker" id="dp1676558858655">
+                                                <div class="ui-datepicker-inline ui-datepicker ui-widget ui-widget-content ui-helper-clearfix ui-corner-all"
+                                                    style="display: block;">
+                                                    <div
+                                                        class="ui-datepicker-header ui-widget-header ui-helper-clearfix ui-corner-all">
+                                                        <a class="ui-datepicker-prev ui-corner-all" data-handler="prev"
+                                                            data-event="click" title="Prev"><span
+                                                                class="ui-icon ui-icon-circle-triangle-w">Prev</span></a><a
+                                                            class="ui-datepicker-next ui-corner-all" data-handler="next"
+                                                            data-event="click" title="Next"><span
+                                                                class="ui-icon ui-icon-circle-triangle-e">Next</span></a>
+                                                        <div class="ui-datepicker-title"><span
+                                                                class="ui-datepicker-month">February</span>&nbsp;<span
+                                                                class="ui-datepicker-year">2023</span></div>
+                                                    </div>
+                                                    <table class="ui-datepicker-calendar">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col" class="ui-datepicker-week-end"><span
+                                                                        title="Sunday">Su</span></th>
+                                                                <th scope="col"><span title="Monday">Mo</span></th>
+                                                                <th scope="col"><span title="Tuesday">Tu</span></th>
+                                                                <th scope="col"><span title="Wednesday">We</span></th>
+                                                                <th scope="col"><span title="Thursday">Th</span></th>
+                                                                <th scope="col"><span title="Friday">Fr</span></th>
+                                                                <th scope="col" class="ui-datepicker-week-end"><span
+                                                                        title="Saturday">Sa</span></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr>
+                                                                <td
+                                                                    class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                    &nbsp;</td>
+                                                                <td
+                                                                    class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                    &nbsp;</td>
+                                                                <td
+                                                                    class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                    &nbsp;</td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="1">1</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="2">2</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="3">3</a></td>
+                                                                <td class=" ui-datepicker-week-end "
+                                                                    data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="4">4</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class=" ui-datepicker-week-end "
+                                                                    data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="5">5</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="6">6</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="7">7</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="8">8</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="9">9</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="10">10</a></td>
+                                                                <td class=" ui-datepicker-week-end "
+                                                                    data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="11">11</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class=" ui-datepicker-week-end "
+                                                                    data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="12">12</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="13">13</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="14">14</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="15">15</a></td>
+                                                                <td class=" ui-datepicker-days-cell-over  ui-datepicker-current-day ui-datepicker-today"
+                                                                    data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default ui-state-highlight ui-state-active"
+                                                                        href="#" aria-current="true" data-date="16">16</a>
+                                                                </td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="17">17</a></td>
+                                                                <td class=" ui-datepicker-week-end "
+                                                                    data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="18">18</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class=" ui-datepicker-week-end "
+                                                                    data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="19">19</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="20">20</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="21">21</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="22">22</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="23">23</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="24">24</a></td>
+                                                                <td class=" ui-datepicker-week-end "
+                                                                    data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="25">25</a></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class=" ui-datepicker-week-end "
+                                                                    data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="26">26</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="27">27</a></td>
+                                                                <td class=" " data-handler="selectDay" data-event="click"
+                                                                    data-month="1" data-year="2023"><a
+                                                                        class="ui-state-default" href="#"
+                                                                        aria-current="false" data-date="28">28</a></td>
+                                                                <td
+                                                                    class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                    &nbsp;</td>
+                                                                <td
+                                                                    class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                    &nbsp;</td>
+                                                                <td
+                                                                    class=" ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                    &nbsp;</td>
+                                                                <td
+                                                                    class=" ui-datepicker-week-end ui-datepicker-other-month ui-datepicker-unselectable ui-state-disabled">
+                                                                    &nbsp;</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card card-md mb-4">
+                                    <div class="card-body">
+                                        <div class="draggable-events" id="draggable-events">
+
+
+
+                                            {# with every add 
+                                            <button class="btn btn-light btn-default btn-rounded " disabled="">
+                                                {#<img src="img/svg/layers.svg" alt="layers" class="svg">
+                                                10h-11h
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>#}
+
+                <!-- ends: col new slots next-->
+                {#<div class="col-xxl-4 col-lg-6 order-xxl-0 order-lg-1">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title">Add a free Slot</h6>
+
+                        </div>
+                        <div class="modal-body">
+                            <div class="c-event-form">
+                                <form action="#">
+
+                                    <!-- ends: .e-form-row -->
+                                    <div class="e-form-row d-flex">
+
+
+                                    </div>
+                                    <!-- ends: .e-form-row -->
+                                    <div class="e-form-row d-flex">
+                                        <div class="e-form-row__left">
+                                            <label>Start</label>
+                                        </div>
+                                        <div class="e-form-row__right d-flex">
+                                            <div class="input-container icon-left position-relative me-2">
+                                                <span class="input-icon icon-left">
+                                                    <img class="svg" src="../img/svg/chevron-right.svg"
+                                                        alt="chevron-right.svg">
+                                                </span>
+
+                                            </div>
+                                            <div class="input-container icon-left position-relative">
+                                                <span class="input-icon icon-left">
+                                                    <img class="svg" src="../img/svg/clock.svg" alt="clock">
+                                                </span>
+                                                <input type="text" class="form-control form-control-md" name="s-time"
+                                                    placeholder="Select Time">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- ends: .e-form-row -->
+                                    <div class="e-form-row d-flex">
+                                        <div class="e-form-row__left">
+                                            <label>End</label>
+                                        </div>
+                                        <div class="e-form-row__right d-flex">
+                                            <div class="input-container icon-left position-relative me-2">
+                                                <span class="input-icon icon-left">
+                                                    <img class="svg" src="../img/svg/chevron-right.svg"
+                                                        alt="chevron-right.svg">
+                                                </span>
+                                            </div>
+                                            <div class="input-container icon-left position-relative">
+
+                                                <span class="input-icon icon-left">
+                                                    <img class="svg" src="../img/svg/clock.svg" alt="clock">
+                                                </span>
+
+                                                <input type="text" class="form-control form-control-md" name="e-time"
+                                                    placeholder="Select Time">
+                                            </div>
+                                        </div>
+
+
+
+
+
+
+
+                                    </div>
+                                    <!-- ends: .e-form-row -->
+                                    <div class="e-form-row d-flex">
+                                        <div class="e-form-row__left">
+                                            <label>Description</label>
+                                        </div>
+                                        <div class="e-form-row__right">
+                                            <textarea name="e-description" class="form-control form-control-md"
+                                                placeholder="Add Description"></textarea>
+                                        </div>
+                                    </div>
+                                    <!-- ends: .e-form-row -->
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-white btn-sm" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary btn-sm">Save</button>
+                        </div>
+                    </div>
+                    <!-- ends: .card -->
+                </div>#}
+                <!-- ends: col -->
+            </div>
+        </div>
+
+
+    </div>
+    <!-- ends: project tab -->
+</div>
+
+
+{#
 <div class="container-fluid">
     <div class="row">
         <div class="col-lg-12">
@@ -573,9 +1257,9 @@
 
 
 
-                                        {# with every add #}
+                                        {# with every add 
                                         <button class="btn btn-light btn-default btn-rounded " disabled="">
-                                            {#<img src="img/svg/layers.svg" alt="layers" class="svg">#}
+                                            {#<img src="img/svg/layers.svg" alt="layers" class="svg">
                                             10h-11h
                                         </button>
                                     </div>
@@ -682,6 +1366,11 @@
     </div>
     <!-- ends: project tab -->
 </div>
+#}
+
+
+
+
 
 
 
@@ -690,7 +1379,6 @@
 
 
 {#
-
 <div class="contents" style="padding-inline-start:2%;">
     <div class="container-fluid" >
         <div class="row">

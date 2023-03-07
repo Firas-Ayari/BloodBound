@@ -14,15 +14,23 @@ use App\Entity\Facility;
 #[Route('/planning')]
 class PlanningController extends AbstractController
 {
-    #[Route('/', name: 'app_planning_index', methods: ['GET'])]
-    public function index(PlanningRepository $planningRepository): Response
+    #[Route('/admin', name: 'app_planning_index', methods: ['GET'])]
+    public function indexadmin(PlanningRepository $planningRepository): Response
     {
-        return $this->render('planning/index.html.twig', [
+        return $this->render('BackOffice/planning/index.html.twig', [
             'plannings' => $planningRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'app_planning_new', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'app_planning_index', methods: ['GET'])]
+    public function index(PlanningRepository $planningRepository): Response
+    {
+        return $this->render('FrontOffice/planning/index.html.twig', [
+            'plannings' => $planningRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/admin/new', name: 'app_planning_new', methods: ['GET', 'POST'])]
     public function new(Request $request, PlanningRepository $planningRepository): Response
     {
         $planning = new Planning();
@@ -35,19 +43,29 @@ class PlanningController extends AbstractController
             return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('planning/new.html.twig', [
+        return $this->renderForm('BackOffice/planning/new.html.twig', [
             'planning' => $planning,
             'form' => $form,
+        ]);
+    }
+
+    #[Route('admin/{id}', name: 'app_planning_show', methods: ['GET'])]
+    public function showAdmin(Planning $planning): Response
+    {
+        return $this->render('BackOffice/planning/show.html.twig', [
+            'planning' => $planning,
         ]);
     }
 
     #[Route('/{id}', name: 'app_planning_show', methods: ['GET'])]
     public function show(Planning $planning): Response
     {
-        return $this->render('planning/show.html.twig', [
+        return $this->render('FrontOffice/planning/show.html.twig', [
             'planning' => $planning,
         ]);
     }
+
+    
 
     #[Route('/{id}/edit', name: 'app_planning_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Planning $planning, PlanningRepository $planningRepository): Response

@@ -7,9 +7,9 @@
 
 
 
-<div class="container-fluid">
+<div class="contents" style="background-color:light-gray;margin-left:-30%;">
 
-    <div class="row" style="padding:10%;">
+    <div class="row" style="margin-left:-40%;">
         <!--<div class="col-4">
             <img src="../img/building-amico.png" width="600">
         </div>-->
@@ -27,7 +27,7 @@
 
     </div>
 
-    <div class="row">
+    <div class="row" style="padding:10%;margin-left:-28%;margin-right:0%;">
 
         {% for facility in facilities %}
         
@@ -35,7 +35,7 @@
         <a href="{{ path('app_facility_show', {'id': facility.id}) }}" class="view">
 
 
-            <div class="modal-content" style="background-color:light-gray;padding:6%">
+            <div class="modal-content" style="background-color:white;padding:10%;background-repeat:no-repeat;background-size:cover;">
                 <img class=" me-20 rounded-circle wh-80 bg-opacity-primary  " src="../img/tm1.png"
                     alt="Generic placeholder image" style="margin-bottom:5%;">
                 <div class="media-body d-xl-flex users-list-body">

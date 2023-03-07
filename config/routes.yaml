@@ -3,3 +3,8 @@
 home:
   path: /
   controller: App\Controller\HomeController::index
+
+
+facility_planning:
+    path: /facility/{id}/planning
+    controller: App\Controller\FacilityController::planning
