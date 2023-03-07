@@ -194,7 +194,6 @@ public function buyticket(Request $request, Ticket $ticket): Response
 
         return $response; 
 
-
         $this->addFlash('success', 'You have successfully purchased a ticket.');
     } else {
         $this->addFlash('error', 'The tickets are sold out.');
