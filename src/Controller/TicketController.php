@@ -1,0 +1,220 @@
+<?php
+
+namespace App\Controller;
+
+use App\Entity\Event;
+use App\Entity\Achat;
+use App\Entity\Ticket;
+use App\Entity\User;
+use App\Form\TicketType;
+use App\Repository\TicketRepository;
+use App\Repository\AchatRepository;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
+//use App\Service\TwilioService;
+use Twilio\Rest\Client;
+use libphonenumber\PhoneNumberUtil;
+use Dompdf\Dompdf;
+use Dompdf\Options;
+
+
+#[Route('/ticket')]
+class TicketController extends AbstractController
+{
+    #[Route('/admin', name: 'app_ticket_indexAdmin', methods: ['GET'])]
+    public function indexAdmin(TicketRepository $ticketRepository): Response
+    {   
+        // Ticket Status Staistics
+        $availableTickets = $this->getDoctrine()
+            ->getRepository(Ticket::class)
+            ->count(['status' => 'available']);
+        $soldOutTickets = $this->getDoctrine()
+        ->getRepository(Ticket::class)
+        ->count(['status' => 'sold out']);
+
+ 
+
+
+
+        return $this->render('BackOffice/ticket/index.html.twig', [
+            'tickets' => $ticketRepository->findAll(),
+            'availableTickets' => $availableTickets,
+            'soldOutTickets' => $soldOutTickets,
+            
+        ]);
+    }
+    
+    #[Route('/', name: 'app_ticket_index', methods: ['GET'])]
+    public function index(TicketRepository $ticketRepository): Response
+    {
+        return $this->render('FrontOffice/ticket/index.html.twig', [
+            'tickets' => $ticketRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/admin/new', name: 'app_ticket_newAdmin', methods: ['GET', 'POST'])]
+    public function new(Request $request, TicketRepository $ticketRepository): Response
+    {
+        $ticket = new Ticket();
+        $form = $this->createForm(TicketType::class, $ticket);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $ticketRepository->save($ticket, true);
+
+            return $this->redirectToRoute('app_ticket_indexAdmin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('BackOffice/ticket/new.html.twig', [
+            'ticket' => $ticket,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/admin/{id}', name: 'app_ticket_show_admin', methods: ['GET'])]
+    public function showAdmin(Ticket $ticket): Response
+    {
+      return $this->render('BackOffice/ticket/show.html.twig', [
+            'ticket' => $ticket,
+        ]);
+   }
+    
+    #[Route('/{id}', name: 'app_ticket_show', methods: ['GET'])]
+    public function show(Ticket $ticket, AchatRepository $achatRepository): Response
+    {
+        //$sumOfTickets = $achatRepository->getSumOfTicketsPurchasedByUser($ticket);
+        $count = $achatRepository->countTicketsPurchasedForTicketId($ticket);
+        return $this->render('FrontOffice/ticket/show.html.twig', [
+            'ticket' => $ticket,
+            'count' => $count,
+            //'status' => $ticket->getStatus()
+        ]);
+    }
+
+    #[Route('/admin/{id}/edit', name: 'app_ticket_editAdmin', methods: ['GET', 'POST'])]
+    public function editAdmin(Request $request, Ticket $ticket, TicketRepository $ticketRepository): Response
+    {
+        $form = $this->createForm(TicketType::class, $ticket);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $ticketRepository->save($ticket, true);
+
+            return $this->redirectToRoute('app_ticket_indexAdmin', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('BackOffice/ticket/edit.html.twig', [
+            'ticket' => $ticket,
+            'form' => $form,
+        ]);
+    }
+
+    #[Route('/{id}', name: 'app_ticket_delete', methods: ['POST'])]
+    public function delete(Request $request, Ticket $ticket, TicketRepository $ticketRepository): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$ticket->getId(), $request->request->get('_token'))) {
+            $ticketRepository->remove($ticket, true);
+        }
+
+        return $this->redirectToRoute('app_ticket_indexAdmin', [], Response::HTTP_SEE_OTHER);
+    }
+
+    /**
+ * @Route("/buyticket/{id}", name="app_buyticket", methods={"GET", "POST"})
+ */
+public function buyticket(Request $request, Ticket $ticket): Response
+{
+    $stock = $ticket->getStock();
+    
+    if ($stock > 0) {
+        $ticket->setStock($stock - 1);
+        
+        if ($stock - 1 === 0) {
+            $ticket->setStatus('sold out');
+            $event = $ticket->getEvent();
+        if ($event) {
+            $event->setStatus('complet');
+        }
+        }
+        
+        $achat = new Achat();
+        $achat->setTicket($ticket);
+        $achat->setUser($this->getUser());
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($achat);
+        $entityManager->flush();
+        
+        // Send Twilio SMS notification
+        $sid = 'AC3fcc859c3c9d7ca0f904d5969b8f077b';
+        $token = '4408d07f6b27129cf416cb48fcca0d07';
+        $from = '+15673714926';
+        $to = '+21650205982';
+        
+        $client = new Client($sid, $token);
+        $event = $ticket->getEvent();
+        $message = $client->messages->create(
+            $to,
+            array(
+                'from' => $from,
+                'body' => 'You have successfully purchased a ticket for '.$event->getTitle().' at '.$ticket->getPrice().' dinars.',
+            )
+        );
+
+        // Pdf Download
+        $ticket = $this->getDoctrine()->getRepository(Ticket::class)->find($ticket);
+
+        if (!$ticket) {
+            throw $this->createNotFoundException('Ticket not found');
+        }
+
+        $event = $ticket->getEvent();
+
+        $pdfOptions = new Dompdf();
+        $html = $this->renderView('FrontOffice/ticket/ticketpdf.html.twig', [
+            'event' => $event,
+            'ticket' => $ticket,
+            'achat' => $achat,
+        ]);
+        $pdfOptions->loadHtml($html);
+        $pdfOptions->setPaper('A4', 'portrait');
+
+
+
+
+        $pdfOptions->render();
+
+        $pdfContent = $pdfOptions->output();
+        $response = new Response($pdfContent);
+
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment;filename=ticket.pdf');
+
+        return $response; 
+
+        $this->addFlash('success', 'You have successfully purchased a ticket.');
+    } else {
+        $this->addFlash('error', 'The tickets are sold out.');
+    }
+    
+    return $this->redirectToRoute('app_ticket_show', ['id' => $ticket->getId()], Response::HTTP_SEE_OTHER);
+}
+
+
+
+
+//#[Route('/{id}', name: 'app_ticket_delete', methods: ['POST'])]
+    
+   /* #[Route("/{id}/purchases", name:"sum_of_tickets_purchased_by_user")]
+     
+    public function sumOfTicketsPurchasedByUser(User $user, AchatRepository $achatRepository): Response
+    {
+        
+
+        return $this->render('FrontOffice/ticket/show.html.twig', [
+            'sumOfTickets' => $sumOfTickets,
+        ]);
+    }*/
+ }
