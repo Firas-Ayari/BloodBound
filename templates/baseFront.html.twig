@@ -103,14 +103,14 @@
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="{{ asset('/img/BBlogo.png') }}" alt="">
+        <img src="{{ asset('BackOffice/img/BBlogo.png') }}" alt="">
         <span></span>
       </a>
 
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto" href="{{ path('app_home_page') }}">Home</a></li>
-          <li><a class="nav-link scrollto" href="">Emergency</a></li>
+          <li><a class="nav-link scrollto" href="{{ path('app_emergency_index') }}">Emergency</a></li>
           <li><a class="nav-link scrollto" href="">RDV</a></li>
           <li><a class="nav-link scrollto" href="{{ path('app_product_index') }}">Marketplace</a></li>
           <li><a href="blog.html">Blog</a>
