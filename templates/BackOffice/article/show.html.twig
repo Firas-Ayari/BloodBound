@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Article{% endblock %}
+
+{% block body %}
+    <h1>Article</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ article.id }}</td>
+            </tr>
+            <tr>
+                <th>Title</th>
+                <td>{{ article.title }}</td>
+            </tr>
+            <tr>
+                <th>FeaturedText</th>
+                <td>{{ article.featuredText }}</td>
+            </tr>
+            <tr>
+                <th>Slug</th>
+                <td>{{ article.slug }}</td>
+            </tr>
+            <tr>
+                <th>Content</th>
+                <td>{{ article.content }}</td>
+            </tr>
+            <tr>
+                <th>CreatedAt</th>
+                <td>{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>UpdatedAt</th>
+                <td>{{ article.updatedAt ? article.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_article_index') }}">back to list</a>
+
+    <a href="{{ path('app_article_edit', {'id': article.id}) }}">edit</a>
+
+    {{ include('backoffice/article/_delete_form.html.twig') }}
+          {#} <p>{{ article.getPositiveVotesCount() }} people liked this article</p>
+           <p>{{ article.getNegativeVotesCount() }} people disliked this article</p>#}
+     <h2>List of comments</h2>
+               {% for comment in article.comments %}
+                  {#{% if comment.parent == null %}#}
+                     <h2> comment {{loop.index}} </h2>
+                           <p>{{comment.content}} <br> created At {{comment.createdAt|date("d/m/Y H:i")}}</p>
+                            <p>{{ comment.getPositiveVotesCount() }} people liked this comment</p>
+                            <p>{{ comment.getNegativeVotesCount() }} people disliked this comment</p>
+                           <a href="{{ path('app_comment_delete', {'id': comment.id}) }}">delete</a>
+                           {% endfor %}
+{% endblock %}

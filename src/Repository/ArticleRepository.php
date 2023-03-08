@@ -38,6 +38,22 @@ class ArticleRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+    public function advancedSearch(?string $title, ?Category $category): array
+    {
+        $qb = $this->createQueryBuilder('a');
+
+        if ($title) {
+            $qb->andWhere('a.title LIKE :title')
+                ->setParameter('title', '%' . $title . '%');
+        }
+
+        if ($category) {
+            $qb->andWhere('a.category = :category')
+                ->setParameter('category', $category);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 
 //    /**
 //     * @return Article[] Returns an array of Article objects
