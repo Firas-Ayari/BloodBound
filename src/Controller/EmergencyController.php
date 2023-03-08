@@ -37,7 +37,7 @@ class EmergencyController extends AbstractController
     #[Route('/', name: 'app_emergency_index', methods: ['GET'])]
     public function index(EmergencyRepository $emergencyRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $emergencies = $emergencyRepository->findAll();
+        $emergencies = $emergencyRepository->findBy([], ['createdAt' => 'DESC']);
 
         $pagination = $paginator->paginate(
             $emergencies,
@@ -48,9 +48,9 @@ class EmergencyController extends AbstractController
         return $this->render('FrontOffice/emergency/index.html.twig', [
             'pagination' => $pagination,
             'emergencies' => $pagination,
-
         ]);
     }
+
 
     #[Route('/new', name: 'app_emergency_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EmergencyRepository $emergencyRepository): Response
