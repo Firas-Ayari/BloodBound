@@ -13,4 +13,4 @@ framework:
             medium: ['email']
             low: ['email']
         admin_recipients:
-            - { email: BackOffice@example.com }
+            - { email: admin@example.com }

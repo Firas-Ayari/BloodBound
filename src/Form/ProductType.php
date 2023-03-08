@@ -30,7 +30,6 @@ class ProductType extends AbstractType
                 'label' => 'Image',
                 'mapped' => false,
                 'required' => false,
-            
             ]);
     }
 
