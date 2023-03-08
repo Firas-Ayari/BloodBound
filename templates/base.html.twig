@@ -6,8 +6,8 @@
        <!-- endinject -->
 
     <link rel="icon" type="image/png" sizes="16x16" href="../img/favicon.png">
-
-    <!-- Fonts -->
+        <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+        <!-- Fonts -->
     <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
           <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {% block css %}
@@ -608,8 +608,8 @@
             <div class="overlay-dark-sidebar"></div>
             <div class="customizer-overlay"></div>
                 
-                    {% block js %}  
-                                                        <!-- inject:js-->
+                    {% block js %}
+                        <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>            <!-- inject:js-->
                                     <script src="{{ asset('BackOffice/assets/vendor_assets/js/jquery/jquery-3.5.1.min.js') }}"></script>
                                     <script src="{{ asset('BackOffice/assets/vendor_assets/js/jquery/jquery-ui.js') }}"></script>
                                     <script src="{{ asset('BackOffice/assets/vendor_assets/js/bootstrap/popper.js') }}"></script>
@@ -655,8 +655,6 @@
                                     <script src="{{ asset('BackOffice/assets/theme_assets/js/jvectormap-init.js') }}"></script>
                                     <script src="{{ asset('BackOffice/assets/theme_assets/js/leaflet-init.js') }}"></script>
                                     <script src="{{ asset('BackOffice/assets/theme_assets/js/main.js') }}"></script>
-                                    <script src="{{ asset('FrontOffice/js/script.js') }}"></script>
-                                    <script src="{{ asset('FrontOffice/js/main.js') }}"></script>
                                                     <!-- endinject-->
                     {% endblock %}
     </body>

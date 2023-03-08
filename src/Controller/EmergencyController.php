@@ -17,8 +17,19 @@ class EmergencyController extends AbstractController
     #[Route('/admin', name: 'app_emergency_indexAdmin', methods: ['GET'])]
     public function indexAdmin(EmergencyRepository $emergencyRepository): Response
     {
+        $emergencyCountByBloodType = $emergencyRepository->getEmergencyCountByBloodType();
+
+        $labels = [];
+        $data = [];
+
+        foreach ($emergencyCountByBloodType as $emergencyCount) {
+            $labels[] = $emergencyCount['bloodType'];
+            $data[] = $emergencyCount['count'];
+        }
         return $this->render('BackOffice/emergency/index.html.twig', [
             'emergencies' => $emergencyRepository->findAll(),
+            'labels' => $labels,
+            'data' => $data,
         ]);
     }
 
