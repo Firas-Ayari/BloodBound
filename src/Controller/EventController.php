@@ -29,7 +29,7 @@ class EventController extends AbstractController
     private $slugger;
     public function __construct(SluggerInterface $slugger)
     {
-        $this->slugger = $slugger;
+        $this->slugger = $slugger;   //provides methods for generating URL-friendly slugs from strings
     }
     #[Route('/admin', name: 'app_event_index_admin', methods: ['GET'])]
     public function indexAdmin(EventRepository $eventRepository): Response
@@ -47,10 +47,21 @@ class EventController extends AbstractController
     }
 
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
-    public function index(EventRepository $eventRepository): Response
+    public function index(EventRepository $eventRepository, Request $request): Response
     {
+        $events = $this->getDoctrine()->getRepository(Event::class)->findAll();
+        $numberOfEventsPerPage = 3;
+        $totalEvents = count($events);
+        $totalPages = ceil($totalEvents / $numberOfEventsPerPage);
+        $pageNumber = $request->query->getInt('page', 1);
+        $offset = ($pageNumber - 1) * $numberOfEventsPerPage;
+        $limit = $numberOfEventsPerPage;
+        $eventsOnCurrentPage = array_slice($events, $offset, $limit);
+
         return $this->render('FrontOffice/event/index.html.twig', [
-            'events' => $eventRepository->findAll(),
+            'events' => $eventsOnCurrentPage,
+            'totalPages' => $totalPages,
+            'currentPage' => $pageNumber,
         ]);
     }
 
@@ -68,8 +79,8 @@ class EventController extends AbstractController
             //upload img
             $image = $form->get('image')->getData();
 
-            // this condition is needed because the 'image' field is not required
-            // so the PDF file must be processed only when a file is uploaded
+           
+            
             if ($image) {
                 $originalFilename = pathinfo($image->getClientOriginalName(), PATHINFO_FILENAME);
                 // this is needed to safely include the file name as part of the URL
@@ -79,7 +90,7 @@ class EventController extends AbstractController
                 // Move the file to the directory where images are stored
                 try {
                     $image->move(
-                        $this->getParameter('img_directory'),
+                        $this->getParameter('img_directory_event'),
                         $newFilename
                     );
 
@@ -165,7 +176,7 @@ class EventController extends AbstractController
                 // Move the file to the directory where images are stored
                 try {
                     $image->move(
-                        $this->getParameter('img_directory'),
+                        $this->getParameter('img_directory_event'),
                         $newFilename
                     );
 
@@ -200,32 +211,7 @@ class EventController extends AbstractController
         return $this->redirectToRoute('app_event_index_admin', [], Response::HTTP_SEE_OTHER);
     }
 
-   /* public function vote(Article $article, int $value): Response
-    {
-        // Check if the user has already voted on this article
-        $vote = $this->getDoctrine()
-            ->getRepository(Vote::class)
-            ->findOneBy([
-                'article' => $article,
-                'user' => $this->getUser(),
-            ]);
-        if ($vote) {
-            // User has already voted, update the value of their vote
-            $vote->setValue($value);
-        } else {
-            // User hasn't voted yet, create a new vote
-            $vote = new Vote();
-            $vote->setArticle($article)
-                ->setUser($this->getUser())
-                ->setValue($value);
-        }
-        // Save the vote to the database
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($vote);
-        $entityManager->flush();
-        return $this->redirectToRoute('app_article_showfront', ['id' => $article->getId()]);
-    } */
-
+   
    
    
    

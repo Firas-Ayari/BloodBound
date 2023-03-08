@@ -71,7 +71,7 @@
                         <div class="logo-area">
                         <a class="navbar-brand" href="index.html">
                             <img class="dark" src="{{ asset('BackOffice/img/BBlogo.png') }}" alt="logo">
-                            <img class="light" src="{{ asset('BackOffice/img/logo-white.png') }}" alt="logo">
+                           
                         </a>
                         <a href="#" class="sidebar-toggle">
                             <img class="svg" src="{{ asset('BackOffice/img/svg/align-center-alt.svg') }}" alt="img"></a>
@@ -81,7 +81,7 @@
                         <div class="hexadash-top-menu position-relative">
                             <ul>
                                 <li class="has-subMenu">
-                                    <a href="#" class="">Dashboard</a>
+                                    <a href="{{ path('admin_dashboard') }}" class="">Dashboard</a>
                                 </li>
                                 <li class="has-subMenu">
                                     <a href="#" class="">Layouts</a>
@@ -149,10 +149,10 @@
                                                 </a>
                                                 <ul class="subMenu">
                                                 <li>
-                                                    <a href="users-list.html" class="">Users List</a>
+                                                    <a href="{{ path('app_user_list') }}" class="">Users List</a>
                                                 </li>
                                                 <li>
-                                                    <a href="users-card2.html" class="">Add Users </a>
+                                                    <a href="{{ path('app_user_create') }}" class="">Add Users </a>
                                                 </li>
                                                 </ul>
                                             </li>
@@ -172,15 +172,14 @@
                                             <li class="has-subMenu-left">
                                                 <a href="#" class="">
                                                 <img src="{{ asset('BackOffice/img/svg/user.svg') }}" alt="user" class="svg nav-icon">
-                                                <span class="menu-text">Social app</span>
+                                                <span class="menu-text">Event</span>
                                                 </a>
                                                 <ul class="subMenu">
                                                 <li>
-                                                    <a href="profile.html" class="">My
-                                                        Profile</a>
+                                                    <a href="{{ path('app_event_index_admin') }}" class="">Events List</a>
                                                 </li>
                                                 <li>
-                                                    <a href="profile-setting.html" class="">Profile Settings</a>
+                                                    <a href="{{ path('app_ticket_indexAdmin') }}" class="">Tickets List</a>
                                                 </li>
                                                 </ul>
                                             </li>
@@ -407,6 +406,13 @@
                                     <span class="menu-text">Dashboard</span>
                                     <span class="toggle-icon"></span>
                                 </a>
+                                                                <ul>
+                                    <li class="">
+                                        <a href="{{ path('admin_dashboard') }}">Dashboard</a>
+                                    </li>
+
+  
+                                </ul>
         
                             </li>
                             <li class="has-child">
@@ -491,10 +497,10 @@
                                 </a>
                                 <ul>
                                     <li class="">
-                                    <a href="{{ path('app_emergency_new') }}"> Add Emergency</a>
+                                    <a href="{{ path('app_emergency_indexAdmin') }}"> Emergencies List</a>
                                     </li>
                                     <li class="">
-                                    <a href="{{ path('app_emergency_index') }}">Emergencies List</a>
+                                    <a href="{{ path('app_donation_indexAdmin') }}">Donation List</a>
                                     </li>
                                 </ul>
                             </li>
@@ -503,47 +509,43 @@
                             <li class="has-child">
                                 <a href="#" class="">
                                     <span class="nav-icon uil uil-apps"></span>
-                                    <span class="menu-text">Social App</span>
+                                    <span class="menu-text">Event</span>
                                     <span class="toggle-icon"></span>
                                 </a>
                                 <ul>
                                     <li class="">
-                                    <a href="profile.html">My Profile</a>
+                                    <a href="{{ path('app_event_index_admin') }}">Events List</a>
                                     </li>
                                     <li class="">
-                                    <a href="profile-setting.html">Profile
-                                        Settings</a>
+                                    <a href="{{ path('app_ticket_indexAdmin') }}">Tickets List</a>
                                     </li>
                                 </ul>
                             </li>
 
 
 
-                            <li class="has-child">
+
+<li class="has-child">
                                 <a href="#" class="">
-                                    <span class="nav-icon uil uil-images"></span>
-                                    <span class="menu-text">Blog</span>
+                                    <span class="nav-icon uil uil-bag"></span>
+                                    <span class="menu-text text-initial">Article</span>
                                     <span class="toggle-icon"></span>
                                 </a>
                                 <ul>
                                     <li class="">
-                                    <a href="blog.html">style 1</a>
+                                        <a href="{{ path('app_article_index') }}">Article's List</a>
                                     </li>
                                     <li class="">
-                                    <a href="blog2.html">Style 2</a>
+                                        <a href="{{ path('app_article_category_index') }}">Categorie's List</a>
                                     </li>
-                                    <li class="">
-                                    <a href="blog3.html">Style 3</a>
-                                    </li>
-                                    <li class="">
-                                    <a href="blog-details.html">Details</a>
-                                    </li>
+                                    
+  
                                 </ul>
                             </li>
 
 
                             <li class="">
-                                <a href="sign-up.html">
+                                <a href="{{ path('app_register') }}">
                                     <span class="nav-icon uil uil-sign-out-alt"></span>
                                     <span class="menu-text">Sign Up</span>
                                 </a>
@@ -655,8 +657,6 @@
                                     <script src="{{ asset('BackOffice/assets/theme_assets/js/jvectormap-init.js') }}"></script>
                                     <script src="{{ asset('BackOffice/assets/theme_assets/js/leaflet-init.js') }}"></script>
                                     <script src="{{ asset('BackOffice/assets/theme_assets/js/main.js') }}"></script>
-                                    <script src="{{ asset('FrontOffice/js/script.js') }}"></script>
-                                    <script src="{{ asset('FrontOffice/js/main.js') }}"></script>
                                                     <!-- endinject-->
                     {% endblock %}
     </body>

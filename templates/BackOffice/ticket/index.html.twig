@@ -11,13 +11,10 @@
                      <div class=" d-flex flex-wrap justify-content-center breadcrumb-main__wrapper">
                         <div class="d-flex align-items-center user-member__title justify-content-center me-sm-25">
                            <h4 class="text-capitalize fw-500 breadcrumb-title">Tickets Admin</h4>
-                           <span class="sub-title ms-sm-25 ps-sm-25">Home</span>
+                           
                         </div>
 
-                        <form action="/" class="d-flex align-items-center user-member__form my-sm-0 my-2">
-                           <img src="../img/svg/search.svg" alt="search" class="svg">
-                           <input class="form-control me-sm-2 border-0 box-shadow-none" type="search" placeholder="Search by Id" aria-label="Search">
-                        </form>
+                        
 
                      </div>
                      <div class="action-btn">
@@ -121,15 +118,57 @@
                   </div>
                </div>
             </div>
-            <h1>Ticket Status Statistics</h1>
+            <h1>Ticket Statistics</h1>
+            <div class="col-xxl-4 col-lg-6 mb-25">
+
+                     <div class="card performance-o border-0">
+                        <div class="card-header border-0 pb-0">
+                           <h6>Ticket Status Statistics </h6>
+                           <div class="card-extra">
+                              <div class="dropdown dropleft">
+                                 <canvas id="ticket-chart" width="350" height="350"></canvas>
+                              </div>
+                           </div>
+                        </div>
+                        <!-- ends: .card-header -->
+                        <div class="card-body pt-sm-25 pb-25">
+                           
+                           
+                           <!-- ends: .session-wrap -->
+                        </div>
+                        <!-- ends: .card-body -->
+            </div>
+
+           {#  <div class="col-xxl-4 col-lg-6 mb-25">
+
+                     <div class="card performance-o border-0">
+                        <div class="card-header border-0 pb-0">
+                           <h6>Ticket Purchase Statistics </h6>
+                           <div class="card-extra">
+                              <div class="dropdown dropleft">
+                                 <div style="width: 600px; height: 400px; margin: 0 auto;">
+                                    <canvas id="myChart"></canvas>
+                                 </div> 
+                              </div>
+                           </div>
+                        </div>
+                        <!-- ends: .card-header -->
+                        <div class="card-body pt-sm-25 pb-25">
+                           
+                           
+                           <!-- ends: .session-wrap -->
+                        </div>
+                        <!-- ends: .card-body -->
+            </div> #}
+
             
-            <div class="container">
+            {# <div class="container">
                <div class="row justify-content-center">
                   <div class="col-sm-6">
-                     <canvas id="ticket-chart" width="600" height="600"></canvas>
+                     <canvas id="ticket-chart" width="350" height="350"></canvas>
                   </div>
                </div>
-            </div>
+            </div> #}
             
             <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
             <script>
@@ -161,15 +200,28 @@
         });
     </script>
 
-    
+      <h1>Ticket Purchase Statistics</h1>
+      <div style="width: 600px; height: 400px; margin: 0 auto; background-color:white;">
+    <canvas id="myChart"></canvas>
+     </div> 
 
 
-
-
-
-
-
-
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+      var data = {{ data|raw }};
+      var ctx = document.getElementById('myChart').getContext('2d');
+      var chart = new Chart(ctx, {
+        type: 'bar',
+        data: data,
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
          </div>
 
 

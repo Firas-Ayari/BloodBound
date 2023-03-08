@@ -108,6 +108,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $userRole = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isArchived = null;
+
+    #[ORM\Column]
+    private ?bool $isBanned = null;
+
+    #[ORM\Column]
+    private ?int $points = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -116,6 +125,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->emergencies = new ArrayCollection();
         $this->articleCategories = new ArrayCollection();
         $this->appointments = new ArrayCollection();
+        $this->isBanned = false;
+        $this->isArchived = false;
+        $this->roles = ['ROLE_USER'];
+        $this->points = 100000;
     }
 
     public function getId(): ?int
@@ -489,6 +502,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCart(?Basket $cart): self
     {
         $this->basket = $cart;
+
+        return $this;
+    }
+
+    public function IsArchived(): ?bool
+    {
+        return $this->isArchived;
+    }
+
+    public function setIsArchived(?bool $isArchived): self
+    {
+        $this->isArchived = $isArchived;
+
+        return $this;
+    }
+
+    public function IsBanned(): ?bool
+    {
+        return $this->isBanned;
+    }
+
+    public function setIsBanned(bool $isBanned): self
+    {
+        $this->isBanned = $isBanned;
+
+        return $this;
+    }
+
+    public function getPoints(): ?int
+    {
+        return $this->points;
+    }
+
+    public function setPoints(int $points): self
+    {
+        $this->points = $points;
 
         return $this;
     }

@@ -24,11 +24,10 @@ class CartService
     public function TotalPriceCalcul(Basket $cart)
     {
         $total = 0;
-        $cartproducts = $cart->getCartProducts();
-        foreach($cartproducts as $cartproduct)
+        $cartProducts = $cart->getCartProducts();
+        foreach($cartProducts as $cartProduct)
         {
-            $product = $cartproduct->getProduct();
-            $total = $total + ($product->getPrice()*$cartproduct->getQuantity());
+            $total = $total + $cartProduct->getTotal();
         }
         return $total;
     }

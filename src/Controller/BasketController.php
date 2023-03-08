@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use Exception;
+use Dompdf\Dompdf;
 use App\Entity\Basket;
+use DateTimeImmutable;
 use App\Form\BasketType;
 use App\Entity\CartProduct;
 use App\Services\CartService;
@@ -13,60 +16,39 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Dompdf\Options;
 
 #[Route('/basket')]
 class BasketController extends AbstractController
 {
     private $em;
-    private $productRepository;
     private $cartService;
-    public function __construct(EntityManagerInterface $em, ProductRepository $productRepository, CartService $cartService) 
+    public function __construct(EntityManagerInterface $em, CartService $cartService) 
     {
         $this->em = $em;
-        $this->productRepository = $productRepository;
         $this->cartService = $cartService;
     }
-    /*#[Route('/', name: 'app_basket_index', methods: ['GET'])]
-    public function index(BasketRepository $basketRepository): Response
+
+
+    #[Route('/', name: 'app_basket_show', methods: ['GET'])]
+    public function show(): Response
     {
-        return $this->render('FrontOffice/basket/index.html.twig', [
-            'baskets' => $basketRepository->findAll(),
-        ]);
-    }
-
-    #[Route('/new', name: 'app_basket_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, BasketRepository $basketRepository): Response
-    {
-        $basket = new Basket();
-        $form = $this->createForm(BasketType::class, $basket);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $basketRepository->save($basket, true);
-
-            return $this->redirectToRoute('app_basket_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->renderForm('basket/new.html.twig', [
-            'basket' => $basket,
-            'form' => $form,
-        ]);
-    }*/
-
-    #[Route('/{id}', name: 'app_basket_show', methods: ['GET'])]
-    public function show(Basket $basket): Response
-    {
+        $user = $this->getUser();
+        $basket = $user->getCart();
         $cartproducts = $basket->getCartProducts();
+        $total= $basket->getTotal()+200;
         return $this->render('/FrontOffice/basket/show.html.twig', [
             'basket' => $basket,
-            'cartproducts' => $cartproducts
+            'cartproducts' => $cartproducts,
+            'total' => $total
         ]);
     }
 
-    #[Route('/{id}/editquantity', name: 'app_quantity_edit', methods: ['GET'])]
+    #[Route('/{id}/editquantity', name: 'app_quantity_edit')]
     public function editQuantity(Request $request,$id): Response
     {
-
+        $user = $this->getUser();
+        $cart= $user->getCart();
         $cartproduct = $this->em->getRepository(CartProduct::class)->find($id);
         if ($request->isMethod("post")) 
         {
@@ -74,36 +56,83 @@ class BasketController extends AbstractController
         }
         $cartproduct->setQuantity($quantity);
         $cartproduct->setTotal($cartproduct->getProduct()->getPrice()*$quantity);
+        $cart->setTotal($this->cartService->TotalPriceCalcul($cart));
+        $updatedAt = new DateTimeImmutable();
+        $cart->setUpdatedAt($updatedAt);
         $this->em->flush();
 
         return $this->redirectToRoute('app_basket_show');
         
     }
-    /*#[Route('/{id}/edit', name: 'app_basket_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Basket $basket, BasketRepository $basketRepository): Response
+
+    #[Route('/checkout', name: 'app_basket_checkout')]
+    public function checkout(): Response
     {
-        $form = $this->createForm(BasketType::class, $basket);
-        $form->handleRequest($request);
+        $user = $this->getUser();
+        $cart= $user->getCart();
+        if($cart->getTotal() < $user->getPoints())
+        {
+            $cartproducts = $cart->getCartProducts();
+            if(!empty($cartproducts))
+            {
+                foreach($cartproducts as $cartProduct)
+                {
+                    $product = $cartProduct->getProduct();
+                    $product->setStock($product->getStock()-$cartProduct->getQuantity());
+                    $user->setPoints($user->getPoints()-$cart->getTotal());
+                    $cart->setCheckout("Done");
+                    $this->em->flush();
+                }
+            }
+            $total= $cart->getTotal()+200;      //Render your HTML.twig page
+            $invoicePDF = $this->renderView('/invoice.html.twig', [
+                'basket' => $cart,
+                'cartproducts' => $cartproducts,
+                'total' => $total
+            ]);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $basketRepository->save($basket, true);
+            // Instantiate Dompdf
+            $pdf = new Dompdf();
 
-            return $this->redirectToRoute('app_basket_index', [], Response::HTTP_SEE_OTHER);
+            // Load HTML into Dompdf
+            $pdf->loadHtml($invoicePDF);
+
+            // Set paper size and orientation
+            $pdf->setPaper('A4', 'portrait');
+
+            // Render the PDF
+            $pdf->render();
+
+            // Output the generated PDF to the browser
+            // $pdf->stream('invoice.pdf', ['Attachment' => true]);
+            // $pdfContent = $pdf->output();
+            // $response = new Response($pdfContent);
+            // $response->headers->set('Content-Type', 'application/pdf');
+            // $response->headers->set('Content-Disposition', 'attachment; filename="invoice.pdf"');
+        
+            // return $response;
+
+            return $this->redirectToRoute('app_invoice');
         }
+        else
+        {
+            throw new Exception();
+        }
+        
+    }
 
-        return $this->renderForm('basket/edit.html.twig', [
+    #[Route('/invoice', name: 'app_invoice')]
+    public function indexinvoice(): Response
+    {
+        $user = $this->getUser();
+        $basket = $user->getCart();
+        $cartproducts = $basket->getCartProducts();
+        $total= $basket->getTotal()+200;
+        return $this->render('invoice.html.twig', [
             'basket' => $basket,
-            'form' => $form,
+            'cartproducts' => $cartproducts,
+            'total' => $total
         ]);
     }
 
-    #[Route('/{id}', name: 'app_basket_delete', methods: ['POST'])]
-    public function delete(Request $request, Basket $basket, BasketRepository $basketRepository): Response
-    {
-        if ($this->isCsrfTokenValid('delete'.$basket->getId(), $request->request->get('_token'))) {
-            $basketRepository->remove($basket, true);
-        }
-
-        return $this->redirectToRoute('app_basket_index', [], Response::HTTP_SEE_OTHER);
-    }*/
 }

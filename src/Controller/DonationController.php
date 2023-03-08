@@ -5,16 +5,18 @@ namespace App\Controller;
 use App\Entity\Donation;
 use App\Form\DonationType;
 use App\Repository\DonationRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Repository\EmergencyRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Repository\EmergencyRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/donation')]
 class DonationController extends AbstractController
 {
     #[Route('/admin', name: 'app_donation_indexAdmin', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function indexAdmin(DonationRepository $donationRepository): Response
     {
         return $this->render('BackOffice/donation/index.html.twig', [
@@ -46,6 +48,7 @@ class DonationController extends AbstractController
     }
 
     #[Route('/admin/{id}}', name: 'app_donation_show', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function show(Donation $donation): Response
     {
         return $this->render('BackOffice/donation/show.html.twig', [
@@ -54,6 +57,7 @@ class DonationController extends AbstractController
     }
 
     #[Route('/admin/{id}/edit', name: 'app_donation_edit', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(Request $request, Donation $donation, DonationRepository $donationRepository): Response
     {
         $form = $this->createForm(DonationType::class, $donation);

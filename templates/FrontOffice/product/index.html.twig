@@ -46,41 +46,17 @@
                               <div class="card border-0 shadow-none multi-collapse mt-10 collapse show" id="multiCollapseExample2">
                                  <div class="product-category limit-list-item">
                                     <ul>
+                                   {# {% for product_category in product_categories %}
                                        <li>
                                           <div class="w-100">
-                                             <span class="fs-14 color-gray">Accessories<span class="item-numbers">25</span></span>
+                                             <span class="fs-14 color-gray">{{ product_category.name }}<span class="item-numbers"></span></span>
                                           </div>
                                        </li>
-                                       <li>
-                                          <div class="w-100">
-                                             <span class="fs-14 color-gray">Appliances<span class="item-numbers">54</span></span>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div class="w-100">
-                                             <span class="fs-14 color-gray">Bags<span class="item-numbers">78</span></span>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div class="w-100">
-                                             <span class="fs-14 color-gray">Electronic<span class="item-numbers">42</span></span>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div class="w-100">
-                                             <span class="fs-14 color-gray">Entertainment<span class="item-numbers">35</span></span>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div class="w-100">
-                                             <span class="fs-14 color-gray">Induction<span class="item-numbers">64</span></span>
-                                          </div>
-                                       </li>
-                                       <li>
-                                          <div class="w-100">
-                                             <span class="fs-14 color-gray">Mobile phone<span class="item-numbers">92</span></span>
-                                          </div>
-                                       </li>
+                                           {% else %}
+                                                   <tr>
+                                                      <td colspan="8">no records found</td>
+                                                   </tr>
+                                          {% endfor %}#}
                                     </ul>
                                  </div>
                               </div>
@@ -281,7 +257,7 @@
                                                    <i class="lar la-heart icon"></i>
                                                 </button>
                                              </span>
-                                             <a href="#"><img class="card-img-top img-fluid" src="{{ asset('BackOffice/img/products/Donate Blood Tshirt.jpg') }}" alt="digital-chair"></a>
+                                             <img class="svg w-100"  src="{{ asset('uploads/productsImg/' ~ product.image) }}" alt="Image">
                                           </div>
 
                                           <div class="card-body px-20 pb-25 pt-25">
@@ -307,11 +283,11 @@
                                                 </div>
                                              </div>
                                              <div class="product-item__button d-flex mt-20 flex-wrap">
-                                                <a href="{{ path('app_product_cart', {'id': product.id}) }}">
+
                                                 <button class="btn btn-default btn-squared color-light btn-outline-light px-20 "><i class="fa-solid fa-cart-plus"></i>
                                                    Add To Cart
                                                 </button>
-                                                </a>
+
                                                 <button class="btn btn-primary btn-default btn-squared border-0 px-25" style="background:#A40E1C;">buy now
                                                 </button>
 
@@ -328,7 +304,35 @@
                                                    <tr>
                                                       <td colspan="8">no records found</td>
                                                    </tr>
-                                          {% endfor %}
+    
+    
+    
+
+                                      {% endfor %}
+
+
+   <li class="dm-pagination__item">
+      <div class="paging-option">
+                     {# add pagination links #}
+                     {% if currentPage > 1 %}
+                        <a href="{{ path('app_product_index', {'page': currentPage - 1}) }}"class="dm-pagination__link pagination-control"><span class="la la-angle-left"></span></a>
+                     {% endif %}
+
+                     {% for page in 1..totalPages %}
+                        {% if page == currentPage %}
+                           {{ page }}
+                        {% else %}
+                           <a href="{{ path('app_product_index', {'page': page}) }}">{{ page }}</a>
+                        {% endif %}
+                     {% endfor %}
+
+                     {% if currentPage < totalPages %}
+                        <a href="{{ path('app_product_index', {'page': currentPage + 1}) }}" class="dm-pagination__link pagination-control"><span class="la la-angle-right"></span></a>
+                     {% endif %}
+                              </select>
+      </div>
+   </li>
+
 
                            </div>
 

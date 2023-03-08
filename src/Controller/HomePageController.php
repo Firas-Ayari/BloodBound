@@ -9,8 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class HomePageController extends AbstractController
 {
-    #[Route('/', name: 'app_home_page')]
-    //#[IsGranted('ROLE_ADMIN')]
+    #[Route('/home', name: 'app_home_page')]
     public function index(): Response
     {
         return $this->render('/FrontOffice/homePage.html.twig', [
@@ -18,11 +17,5 @@ class HomePageController extends AbstractController
         ]);
     }
 
-    #[Route('/invoice', name: 'app_invoice')]
-    public function indexinvoice(): Response
-    {
-        return $this->render('invoice.html.twig', [
-            'home_page' => 'HomePageController',
-        ]);
-    }
+    
 }

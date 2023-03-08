@@ -17,6 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
@@ -35,22 +36,70 @@ class ProductController extends AbstractController
         $this->cartService = $cartService;
     }
 
-    #[Route('/admin', name: 'app_product_index_admin', methods: ['GET'])]
-    public function index(ProductRepository $productRepository): Response
+    #[Route('/', name: 'app_product_index', methods: ['GET'])]
+    public function indexFront(Request $request,ProductRepository $productRepository): Response
     {
-        return $this->render('BackOffice/product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+        
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        $numberOfProductsPerPage = 3;
+        $totalProducts = count($products);
+        $totalPages = ceil($totalProducts / $numberOfProductsPerPage);
+        $pageNumber = $request->query->getInt('page', 1);
+        $offset = ($pageNumber - 1) * $numberOfProductsPerPage;
+        $limit = $numberOfProductsPerPage;
+        $productsOnCurrentPage = array_slice($products, $offset, $limit);
+
+        return $this->render('FrontOffice/product/index.html.twig', [
+            'products' => $productsOnCurrentPage,
+            'totalPages' => $totalPages,
+            'currentPage' => $pageNumber,
         ]);
 
         
     }
-
-    #[Route('/', name: 'app_product_index', methods: ['GET'])]
-    public function indexFront(ProductRepository $productRepository): Response
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/admin', name: 'app_product_index_admin', methods: ['GET'])]
+    public function index(Request $request, ProductRepository $productRepository): Response
     {
+    
+        $products = $this->getDoctrine()->getRepository(Product::class)->findAll();
+        $numberOfProductsPerPage = 2;
+        $totalProducts = count($products);
+        $totalPages = ceil($totalProducts / $numberOfProductsPerPage);
+        $pageNumber = $request->query->getInt('page', 1);
+        $offset = ($pageNumber - 1) * $numberOfProductsPerPage;
+        $limit = $numberOfProductsPerPage;
+        $productsOnCurrentPage = array_slice($products, $offset, $limit);
+
+
+        $queryBuilder = $this->em->createQueryBuilder();
+        $queryBuilder->select('c.name AS category', 'COUNT(p.id) AS count')
+             ->from('App\Entity\Product', 'p')
+             ->join('p.productCategory', 'c')
+             ->groupBy('c.name');
+
+        $data = $queryBuilder->getQuery()->getResult();
+
+        // Using array_map to extract category names and counts
+        $labels = array_map(function ($row) {
+    return $row['category'];
+    }, $data);
+
+    $values = array_map(function ($row) {
+    return $row['count'];
+    }, $data);
+
+    $chartData = [
+    'labels' => $labels,
+    'values' => $values,
+    ];
         
-        return $this->render('FrontOffice/product/index.html.twig', [
-            'products' => $productRepository->findAll(),
+
+        return $this->render('BackOffice/product/index.html.twig', [
+            'products' => $productsOnCurrentPage,
+            'totalPages' => $totalPages,
+            'currentPage' => $pageNumber,
+            'chartData' => $chartData,
         ]);
 
         
@@ -109,6 +158,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/admin/{id}', name: 'app_product_show_admin', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function show(Product $product): Response
     {
         return $this->render('BackOffice/product/show.html.twig', [
@@ -170,9 +220,12 @@ class ProductController extends AbstractController
                 $cartProduct->setQuantity(1);
                 $cartProduct->setTotal($product->getPrice());
                 $this->em->persist($cartProduct);
+                $this->em->flush();
             }
         }
-
+        $cart->setTotal($this->cartService->TotalPriceCalcul($cart));
+        $updatedAt = new DateTimeImmutable();
+        $cart->setUpdatedAt($updatedAt);
         $this->em->flush();
 
         return $this->redirectToRoute('app_product_index');
@@ -230,7 +283,9 @@ class ProductController extends AbstractController
                 $this->em->persist($cartProduct);
             }
         }
-
+        $cart->setTotal($this->cartService->TotalPriceCalcul($cart));
+        $updatedAt = new DateTimeImmutable();
+        $cart->setUpdatedAt($updatedAt);
         $this->em->flush();
 
         return $this->redirectToRoute('app_product_index');

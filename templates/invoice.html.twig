@@ -67,7 +67,7 @@
                         <div class="payment-invoice-address d-flex justify-content-sm-between">
                            <div class="payment-invoice-logo">
                               <a href="index.html">
-                                 <img class="dark" src="BackOffice/img/BBLogo.png" alt="logo" style="max-width:800px;">
+                                 <img class="dark" src="{{asset('BackOffice/img/BBLogo.png')}}" alt="logo" style="max-width:800px;">
 
                               </a>
                            </div>
@@ -88,7 +88,7 @@
                               </div>
                            </div><!-- End: .d-flex -->
                            <div class="d-flex justify-content-center mb-lg-0 mb-25">
-                           <img class="dark" src="BackOffice/img/lg.png" alt="logo" style="max-width:120px; margin-left:30px;">
+                           <img class="dark" src="{{asset('BackOffice/img/BBLogo.png')}}" alt="logo" style="max-width:120px; margin-left:30px;">
                               <div class="payment-invoice-qr__code e radius-xl p-20">
                                  
                                  
@@ -116,12 +116,13 @@
                                     </tr>
                                  </thead>
                                  <tbody>
+                                 {% for cartproduct in cartproducts %}
                                     <tr>
                                        <th>1</th>
                                        <td class="Product-cart-title">
                                           <div class="media  align-items-center">
                                              <div class="media-body">
-                                                <h5 class="mt-0">Fiber base chair</h5>
+                                                <h5 class="mt-0">{{ cartproduct.product.name }}</h5>
                                                 <div class="d-flex">
                                                    <p>Size:<span>large</span></p>
                                                    <p>color:<span>brown</span></p>
@@ -130,11 +131,11 @@
                                              </div>
                                           </div>
                                        </td>
-                                       <td class="unit text-end">$248.66</td>
-                                       <td class="invoice-quantity text-end">1</td>
-                                       <td class="text-end order">$5.11</td>
+                                       <td class="unit text-end">{{ cartproduct.product.price }} pts</td>
+                                       <td class="invoice-quantity text-end">{{ cartproduct.quantity }}</td>
+                                       <td class="text-end order">{{ cartproduct.total }} pts</td>
                                     </tr>
-
+                                    {% endfor %}
                                  </tbody>
                                  <tfoot>
                                     <tr>
@@ -155,9 +156,9 @@
 
                                        <td>
                                           <div class="total-order float-right text-end fs-14 fw-500">
-                                             <p>$1,690.26</p>
-                                             <p>$46.30</p>
-                                             <h5 class="" style="color: #DB1628;" >$1736.00</h5>
+                                             <p>{{ basket.total }} pts</p>
+                                             <p>200 pts</p>
+                                             <h5 class="" style="color: #DB1628;" >{{ total }} pts</h5>
                                           </div>
                                        </td>
                                     </tr>

@@ -10,8 +10,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-
+#[IsGranted('ROLE_ADMIN')]
 #[Route('/users')]
 class UserController extends AbstractController
 {
@@ -23,10 +24,21 @@ class UserController extends AbstractController
         $this->userRepository = $userRepository;
     }
     #[Route('/admin', name: 'app_user_list')]
-    public function index(): Response
+    public function index(Request $request): Response
     {
+        $users = $this->getDoctrine()->getRepository(User::class)->findAll();
+        $numberOfUsersPerPage = 5;
+        $totalUsers = count($users);
+        $totalPages = ceil($totalUsers / $numberOfUsersPerPage);
+        $pageNumber = $request->query->getInt('page', 1);
+        $offset = ($pageNumber - 1) * $numberOfUsersPerPage;
+        $limit = $numberOfUsersPerPage;
+        $usersOnCurrentPage = array_slice($users, $offset, $limit);
+    
         return $this->render('BackOffice/user/index.html.twig', [
-            'users' => $this->userRepository->findAll(),
+            'users' => $usersOnCurrentPage,
+            'totalPages' => $totalPages,
+            'currentPage' => $pageNumber,
         ]);
     }
 
@@ -103,11 +115,31 @@ class UserController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/delete', name:'app_user_delete')]
-    public function delete($id): Response
+    #[Route('/{id}/archive', name:'app_user_archive')]
+    public function archive($id): Response
     {
         $user = $this->userRepository->find($id);
-        $this->em->remove($user);
+        $user->setIsArchived(true);
+        $this->em->flush();
+
+        return $this->redirectToRoute('app_user_list');
+    }
+
+    #[Route('/{id}/ban', name:'app_user_ban')]
+    public function ban($id): Response
+    {
+        $user = $this->userRepository->find($id);
+        $user->setIsBanned(true);
+        $this->em->flush();
+
+        return $this->redirectToRoute('app_user_list');
+    }
+
+    #[Route('/{id}/unban', name:'app_user_unban')]
+    public function unban($id): Response
+    {
+        $user = $this->userRepository->find($id);
+        $user->setIsBanned(false);
         $this->em->flush();
 
         return $this->redirectToRoute('app_user_list');

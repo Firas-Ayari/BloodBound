@@ -93,7 +93,64 @@
                                     <td colspan="8">no records found</td>
                                 </tr>
                             {% endfor %}
+                             <li class="dm-pagination__item">
+      <div class="paging-option">
+                     {# add pagination links #}
+                     {% if currentPage > 1 %}
+                        <a href="{{ path('app_product_index_admin', {'page': currentPage - 1}) }}"class="dm-pagination__link pagination-control"><span class="la la-angle-left"></span></a>
+                     {% endif %}
+
+                     {% for page in 1..totalPages %}
+                        {% if page == currentPage %}
+                           {{ page }}
+                        {% else %}
+                           <a href="{{ path('app_product_index_admin', {'page': page}) }}">{{ page }}</a>
+                        {% endif %}
+                     {% endfor %}
+
+                     {% if currentPage < totalPages %}
+                        <a href="{{ path('app_product_index_admin', {'page': currentPage + 1}) }}" class="dm-pagination__link pagination-control"><span class="la la-angle-right"></span></a>
+                     {% endif %}
+                              </select>
+      </div>
+   </li>
+
          </div>
 <br>
+
+
+<h1>Product Stats by Category</h1>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="col-4">
+    <canvas  id="myChart" style="background-color:white;"></canvas>
+
+    <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ chartData.labels|json_encode()|raw }},
+            datasets: [{
+                label: 'Products by Category',
+                data: {{ chartData.values|json_encode()|raw }},
+                backgroundColor: 'rgba(164, 14, 28, 0.5)',
+                borderColor: 'rgba(164, 14, 28, 0.5)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+    </script>
+
+
+
 
 {% endblock %}

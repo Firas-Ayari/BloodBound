@@ -57,13 +57,19 @@
                                     <span class="userDatatable-title float-end">DonationStatus</span>
                                  </th>
                                  <th>
-                                    <span class="userDatatable-title">BloodType</span>
+                                    <span class="userDatatable-title">Blood Type</span>
                                  </th>
                                  <th>
-                                    <span class="userDatatable-title">CreatedAt</span>
+                                    <span class="userDatatable-title">Created At</span>
                                  </th>
                                  <th>
-                                    <span class="userDatatable-title">IsVerified</span>
+                                    <span class="userDatatable-title">Is Verified</span>
+                                 </th>
+                                 <th>
+                                    <span class="userDatatable-title">Is Banned</span>
+                                 </th>
+                                 <th>
+                                    <span class="userDatatable-title">Is Archived</span>
                                  </th>
                                  <th>
                                     <span class="userDatatable-title">UserRole</span>
@@ -140,12 +146,21 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a href="{{ path('app_user_delete', {'id': user.id}) }}" 
+                                                <a href="{{ path('app_user_archive', {'id': user.id}) }}" 
                                                     value="{{ csrf_token('delete' ~ user.id) }}" class="remove">
-                                                    <i class="uil uil-trash-alt"></i>
+                                                    <i class="fa-solid fa-box-archive"></i>
                                                 </a>
-            
-                                            </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('app_user_ban', {'id': user.id}) }}" 
+                                                    value="{{ csrf_token('delete' ~ user.id) }}" class="remove">
+                                                    <i class="fa-solid fa-user-slash"></i>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ path('app_user_unban', {'id': user.id}) }}" class="edit">
+                                                    <i class="fa-brands fa-creative-commons-by"></i>
+                                                </a>
                                             </li>
                                             </ul>
                                         </td>
@@ -156,9 +171,30 @@
                                     </tr>
                                 {% endfor %}
                            </tbody>
+
                         </table>
                      </div>
-                     
+                                                 <li class="dm-pagination__item">
+      <div class="paging-option">
+                     {# add pagination links #}
+                     {% if currentPage > 1 %}
+                        <a href="{{ path('app_user_list', {'page': currentPage - 1}) }}"class="dm-pagination__link pagination-control"><span class="la la-angle-left"></span></a>
+                     {% endif %}
+
+                     {% for page in 1..totalPages %}
+                        {% if page == currentPage %}
+                           {{ page }}
+                        {% else %}
+                           <a href="{{ path('app_user_list', {'page': page}) }}">{{ page }}</a>
+                        {% endif %}
+                     {% endfor %}
+
+                     {% if currentPage < totalPages %}
+                        <a href="{{ path('app_user_list', {'page': currentPage + 1}) }}" class="dm-pagination__link pagination-control"><span class="la la-angle-right"></span></a>
+                     {% endif %}
+                              </select>
+      </div>
+   </li>
 
                   </div>
                </div>

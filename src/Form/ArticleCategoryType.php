@@ -14,7 +14,6 @@ class ArticleCategoryType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('user')
             ;
     }
 

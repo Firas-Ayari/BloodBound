@@ -74,17 +74,6 @@
   <!-- Template Main CSS File -->
   <link href="{{ asset('FrontOffice/css/style.css') }}" rel="stylesheet">
 </head>
-<style>
-    .A {
-        display: none;
-    }
-    .gradient-text {
-        background: linear-gradient(to right, #660000, #330000);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-align: center;
-    }
-</style>
 
 <body>
 
@@ -93,17 +82,19 @@
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
       <a href="index.html" class="logo d-flex align-items-center">
-        <img src="{{ asset('/img/BBlogo.png') }}" alt="">
+         <img class="dark" src="{{ asset('BackOffice/img/BBlogo.png') }}" alt="logo">
         <span></span>
       </a>
 
       <nav id="navbar" class="navbar">
         <ul>
           <li><a class="nav-link scrollto" href="{{ path('app_home_page') }}">Home</a></li>
-          <li><a class="nav-link scrollto" href="">Emergency</a></li>
+          <li><a class="nav-link scrollto" href="{{ path('app_emergency_index') }}">Emergency</a></li>
           <li><a class="nav-link scrollto" href="">RDV</a></li>
           <li><a class="nav-link scrollto" href="{{ path('app_product_index') }}">Marketplace</a></li>
-          <li class="dropdown"><a href=""><span>Blog</span> <i class="bi bi-chevron-down"></i></a>
+          <li><a href="{{ path('app_event_index') }}">Event</a>
+          </li>
+<li class="dropdown"><a href=""><span>Blog</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a class="nav-link scrollto" href="{{path('app_article_index_Front')}}">Article</a></li>
           <li><a class="nav-link" href="{{path('app_article_new')}}">Add an article</a></li>
@@ -111,7 +102,12 @@
               </li>
             </ul>
           </li>
-          <li><a class="getstarted scrollto" href="#about">Log in</a></li>
+          <li><a href="{{path('app_basket_show')}}" ><i style="background:#A40E1C;" class="fas fa-shopping-cart"></i></a></li>
+           {% if app.session.get('user') is not null %}
+           <li><a class="getstarted scrollto" href="{{ path('app_register') }}">Sign out</a></li>
+           {% else %}
+          <li><a class="getstarted scrollto" href="{{ path('app_login') }}">Log in</a></li>
+           {% endif %}
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -249,8 +245,6 @@
                                     <script src="{{ asset('BackOffice/assets/theme_assets/js/jvectormap-init.js') }}"></script>
                                     <script src="{{ asset('BackOffice/assets/theme_assets/js/leaflet-init.js') }}"></script>
                                     <script src="{{ asset('BackOffice/assets/theme_assets/js/main.js') }}"></script>
-                                    <script src="{{ asset('FrontOffice/js/script.js') }}"></script>
-                                    <script src="{{ asset('FrontOffice/js/main.js') }}"></script>
                                                     <!-- endinject-->
                     {% endblock %}
 

@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Doctrine\ORM\EntityManagerInterface;
 //use App\Service\TwilioService;
 use Twilio\Rest\Client;
 use libphonenumber\PhoneNumberUtil;
@@ -24,7 +25,7 @@ use Dompdf\Options;
 class TicketController extends AbstractController
 {
     #[Route('/admin', name: 'app_ticket_indexAdmin', methods: ['GET'])]
-    public function indexAdmin(TicketRepository $ticketRepository): Response
+    public function indexAdmin(TicketRepository $ticketRepository, EntityManagerInterface $entityManager): Response
     {   
         // Ticket Status Staistics
         $availableTickets = $this->getDoctrine()
@@ -34,7 +35,28 @@ class TicketController extends AbstractController
         ->getRepository(Ticket::class)
         ->count(['status' => 'sold out']);
 
- 
+        //Ticket Status 2
+        $query = $entityManager->createQuery(
+            'SELECT t.id, t.stock, COUNT(p.id) as achats
+            FROM App\Entity\Ticket t
+            JOIN App\Entity\Achat p WITH p.ticket = t.id
+            GROUP BY t.id'
+        );
+
+        $ticketsData = $query->getResult();
+
+        $data = [
+            'labels' => array_map(function($ticketData) { return $ticketData['id']; }, $ticketsData),
+            'datasets' => [
+                [
+                    'label' => 'Number of Purchases',
+                    'data' => array_map(function($ticketData) { return $ticketData['achats']; }, $ticketsData),
+                    'backgroundColor' => 'rgba(255, 99, 132, 0.2)',
+                    'borderColor' => 'rgba(255, 99, 132, 1)',
+                    'borderWidth' => 1,
+                ]
+            ]
+        ];
 
 
 
@@ -42,6 +64,7 @@ class TicketController extends AbstractController
             'tickets' => $ticketRepository->findAll(),
             'availableTickets' => $availableTickets,
             'soldOutTickets' => $soldOutTickets,
+            'data' => json_encode($data),
             
         ]);
     }
@@ -125,7 +148,9 @@ class TicketController extends AbstractController
  * @Route("/buyticket/{id}", name="app_buyticket", methods={"GET", "POST"})
  */
 public function buyticket(Request $request, Ticket $ticket): Response
-{
+{   
+
+
     $stock = $ticket->getStock();
     
     if ($stock > 0) {
@@ -195,8 +220,10 @@ public function buyticket(Request $request, Ticket $ticket): Response
         return $response; 
 
         $this->addFlash('success', 'You have successfully purchased a ticket.');
-    } else {
-        $this->addFlash('error', 'The tickets are sold out.');
+    }
+    else 
+    {
+    $this->addFlash('error', 'The tickets are sold out.');
     }
     
     return $this->redirectToRoute('app_ticket_show', ['id' => $ticket->getId()], Response::HTTP_SEE_OTHER);
