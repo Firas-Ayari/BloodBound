@@ -3,35 +3,59 @@
 {% block title %}Planning index{% endblock %}
 
 {% block body %}
-    <h1>Planning index</h1>
+
+<div class="container" style="background-color:white;padding:8%;border-radius:10px;box-shadow: 0 3px 6px -4px rgba(var(--color-light-rgba), 0.12), 0 6px 16px 0 rgba(var(--color-light-rgba), 0.08), 0 9px 28px 8px rgba(var(--color-light-rgba), 0.05);">
+
+    <h1 style="padding-bottom:5%;">Get your appointment</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Weekday</th>
                 <th>Hourtime</th>
-                <th>actions</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
-        {% for planning in plannings %}
+            {% for planning in plannings %}
             <tr>
                 <td>{{ planning.id }}</td>
                 <td>{{ planning.weekday ? planning.weekday|date('Y-m-d') : '' }}</td>
                 <td>{{ planning.hourtime ? planning.hourtime|date('H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_planning_show', {'id': planning.id}) }}">show</a>
+                    <a href="{{ path('app_appointment_new') }}">book it</a>
                     {#<a href="{{ path('app_planning_edit', {'id': planning.id}) }}">edit</a>#}
                 </td>
             </tr>
-        {% else %}
+            {% else %}
             <tr>
                 <td colspan="4">no records found</td>
             </tr>
-        {% endfor %}
+            {% endfor %}
         </tbody>
     </table>
+</div>
+{#<a href="{{ path('app_planning_new') }}">Create new</a>#}
 
-    {#<a href="{{ path('app_planning_new') }}">Create new</a>#}
+
+
+
+{#
+
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+<h2>Google Calendar Events</h2>
+<ul>
+    {% for event in eventList %}
+    <li>{{ event.summary }} - {{ event.start }}</li>
+    {% endfor %}
+</ul>
+{% else %}
+<a href="{{ google_auth_url }}">Authenticate with Google</a>
+{% endif %}
+
+#}
+
+
+
+
 {% endblock %}

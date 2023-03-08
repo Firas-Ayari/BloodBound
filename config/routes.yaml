@@ -16,3 +16,4 @@ google_authenticate:
 google_calendar:
     path: /calendar
     controller: App\Controller\GoogleApiController::calendar
+    methods: [GET, POST]

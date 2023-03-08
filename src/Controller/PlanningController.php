@@ -94,4 +94,39 @@ class PlanningController extends AbstractController
 
         return $this->redirectToRoute('app_planning_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    #[Route("/calendar", name:"calendar")]
+    public function cal(): Response
+    {
+        $today = new \DateTime();
+        $year = $today->format('Y');
+        $month = $today->format('m');
+        $daysInMonth = cal_days_in_month(CAL_GREGORIAN, $month, $year);
+        $firstDay = new \DateTime("$year-$month-01");
+        $lastDay = new \DateTime("$year-$month-$daysInMonth");
+
+        $events = [
+            '2023-03-05' => [
+                'title' => 'Event 1',
+                'description' => 'This is the first event',
+            ],
+            '2023-03-10' => [
+                'title' => 'Event 2',
+                'description' => 'This is the second event',
+            ],
+            '2023-03-15' => [
+                'title' => 'Event 3',
+                'description' => 'This is the third event',
+            ],
+        ];
+
+        return $this->render('FrontOffice/planning/index.html.twig', [
+            'year' => $year,
+            'month' => $month,
+            'daysInMonth' => $daysInMonth,
+            'firstDay' => $firstDay,
+            'lastDay' => $lastDay,
+            'events' => $events,
+        ]);
+    }
 }

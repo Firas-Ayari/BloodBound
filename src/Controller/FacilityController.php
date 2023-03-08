@@ -110,4 +110,21 @@ class FacilityController extends AbstractController
         ]);
     }
 
+    
+
+    #[Route("/admin/facility/{id}", name:"facility_showP_admin", methods: ['GET'])]
+    public function planningA(Facility $facility): Response
+    {
+        // Load the associated plannings
+        $plannings = $facility->getPlannings();
+
+        // Render the template with the list of plannings
+        return $this->render('BackOffice/planning/index.html.twig', [
+            'facility' => $facility,
+            'plannings' => $plannings,
+        ]);
+    }
+
+    
+
 }

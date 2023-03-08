@@ -34,7 +34,7 @@ class AppointmentController extends AbstractController
             return $this->redirectToRoute('app_appointment_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('BackOffice/appointment/new.html.twig', [
+        return $this->renderForm('FrontOffice/appointment/new.html.twig', [
             'appointment' => $appointment,
             'form' => $form,
         ]);
