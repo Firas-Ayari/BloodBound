@@ -64,10 +64,22 @@ class ArticleController extends AbstractController
         ]);
     }
     #[Route('/front', name: 'app_article_index_Front', methods: ['GET'])]
-    public function indexFront(ArticleRepository $articleRepository): Response
+    public function indexFront(ArticleRepository $articleRepository,Request $request): Response
     {
-        return $this->render('frontoffice/article/indexFront.html.twig', [
-            'articles' => $articleRepository->findAll(),
+
+        $articles = $this->getDoctrine()->getRepository(Article::class)->findAll();
+        $numberOfArticlesPerPage = 3;
+        $totalArticles = count($articles);
+        $totalPages = ceil($totalArticles / $numberOfArticlesPerPage);
+        $pageNumber = $request->query->getInt('page', 1);
+        $offset = ($pageNumber - 1) * $numberOfArticlesPerPage;
+        $limit = $numberOfArticlesPerPage;
+        $articlesOnCurrentPage = array_slice($articles, $offset, $limit);
+
+        return $this->render('FrontOffice/article/indexFront.html.twig', [
+            'articles' => $articlesOnCurrentPage,
+            'totalPages' => $totalPages,
+            'currentPage' => $pageNumber,
         ]);
     }
 

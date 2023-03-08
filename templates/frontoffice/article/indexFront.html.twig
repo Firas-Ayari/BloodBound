@@ -59,6 +59,27 @@
                </article><!-- End blog entry -->
 
          {% endfor %}
+         <li class="dm-pagination__item">
+      <div class="paging-option">
+               {# add pagination links #}
+               {% if currentPage > 1 %}
+                  <a href="{{ path('app_article_index_Front', {'page': currentPage - 1}) }}">Previous</a>
+               {% endif %}
+
+               {% for page in 1..totalPages %}
+                  {% if page == currentPage %}
+                     {{ page }}
+                  {% else %}
+                     <a href="{{ path('app_article_index_Front', {'page': page}) }}">{{ page }}</a>
+                  {% endif %}
+               {% endfor %}
+
+               {% if currentPage < totalPages %}
+                  <a href="{{ path('app_article_index_Front', {'page': currentPage + 1}) }}">Next</a>
+               {% endif %}
+         
+      </div>
+   </li>
           </div><!-- End blog entries list -->
 
 
