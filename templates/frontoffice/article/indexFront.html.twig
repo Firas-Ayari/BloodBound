@@ -4,7 +4,7 @@
 
 {% block body %}
     
-    <h1>Articles</h1>
+    
     {#{{ form_start(formSearch) }}
     {{ form_row(formSearch.title) }}
     {{ form_row(formSearch.category) }}
@@ -20,73 +20,52 @@
         <p>Aucun résultat trouvé</p>
     {% endif %}#}
 
-    <h3 class="sidebar-title">Search</h3>
-              <div class="sidebar-item search-form">
-                <form action="" method="POST">
-                  <input type="text">
-                  <button type="submit"><i class="bi bi-search"></i></button>
-                </form>
-              </div>
-   <div class="blog-page">
-            <div class="container-fluid">
-               <div class="row">
-                  
-                   {% for article in articles %}
-                  <div class="col-xl-4 col-md-6 mb-25">
+   
+<!-- ======= Blog Section ======= -->
+    <section id="blog" class="blog">
+      <div class="container" data-aos="fade-up">
 
-                     <div class="blog-card">
-                        <div class="blog-card__thumbnail">
-                           <a href="#">
-                              <img src="/FrontOffice/img/1.png" alt="">
-                           </a>
-                        </div>
-                        <div class="blog-card__details">
-                           <div class="blog-card__content">
-                              <div class="blog-card__title--top">                                            {{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}
-                            </div>
-                              <h4 class="blog-card__title">
-                                 <a href="#" class="entry-title" rel="bookmark">   {{ article.title }}</a>
-                              </h4>
-                              <p>{{ article.content |slice(0, 50)}}</p>
-                           </div>
-                           <div class="blog-card__meta">
-                              <div class="blog-card__meta-profile">
-                                 <img src="/FrontOffice/img/6.png" alt="">
-                              </div>
-                              <div class="blog-card__meta-profile">
-                                 <img src="/FrontOffice/img/7.png" alt="">
-                                 <span> {{ article.articleCategory.name }}</span>
-                              </div>
-                              <div class="blog-card__meta-count">
-                                 <ul>
-                                    <li>
-                                       <div class="blog-card__meta-reaction">
-                                          <img src="/FrontOffice/img/3.png" alt="heart" class="svg">
-                                          <span class="blog-card__meta-reaction-like">15 K</span>
-                                       </div>
-                                    </li>
-                                    <li>
-                                       <div class="blog-card__meta-doc-wrapper">
-                                          <img src="/FrontOffice/img/5.png" alt="file-text" class="svg">
-                                          <span class="blog-card__meta-doc">75</span>
-                                       </div>
-                                    </li>
-                                 </ul>
-                              </div>
-                           </div>
-                           <a href="{{ path('app_article_showfront', {'id': article.id}) }}"><button class="btn btn-warning" style="background-color:darkred">read more</button> </a>
-                        </div>
-                     </div>
+        <div class="row">
 
-                  </div>
-               {% endfor %}
-                  
+          <div class="col-lg-8 entries">
+            {% for article in articles %}
+               <article class="entry">
+
+               <div class="entry-img">
+                  <img src="{{ asset('/FrontOffice/img/dnt.png') }}" alt="" class="img-fluid">
+               </div>
+
+               <h2 class="entry-title">
+                  <a href="blog-single.html">{{ article.title }}</a>
+               </h2>
+
+               <div class="entry-meta">
+                  <ul>
+                     <li class="d-flex align-items-center"><i class="bi bi-person"></i> <a href="blog-single.html">{{ article.articleCategory.name }}</a></li>
+                     <li class="d-flex align-items-center"><i class="bi bi-clock"></i> <a href="blog-single.html"><time datetime="2020-01-01">{{ article.createdAt ? article.createdAt|date('Y-m-d H:i:s') : '' }}</time></a></li>
+                     <li class="d-flex align-items-center"><i class="bi bi-chat-dots"></i> <a href="blog-single.html">12 Comments</a></li>
+                  </ul>
+               </div>
+
+               <div class="entry-content">
+                  <p>
+                    {{ article.content |slice(0, 50)}}
+                  </p>
+                  <div class="read-more">
+                     <a href="{{ path('app_article_showfront', {'id': article.id}) }}" style="background:#A40E1C;">Read More</a>
                   </div>
                </div>
-               <!-- ends: .row -->
-            </div>
-         </div>
-    
+
+               </article><!-- End blog entry -->
+
+         {% endfor %}
+          </div><!-- End blog entries list -->
+
+
+        </div>
+
+      </div>
+    </section><!-- End Blog Section -->
 
     
 {% endblock %}

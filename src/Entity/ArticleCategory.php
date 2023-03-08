@@ -30,7 +30,7 @@ class ArticleCategory
     #[Assert\NotBlank(message: "")]
     private User|null $user = null;
 
-    #[ORM\OneToMany(mappedBy: 'articleCategory', targetEntity: Article::class)]
+    #[ORM\OneToMany(mappedBy: 'articleCategory', targetEntity: Article::class, cascade:["persist","remove"])]
     private Collection $articles;
 
     public function __construct()

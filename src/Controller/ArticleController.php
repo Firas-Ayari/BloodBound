@@ -236,58 +236,50 @@ class ArticleController extends AbstractController
 
         return $this->redirectToRoute('app_article_index_Front', [], Response::HTTP_SEE_OTHER);
     }
-    /*#[Route('/{id}/vote/{value}', name:"vote")]
-    public function vote(Article $article, int $value): Response
+    /*#[Route('/search', name: 'search', methods:['POST','GET' ])]
+    public function searchAction(Request $request, EntityManagerInterface $em): Response
     {
-        // Check if the user has already voted on this article
-        $vote = $this->getDoctrine()
-            ->getRepository(Vote::class)
-            ->findOneBy([
-                'article' => $article,
-                'user' => $this->getUser(),
-            ]);
+        $query = $em->createQueryBuilder()
+        ->select('a')
+        ->from('App\Entity\Article', 'a');
 
-        if ($vote) {
-            // User has already voted, update the value of their vote
-            $vote->setValue($value);
-        } else {
-            // User hasn't voted yet, create a new vote
-            $vote = new Vote();
-            $vote->setArticle($article)
-                ->setUser($this->getUser())
-                ->setValue($value);
+    // Get the search terms from the form
+    $searchTerms = $request->query->get('search');
+
+    // Get the filters from the form
+    $filters = $request->query->get('filters');
+
+    // Add search conditions to the query
+    if (!empty($searchTerms)) {
+        $conditions = array();
+        foreach (explode(' ', $searchTerms) as $key => $term) {
+            $conditions[] = $query->expr()->orX(
+                $query->expr()->like('a.title', ':term_' . $key),
+                $query->expr()->like('a.content', ':term_' . $key)
+            );
+            $query->setParameter('term_' . $key, '%' . $term . '%');
         }
+        $query->andWhere(call_user_func_array(array($query->expr(), 'andX'), $conditions));
+    }
 
-        // Save the vote to the database
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($vote);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_article_showfront', ['id' => $article->getId()]);
-    }*/
-    /*#[Route('/search', name: 'app_article_search', methods:['POST','GET' ])]
-    public function search(Request $request, ArticleRepository $articleRepository): Response
-    {
-
-        $form = $this->createForm(ArticleSearchType::class);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $data = $form->getData();
-
-            $title = $data['title'] ?? null;
-            $category = $data['category'] ?? null;
-
-            $results = $articleRepository->advancedSearch($title, $category);
-
-            return $this->redirectToRoute('app_article_index_Front', [], Response::HTTP_SEE_OTHER);
+    // Add filter conditions to the query
+    if (!empty($filters)) {
+        foreach ($filters as $filterName => $filterValue) {
+            if ($filterName == 'category') {
+                $query->andWhere('a.category = :category');
+                $query->setParameter('category', $filterValue);
+            }
+           
         }
+    }
 
-        return $this->render('FrontOffice/article/indexFront.html.twig', [
-            'formSearch'=> $formSearch->createView(),
-            'results' => $results,
-        ]);
+    $articles = $query->getQuery()->getResult();
+
+    return $this->render('FrontOffice/article/indexFront.html.twig', [
+        'articles' => $articles,
+    ]);
     }*/
+    
     #[Route('/{id}/rate', name:'Rate')]
     public function addRating(Request $request)
 {

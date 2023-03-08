@@ -102,7 +102,7 @@ class CommentController extends AbstractController
         }
 
         // Save the vote to the database
-        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager = $this->getDoctrine()->getManager();//instance doctrine orm
         $entityManager->persist($vote);
         $entityManager->flush();
 
