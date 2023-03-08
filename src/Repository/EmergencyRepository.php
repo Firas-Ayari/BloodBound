@@ -39,6 +39,14 @@ class EmergencyRepository extends ServiceEntityRepository
         }
     }
 
+    public function getEmergencyCountByBloodType()
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e.bloodType, COUNT(e) as count')
+            ->groupBy('e.bloodType')
+            ->getQuery()
+            ->getResult();
+    }
 //    /**
 //     * @return Emergency[] Returns an array of Emergency objects
 //     */
