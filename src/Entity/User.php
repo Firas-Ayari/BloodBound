@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: '`user`')]
@@ -23,9 +24,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    //#[Groups("users")]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Groups("users")]
     private ?string $email = null;
 
     #[ORM\Column]
@@ -35,6 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    //#[Groups("users")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
@@ -45,6 +49,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: 'The name must be at least {{ limit }} characters',
         maxMessage: 'The name cannot exceed {{ limit }} characters'
     )]
+    #[Groups("users")]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -55,10 +60,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: 'The phone number must be at least {{ limit }} digits',
         maxMessage: 'The phone number cannot exceed {{ limit }} digits'
     )]
+    #[Groups("users")]
     private ?string $number = null;
 
     #[ORM\Column]
     #[Assert\GreaterThan(20)]
+    //#[Groups("users")]
     private ?int $age = null;
 
     #[ORM\Column(length: 255)]
@@ -68,14 +75,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         minMessage: 'The location address be at least {{ limit }} characters',
         maxMessage: 'The location address cannot exceed {{ limit }} characters'
     )]
+    // #[Groups("users")]
     private ?string $location = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     #[Assert\Choice(choices: ['Ready', 'Waiting'], message: 'Invalid Status')]
+    // #[Groups("users")]
     private ?string $donationStatus = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\Choice(choices: ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'], message: 'Invalid type of blood ')]
+    // #[Groups("users")]
     private ?string $bloodType = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Event::class)]
@@ -91,9 +101,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $articleCategories;
 
     #[ORM\Column]
+    //#[Groups("users")]
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\Column(nullable: true)]
+    //#[Groups("users")]
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Appointment::class)]
@@ -103,18 +115,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Basket|null $basket = null;
 
     #[ORM\Column(type: 'boolean')]
+    //#[Groups("users")]
     private $isVerified = false;
 
     #[ORM\Column(length: 255)]
+    // #[Groups("users")]
     private ?string $userRole = null;
 
     #[ORM\Column(nullable: true)]
+    //#[Groups("users")]
     private ?bool $isArchived = null;
 
     #[ORM\Column]
+    //#[Groups("users")]
     private ?bool $isBanned = null;
 
     #[ORM\Column]
+    //#[Groups("users")]
     private ?int $points = null;
 
     public function __construct()

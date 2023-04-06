@@ -100,7 +100,7 @@ class EmergencyController extends AbstractController
             'form' => $form,
         ]);
     }
-    #[Route('/admin/{id}/edit', name: 'app_emergency_editAdmin', methods: ['GET', 'POST'])]
+    #[Route('/admin/{id}/edit', name: 'app_emergency_editAdmin')]
     public function editAdmin(Request $request, Emergency $emergency, EmergencyRepository $emergencyRepository): Response
     {
         $form = $this->createForm(EmergencyType::class, $emergency);
