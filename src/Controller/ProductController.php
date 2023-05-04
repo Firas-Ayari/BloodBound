@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use COM;
+use App\Entity\User;
 use App\Entity\Basket;
 use DateTimeImmutable;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Entity\CartProduct;
+use App\Entity\ScratchCode;
 use App\Services\CartService;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -345,7 +347,20 @@ class ProductController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
             $productRepository->remove($product, true);
         }
-
+        return $this->redirectToRoute('app_product_index_admin', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/redeem', name: 'app_points_redeem')]
+    public function redeem(Request $request): Response
+    {
+        $user = new User($this->getUser());
+        $code = $request->query->get('scratch_code');
+        $scratchCode = $this->em->getRepository(ScratchCode::class)->findByCode($code);
+        if($scratchCode!=null)
+            {
+                $user->setPoints($user->getPoints()+$scratchCode->getPoints());
+                $this->em->getRepository(ScratchCode::class)->remove($scratchCode, true);
+                $this->em->flush();
+            }
         return $this->redirectToRoute('app_product_index_admin', [], Response::HTTP_SEE_OTHER);
     }
 }
