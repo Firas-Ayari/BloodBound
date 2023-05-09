@@ -82,11 +82,11 @@
                               <div class="product-item__body">
                                  <!-- Start: Product Title -->
                                  <div class="product-item__title">
-                                    <a href="#">
+                                    {# <a href="#"> #}
                                        <h1 class="card-title" style="color:#A40E1C;">  
                                             {{ product.name }}
                                        </h1>
-                                    </a>
+                                    {# </a> #}
                                  </div>
                                  <!-- End: Product Title -->
                                  <div class="product-item__content text-capitalize">
@@ -132,7 +132,7 @@
                                        <div class="me-15 d-flex align-items-center flex-wrap">
                                           <p class="fs-14 fw-500 color-dark">Quantity:</p>
                                          <form method="post" action="{{ path('app_product_cart_quantity', {'id': product.id}) }}">
-                                          <input type="number" id="quantity" name="quantity"  step="1" required>
+                                          <input type="number" id="quantity" name="quantity" required>
                                        </div>
                                        <span class="fs-13 fw-400 color-light my-sm-0 my-10">{{ product.stock }} pieces available</span>
                                     </div>
@@ -195,7 +195,7 @@
                            <div class="product-details__availability">
                               <div class="title">
                                  <p>Category:</p>
-                                 <span class="free"> {{ product.productCategory.name }}</span>
+                                 <span class="free"> product.productCategory.name </span>
                               </div>
                            </div>
                            <!-- End: Product Availability -->

@@ -5,7 +5,6 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\BasketRepository;
 use Doctrine\ORM\Mapping\JoinColumn;
-use Doctrine\ORM\Mapping\ManyToMany;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 
@@ -29,7 +28,7 @@ class Basket
     #[ORM\OneToMany(mappedBy: 'basket', targetEntity: CartProduct::class)]
     private Collection $cartProducts;
 
-    #[ORM\OneToOne(targetEntity: User::class,inversedBy: 'basket')]
+    #[ORM\OneToOne(targetEntity: User::class,inversedBy: 'basket', cascade: ['persist'])]
     #[JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete:"CASCADE")]
     private ?User $user = null;
 

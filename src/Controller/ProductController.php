@@ -168,9 +168,10 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
-    public function showFront(Product $product): Response
+    #[Route('/{id}', name: 'app_product_show')]
+    public function showFront($id): Response
     {
+        $product = $this->productRepository->find($id);
         return $this->render('FrontOffice/product/show.html.twig', [
             'product' => $product,
         ]);
@@ -182,15 +183,6 @@ class ProductController extends AbstractController
         $user = $this->getUser();
         $cart = $user->getCart();
 
-        if($cart == null)
-        {
-            $cart = new Basket();
-            $cart->setUser($user);
-            $cart->setCreatedAt(new DateTimeImmutable());
-            $cart->setCheckout("onHold");
-            $cart->setTotal(0);
-            $this->em->persist($cart);
-        }
 
         $product = $this->productRepository->find($id);
         $cartProducts = $cart->getCartProducts();
@@ -239,15 +231,6 @@ class ProductController extends AbstractController
         $user = $this->getUser();
         $cart = $user->getCart();
 
-        if($cart == null)
-        {
-            $cart = new Basket();
-            $cart->setUser($user);
-            $cart->setCreatedAt(new DateTimeImmutable());
-            $cart->setCheckout("onHold");
-            $this->em->persist($cart);
-        }
-
         if ($request->isMethod("post")) {
             $quantity=$request->get('quantity');
         }
@@ -266,6 +249,7 @@ class ProductController extends AbstractController
                     {
                         $cartProduct->setQuantity($cartProduct->getQuantity()+$quantity);
                         $cartProduct->setTotal($cartProduct->getTotal()+($product->getPrice()*$quantity));
+                        $found = true;
                     }
                     break;
                 }
@@ -291,6 +275,54 @@ class ProductController extends AbstractController
         $this->em->flush();
 
         return $this->redirectToRoute('app_product_index');
+    }
+
+    #[Route('/{id}/buynow', name: 'app_product_buy')]
+    public function buyNow($id): Response
+    {
+        $user = $this->getUser();
+        $cart = $user->getCart();
+
+
+        $product = $this->productRepository->find($id);
+        $cartProducts = $cart->getCartProducts();
+        $found = false;
+
+        if(!empty($cartProducts))
+        {
+            foreach($cartProducts as $cartProduct)
+            {
+                if($product->getId() == $cartProduct->getProduct()->getId())
+                {
+                    if($product->getStock() > 0)
+                    {
+                        $cartProduct->setQuantity($cartProduct->getQuantity()+1);
+                        $cartProduct->setTotal($cartProduct->getTotal()+$product->getPrice());
+                        $found = true;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if($found == false){
+            if($product->getStock() > 0)
+            {
+                $cartProduct = new CartProduct();
+                $cartProduct->setProduct($product);
+                $cartProduct->setCart($cart);
+                $cartProduct->setQuantity(1);
+                $cartProduct->setTotal($product->getPrice());
+                $this->em->persist($cartProduct);
+                $this->em->flush();
+            }
+        }
+        $cart->setTotal($this->cartService->TotalPriceCalcul($cart));
+        $updatedAt = new DateTimeImmutable();
+        $cart->setUpdatedAt($updatedAt);
+        $this->em->flush();
+
+        return $this->redirectToRoute('app_basket_show');
     }
 
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['GET', 'POST'])]

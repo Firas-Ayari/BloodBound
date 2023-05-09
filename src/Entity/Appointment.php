@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use FFI;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToOne;
 use Doctrine\ORM\Mapping\ManyToOne;
 use Doctrine\ORM\Mapping\JoinColumn;
 use App\Repository\AppointmentRepository;
@@ -15,60 +18,60 @@ class Appointment
     #[ORM\Column]
     private ?int $id = null;
 
+    #[ORM\Column(type: Types::DATE_IMMUTABLE)]
+    private ?\DateTimeImmutable $rdv = null;
+
     #[ORM\Column(length: 255)]
-    private ?string $description = null;
+    private ?string $status = null;
 
-    #[ORM\Column]
-    private ?\DateTimeImmutable $date = null;
-
-    #[ORM\Column]
-    private ?bool $status = null;
+    #[ManyToOne(targetEntity: User::class, inversedBy: 'appointments')]
+    #[JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete:"CASCADE")]
+    private ?User $user = null;
 
     #[ManyToOne(targetEntity: Facility::class, inversedBy: 'appointments')]
     #[JoinColumn(name: 'facility_id', referencedColumnName: 'id', onDelete:"CASCADE")]
     private ?Facility $facility = null;
 
-    #[ManyToOne(targetEntity: User::class, inversedBy: 'appointments')]
-    #[JoinColumn(name: 'user_id', referencedColumnName: 'id', onDelete:"CASCADE")]
-    private ?User $user = null;
+    #[OneToOne(targetEntity: Donation::class, mappedBy: 'appointment')]
+    private Donation|null $donation = null;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getDescription(): ?string
+    public function getRdv(): ?\DateTimeImmutable
     {
-        return $this->description;
+        return $this->rdv;
     }
 
-    public function setDescription(string $description): self
+    public function setRdv(\DateTimeImmutable $date): self
     {
-        $this->description = $description;
+        $this->rdv = $date;
 
         return $this;
     }
 
-    public function getDate(): ?\DateTimeImmutable
-    {
-        return $this->date;
-    }
-
-    public function setDate(\DateTimeImmutable $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    public function isStatus(): ?bool
+    public function getStatus(): ?string
     {
         return $this->status;
     }
 
-    public function setStatus(bool $status): self
+    public function setStatus(string $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
@@ -85,14 +88,14 @@ class Appointment
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getDonation(): ?Donation
     {
-        return $this->user;
+        return $this->donation;
     }
 
-    public function setUser(?User $user): self
+    public function setDonation(Donation $donation): self
     {
-        $this->user = $user;
+        $this->donation = $donation;
 
         return $this;
     }

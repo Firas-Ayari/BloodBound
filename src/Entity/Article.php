@@ -68,6 +68,12 @@ class Article
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Rating::class)]
     private Collection $ratings;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $etat = null;
+
     public function __construct(){
         $this->createdAt=new \DateTimeImmutable();
         $this->updatedAt=new \DateTimeImmutable();
@@ -265,6 +271,30 @@ class Article
                 $rating->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getEtat(): ?string
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?string $etat): self
+    {
+        $this->etat = $etat;
 
         return $this;
     }

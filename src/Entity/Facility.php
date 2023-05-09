@@ -25,33 +25,20 @@ class Facility
     #[ORM\Column(type: Types::BIGINT)]
     private ?string $phone = null;
 
-    #[ORM\Column(type: Types::BIGINT, nullable: true)]
-    private ?string $fax = null;
-
-    #[ORM\Column(nullable: true)]
-    private ?int $rank = null;
-
-    #[ORM\Column]
-    private ?bool $status = null;
-
     #[ORM\Column(length: 255)]
     private ?string $description = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $startTime = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $endTime = null;
-
-    #[ORM\OneToMany(mappedBy: 'facility', targetEntity: Planning::class)]
-    private Collection $plannings;
 
     #[ORM\OneToMany(mappedBy: 'facility', targetEntity: Appointment::class)]
     private Collection $appointments;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $startingTime = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $endingTime = null;
+
     public function __construct()
     {
-        $this->plannings = new ArrayCollection();
         $this->appointments = new ArrayCollection();
     }
 
@@ -96,42 +83,6 @@ class Facility
         return $this;
     }
 
-    public function getFax(): ?string
-    {
-        return $this->fax;
-    }
-
-    public function setFax(?string $fax): self
-    {
-        $this->fax = $fax;
-
-        return $this;
-    }
-
-    public function getRank(): ?int
-    {
-        return $this->rank;
-    }
-
-    public function setRank(?int $rank): self
-    {
-        $this->rank = $rank;
-
-        return $this;
-    }
-
-    public function isStatus(): ?bool
-    {
-        return $this->status;
-    }
-
-    public function setStatus(bool $status): self
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     public function getDescription(): ?string
     {
         return $this->description;
@@ -140,60 +91,6 @@ class Facility
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getStartTime(): ?\DateTimeImmutable
-    {
-        return $this->startTime;
-    }
-
-    public function setStartTime(\DateTimeImmutable $startTime): self
-    {
-        $this->startTime = $startTime;
-
-        return $this;
-    }
-
-    public function getEndTime(): ?\DateTimeImmutable
-    {
-        return $this->endTime;
-    }
-
-    public function setEndTime(\DateTimeImmutable $endTime): self
-    {
-        $this->endTime = $endTime;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Planning>
-     */
-    public function getPlannings(): Collection
-    {
-        return $this->plannings;
-    }
-
-    public function addPlanning(Planning $planning): self
-    {
-        if (!$this->plannings->contains($planning)) {
-            $this->plannings->add($planning);
-            $planning->setFacility($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlanning(Planning $planning): self
-    {
-        if ($this->plannings->removeElement($planning)) {
-            // set the owning side to null (unless already changed)
-            if ($planning->getFacility() === $this) {
-                $planning->setFacility(null);
-            }
-        }
 
         return $this;
     }
@@ -224,6 +121,30 @@ class Facility
                 $appointment->setFacility(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getStartingTime(): ?\DateTimeImmutable
+    {
+        return $this->startingTime;
+    }
+
+    public function setStartingTime(\DateTimeImmutable $startingTime): self
+    {
+        $this->startingTime = $startingTime;
+
+        return $this;
+    }
+
+    public function getEndingTime(): ?\DateTimeImmutable
+    {
+        return $this->endingTime;
+    }
+
+    public function setEndingTime(\DateTimeImmutable $endingTime): self
+    {
+        $this->endingTime = $endingTime;
 
         return $this;
     }

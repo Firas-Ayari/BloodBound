@@ -143,10 +143,10 @@
                                        <td class="order-summery float-right border-0   ">
                                           <div class="total">
                                              <div class="subtotalTotal mb-0 text-end">
-                                                Subtotal :
+                                                Subtotal : {{ basket.total }}
                                              </div>
                                              <div class="shipping mb-0 text-end">
-                                                Shipping charge :
+                                                Shipping charge : Free
                                              </div>
                                           </div>
                                           <div class="total-money mt-2 text-end">
@@ -157,8 +157,8 @@
                                        <td>
                                           <div class="total-order float-right text-end fs-14 fw-500">
                                              <p>{{ basket.total }} pts</p>
-                                             <p>200 pts</p>
-                                             <h5 class="" style="color: #DB1628;" >{{ total }} pts</h5>
+                                             <p>Free Shipping</p>
+                                             <h5 class="" style="color: #DB1628;" >{{ basket.total }} pts</h5>
                                           </div>
                                        </td>
                                     </tr>

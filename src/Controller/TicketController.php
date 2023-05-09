@@ -145,9 +145,9 @@ class TicketController extends AbstractController
     }
 
     /**
- * @Route("/buyticket/{id}", name="app_buyticket", methods={"GET", "POST"})
- */
-public function buyticket(Request $request, Ticket $ticket): Response
+    * @Route("/buyticket/{id}", name="app_buyticket", methods={"GET", "POST"})
+    */
+public function buyticketDT(Request $request, Ticket $ticket): Response
 {   
 
 
@@ -224,6 +224,100 @@ public function buyticket(Request $request, Ticket $ticket): Response
     else 
     {
     $this->addFlash('error', 'The tickets are sold out.');
+    }
+    
+    return $this->redirectToRoute('app_ticket_show', ['id' => $ticket->getId()], Response::HTTP_SEE_OTHER);
+}
+
+    /**
+    * @Route("/buyticketPT/{id}", name="app_buyticket", methods={"GET", "POST"})
+    */
+public function buyticketPT(Request $request, Ticket $ticket): Response
+{   
+
+
+    $stock = $ticket->getStock();
+    $user = $this->getUser();
+    $userPoints = $user->getPoints();
+    $pricePt = $ticket->getPricePT();
+    if($pricePt <= $userPoints)
+    {
+        if ($stock > 0) {
+            $ticket->setStock($stock - 1);
+            $user->setPoints($userPoints - $pricePt);
+            if ($stock - 1 === 0) {
+                $ticket->setStatus('sold out');
+                $event = $ticket->getEvent();
+            if ($event) {
+                $event->setStatus('complet');
+            }
+            }
+            
+            $achat = new Achat();
+            $achat->setTicket($ticket);
+            $achat->setUser($this->getUser());
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($achat);
+            $entityManager->flush();
+            
+            // Send Twilio SMS notification
+            $sid = 'AC3fcc859c3c9d7ca0f904d5969b8f077b';
+            $token = '4408d07f6b27129cf416cb48fcca0d07';
+            $from = '+15673714926';
+            $to = '+21650205982';
+            
+            $client = new Client($sid, $token);
+            $event = $ticket->getEvent();
+            $message = $client->messages->create(
+                $to,
+                array(
+                    'from' => $from,
+                    'body' => 'You have successfully purchased a ticket for '.$event->getTitle().' at '.$ticket->getPrice().' dinars.',
+                )
+            );
+
+            // Pdf Download
+            $ticket = $this->getDoctrine()->getRepository(Ticket::class)->find($ticket);
+
+            if (!$ticket) {
+                throw $this->createNotFoundException('Ticket not found');
+            }
+
+            $event = $ticket->getEvent();
+
+            $pdfOptions = new Dompdf();
+            $html = $this->renderView('FrontOffice/ticket/ticketpdf.html.twig', [
+                'event' => $event,
+                'ticket' => $ticket,
+                'achat' => $achat,
+            ]);
+            $pdfOptions->loadHtml($html);
+            $pdfOptions->setPaper('A4', 'portrait');
+
+
+
+
+            $pdfOptions->render();
+
+            $pdfContent = $pdfOptions->output();
+            $response = new Response($pdfContent);
+
+            $response->headers->set('Content-Type', 'application/pdf');
+            $response->headers->set('Content-Disposition', 'attachment;filename=ticket.pdf');
+
+            return $response; 
+
+            $this->addFlash('success', 'You have successfully purchased a ticket.');
+        }
+        else 
+        {
+        $this->addFlash('error', 'The tickets are sold out.');
+        }
+    }
+    else
+    {
+        $this->addFlash('error', 'please check that you have enough points then try again!');
     }
     
     return $this->redirectToRoute('app_ticket_show', ['id' => $ticket->getId()], Response::HTTP_SEE_OTHER);

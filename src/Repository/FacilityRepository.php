@@ -39,6 +39,16 @@ class FacilityRepository extends ServiceEntityRepository
         }
     }
 
+    public function findByFacilityName(string $name): ?Facility
+    {
+        $qb = $this->createQueryBuilder('f')
+            ->andWhere('f.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery();
+
+        return $qb->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return Facility[] Returns an array of Facility objects
 //     */

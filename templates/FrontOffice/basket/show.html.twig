@@ -56,16 +56,16 @@
                                           </div>
                                        </div>
                                     </td>
-                                    <td class="price">${{ cartproduct.product.price }}</td>
+                                    <td class="price">{{ cartproduct.product.price }}</td>
                                     <td>
                                        <!-- Start: Product Quantity -->
                                        <div class="quantity product-cart__quantity">
-                                       <form>
+                                       <form method="post" action="{{ path('app_quantity_edit', {'id': cartproduct.id})}}">
                                           <input type="number" id="quantity" name="quantity" value="{{ cartproduct.quantity }}" required>
                                           <button style="background:#A40E1C;" type="submit" class="action-btn float-end">
                                           <i class="fa-solid fa-plus" style="color:#ffffff;"></i>
-                                       </button>
-                                       </form>   
+                                       </button>  
+                                       </form>
                                        </div>
                                        <!-- End: Product Quantity -->
                                     </td>
@@ -98,11 +98,11 @@
                            <div class="total">
                               <div class="subtotalTotal">
                                  Subtotal:
-                                 <span>${{ basket.total }}</span>
+                                 <span>{{ basket.total }} pts</span>
                               </div>
                               <div class="shipping">
                                  Shipping charge:
-                                 <span>$46.30</span>
+                                 <span>Free</span>
                               </div>
                            </div>
                            <div class="select-cupon position-relative">
@@ -113,9 +113,9 @@
                            </div>
                            <div class="total-money d-flex justify-content-between">
                               <h6>Total :</h6>
-                              <h5 style="color:#A40E1C;" > $1738.60</h5>
+                              <h5 style="color:#A40E1C;" > {{ basket.total }}</h5>
                            </div>
-                           <a href="checkout.html" class="checkout btn-secondary content-center w-100 btn-lg mt-20" style="background:#A40E1C;"> procdces to
+                           <a href="{{ path('app_basket_checkout') }}" class="checkout btn-secondary content-center w-100 btn-lg mt-20" style="background:#A40E1C;"> procdces to
                               checkout<i class="las la-arrow-right"></i>
                            </a>
                         </div>

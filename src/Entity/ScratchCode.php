@@ -17,7 +17,7 @@ class ScratchCode
     private ?string $code = null;
 
     #[ORM\Column]
-    private ?int $points = null;
+    private ?float $points = null;
 
     // public function setId($id): self
     // {
@@ -42,12 +42,12 @@ class ScratchCode
         return $this;
     }
 
-    public function getPoints(): ?int
+    public function getPoints(): ?float
     {
         return $this->points;
     }
 
-    public function setPoints(int $points): self
+    public function setPoints(float $points): self
     {
         $this->points = $points;
 

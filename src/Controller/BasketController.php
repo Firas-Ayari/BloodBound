@@ -36,11 +36,9 @@ class BasketController extends AbstractController
         $user = $this->getUser();
         $basket = $user->getCart();
         $cartproducts = $basket->getCartProducts();
-        $total= $basket->getTotal()+200;
         return $this->render('/FrontOffice/basket/show.html.twig', [
             'basket' => $basket,
             'cartproducts' => $cartproducts,
-            'total' => $total
         ]);
     }
 
@@ -70,7 +68,7 @@ class BasketController extends AbstractController
     {
         $user = $this->getUser();
         $cart= $user->getCart();
-        if($cart->getTotal() < $user->getPoints())
+        if($cart->getTotal() <= $user->getPoints())
         {
             $cartproducts = $cart->getCartProducts();
             if(!empty($cartproducts))
@@ -83,12 +81,10 @@ class BasketController extends AbstractController
                     $cart->setCheckout("Done");
                     $this->em->flush();
                 }
-            }
-            $total= $cart->getTotal()+200;      //Render your HTML.twig page
+            }    //Render your HTML.twig page
             $invoicePDF = $this->renderView('/invoice.html.twig', [
                 'basket' => $cart,
                 'cartproducts' => $cartproducts,
-                'total' => $total
             ]);
 
             // Instantiate Dompdf
@@ -104,19 +100,19 @@ class BasketController extends AbstractController
             $pdf->render();
 
             // Output the generated PDF to the browser
-            // $pdf->stream('invoice.pdf', ['Attachment' => true]);
-            // $pdfContent = $pdf->output();
-            // $response = new Response($pdfContent);
-            // $response->headers->set('Content-Type', 'application/pdf');
-            // $response->headers->set('Content-Disposition', 'attachment; filename="invoice.pdf"');
+            $pdf->stream('invoice.pdf', ['Attachment' => true]);
+            $pdfContent = $pdf->output();
+            $response = new Response($pdfContent);
+            $response->headers->set('Content-Type', 'application/pdf');
+            $response->headers->set('Content-Disposition', 'attachment; filename="invoice.pdf"');
         
-            // return $response;
+            return $response;
 
-            return $this->redirectToRoute('app_invoice');
+            // return $this->redirectToRoute('app_invoice');
         }
         else
         {
-            throw new Exception();
+            return $this->redirectToRoute('app_invoice');
         }
         
     }
@@ -127,11 +123,9 @@ class BasketController extends AbstractController
         $user = $this->getUser();
         $basket = $user->getCart();
         $cartproducts = $basket->getCartProducts();
-        $total= $basket->getTotal()+200;
         return $this->render('invoice.html.twig', [
             'basket' => $basket,
             'cartproducts' => $cartproducts,
-            'total' => $total
         ]);
     }
 

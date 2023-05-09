@@ -16,6 +16,7 @@ class TicketType extends AbstractType
     {
         $builder
             ->add('price')
+            ->add('PricePt')
             ->add('stock')
             ->add('status', ChoiceType::class, [
                 'choices' => [

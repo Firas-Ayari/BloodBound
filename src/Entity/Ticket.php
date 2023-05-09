@@ -42,6 +42,9 @@ class Ticket
     #[JoinColumn(name: 'event_id', referencedColumnName: 'id', onDelete:"CASCADE")]
     private Event|null $event = null;
 
+    #[ORM\Column]
+    private ?float $pricePT = null;
+
     public function __construct()
     {
         $this->achats = new ArrayCollection();
@@ -126,6 +129,18 @@ class Ticket
                 $achat->setTicket(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPricePT(): ?float
+    {
+        return $this->pricePT;
+    }
+
+    public function setPricePT(float $pricePT): self
+    {
+        $this->pricePT = $pricePT;
 
         return $this;
     }
