@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FacilityAppoController extends AbstractController
 {
-    #[Route('/facility/donation', name: 'app_confirm_donation')]
+    #[Route('/facility/donation/confirm', name: 'app_confirm_donation')]
     public function confirmDonation(Request $request, EntityManagerInterface $em): Response
     {
         $session = $this->get('session');
@@ -43,6 +43,7 @@ class FacilityAppoController extends AbstractController
 
         $donation = new Donation();
         $emergency = $em->getRepository(Emergency::class)->find($emergencyData->getId());
+        $emergency->setStatus("Completed");
         $donation->setEmergency($emergency);
         $donation->setAppointment($appointment);
         $em->persist($donation);
@@ -54,7 +55,40 @@ class FacilityAppoController extends AbstractController
         $session->remove('appointment_data');
 
         return $this->render('FrontOffice/emergency/show.html.twig',[
-            'emergency' => $emergencyData
+            'emergency' => $emergency,
+        ]);
+    }
+
+    #[Route('/facility/donation', name: 'app_index_donation')]
+    public function indexDonation(Request $request, EntityManagerInterface $em): Response
+    {
+        $session = $this->get('session');
+        $facilityData = $session->get('facility_data');
+        $emergencyData = $session->get('emergency_data');
+        $appoData = $session->get('appointment_data');
+        
+        if (!$facilityData || !$appoData || !$emergencyData) {
+            return $this->redirectToRoute('app_select_facility');
+        }
+
+        $appointment = new Appointment();
+        $appointment->setRdv($appoData->getRdv());
+        $appointment->setStatus($appoData->getStatus());
+        $user = $this->getUser();
+        $appointment->setUser($user);
+        $facility = $em->getRepository(Facility::class)->find($facilityData->getId());
+        $appointment->setFacility($facility);
+
+        $donation = new Donation();
+        $emergency = $em->getRepository(Emergency::class)->find($emergencyData->getId());
+        $donation->setEmergency($emergency);
+        $donation->setAppointment($appointment);
+
+        return $this->render('FrontOffice/FacilityAppo/test3.html.twig',[
+            'emergency' => $emergency,
+            'donation' => $donation,
+            'appointment' => $appointment,
+            'facility' => $facility
         ]);
     }
 
@@ -85,7 +119,7 @@ class FacilityAppoController extends AbstractController
             $session = $this->get('session');
             $session->set('appointment_data',$appointment);
 
-            return $this->redirectToRoute('app_confirm_donation');
+            return $this->redirectToRoute('app_index_donation');
         }
 
 

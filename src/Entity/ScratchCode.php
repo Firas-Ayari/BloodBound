@@ -19,6 +19,9 @@ class ScratchCode
     #[ORM\Column]
     private ?float $points = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     // public function setId($id): self
     // {
     //     $this->id = $id;
@@ -50,6 +53,18 @@ class ScratchCode
     public function setPoints(float $points): self
     {
         $this->points = $points;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

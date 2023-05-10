@@ -6,6 +6,7 @@
 parameters:
     img_directory : '%kernel.project_dir%/public/uploads/productsImg/'
     img_directory_event : '%kernel.project_dir%/public/uploads/eventsImg/'
+    img_directory_code : '%kernel.project_dir%/public/uploads/ScratchCode/'
     google_recaptcha_site_key: '%env(GOOGLE_RECAPTCHA_SITE_KEY)%'
 
 services:
