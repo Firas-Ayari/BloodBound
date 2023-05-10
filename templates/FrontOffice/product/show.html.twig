@@ -140,11 +140,11 @@
                                     <!-- Start: Product Selections -->
                                     <div class="product-item__button mt-lg-30 mt-sm-25 mt-20 d-flex flex-wrap">
                                        <div class=" d-flex flex-wrap product-item__action align-items-center">
-                                          <button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2" style="background:#A40E1C;">buy
-                                             now</button>
-                                          <button type="submit" class="btn btn-secondary btn-default btn-squared border-0 px-25 my-sm-0 my-2 me-10" style="background:#000000;">
+                                           <a href = {{ path('app_product_buy', {'id': product.id})}}><button class="btn btn-primary btn-default btn-squared border-0 me-10 my-sm-0 my-2" style="background:#A40E1C;">buy
+                                             now</button></a>
+                                          <a href = {{ path('app_product_cart', {'id': product.id})}}><button type="submit" class="btn btn-secondary btn-default btn-squared border-0 px-25 my-sm-0 my-2 me-10" style="background:#000000;">
                                              <i class="fa-solid fa-cart-plus"></i>
-                                             Add To Cart</button>
+                                             Add To Cart</button></a>
                                           </form>
                                           <div class="like-icon">
                                              <button type="button">

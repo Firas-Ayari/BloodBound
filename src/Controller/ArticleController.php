@@ -169,7 +169,7 @@ class ArticleController extends AbstractController
            $dirty_comment = $comment->getContent();
 
            // Définir la liste des gros mots à filtrer
-           $bad_words = array('merde', 'putain');
+           $bad_words = array('soleil', 'papier');
 
            // Utiliser une expression régulière pour remplacer les gros mots par des étoiles
            $clean_comment = preg_replace('/('.implode('|', $bad_words).')/i', '***', $dirty_comment);
